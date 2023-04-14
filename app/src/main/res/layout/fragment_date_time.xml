@@ -1,28 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_height="match_parent"
-    android:layout_width="match_parent">
-    <LinearLayout
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/date_text_view"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="16dp"
+        android:text="Date:"
+        android:textSize="40sp"
+        android:textStyle="bold"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"/>
 
-        <DatePicker
-            android:id="@+id/date_picker"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+    <EditText
+        android:id="@+id/date_edit_text"
+        android:layout_width="match_parent"
+        android:layout_height="132dp"
+        android:hint="DD/MM/YYYY"
+        android:inputType="date"
+        android:maxLength="10"
+        android:textAlignment="center" />
 
-        <TimePicker
-            android:id="@+id/time_picker"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
 
-        <Button
-            android:id="@+id/next_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Next" />
+    <TextView
+        android:id="@+id/time_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/date_edit_text"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:text="Time:"
+        android:textSize="40sp"
+        android:textStyle="bold" />
 
-    </LinearLayout>
-</ScrollView>
+    <EditText
+        android:id="@+id/time_edit_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/time_text_view"
+        android:layout_alignStart="@id/time_text_view"
+        android:layout_marginTop="8dp"
+        android:hint="HH:MM"
+        android:inputType="none"
+        android:minHeight="48dp" />
+
+    <Button
+        android:id="@+id/back_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="16dp"
+        android:text="Back"/>
+
+    <Button
+        android:id="@+id/next_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:text="Next"/>
+
+</RelativeLayout>

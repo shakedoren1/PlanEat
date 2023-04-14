@@ -6,6 +6,8 @@ import androidx.fragment.app.FragmentTransaction;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 public class NewEvent extends AppCompatActivity {
 
@@ -17,13 +19,25 @@ public class NewEvent extends AppCompatActivity {
         Button nextButton = findViewById(R.id.newEventButton);
         nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
+
             public void onClick(View v) {
+                // Hide logo and text views
+                ImageView logo = findViewById(R.id.logo1);
+                TextView title = findViewById(R.id.planTitle);
+                TextView info = findViewById(R.id.planInfo);
+                logo.setVisibility(View.GONE);
+                title.setVisibility(View.GONE);
+                info.setVisibility(View.GONE);
+
+                // Replace container view with DateTimeFragment
                 DateTimeFragment dateTimeFragment = new DateTimeFragment();
                 FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-                transaction.add(R.id.fragment_container, dateTimeFragment);
+                transaction.replace(R.id.dt_fragment_container, dateTimeFragment);
+                transaction.addToBackStack(null);
                 transaction.commit();
-                nextButton.setVisibility(View.GONE); // hide the button after clicking
-            }
-        });
+
+                // Hide button
+                nextButton.setVisibility(View.GONE);
+            }        });
     }
 }
