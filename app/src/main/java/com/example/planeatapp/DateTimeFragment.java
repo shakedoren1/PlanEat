@@ -11,14 +11,15 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.TextView;
+import android.widget.ImageButton;
 import android.widget.TimePicker;
 import java.util.Calendar;
 import java.util.Locale;
 
 public class DateTimeFragment extends Fragment {
 
-    private Button backButton, nextButton;
+    private ImageButton backButton;
+    private Button nextButton;
     private EditText dateEditText, timeEditText;
 
     public DateTimeFragment() {
