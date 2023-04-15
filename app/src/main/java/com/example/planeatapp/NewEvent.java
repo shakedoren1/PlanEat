@@ -38,6 +38,7 @@ public class NewEvent extends AppCompatActivity {
 
                 // Hide button
                 nextButton.setVisibility(View.GONE);
-            }        });
+            }
+        });
     }
 }

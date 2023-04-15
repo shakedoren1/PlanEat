@@ -53,50 +53,54 @@ public class DateTimeFragment extends Fragment {
             public void onClick(View view) {
                 // Navigate to the next fragment
                 FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-                transaction.replace(R.id.fragment_container, new ConceptFragment());
+                transaction.replace(R.id.concept_fragment_container, new ConceptFragment());
                 transaction.addToBackStack(null);
                 transaction.commit();
+
+                // Hide views
+                dateEditText.setVisibility(View.GONE);
+                timeEditText.setVisibility(View.GONE);
+                nextButton.setVisibility(View.GONE);
+                getView().findViewById(R.id.date_text_view).setVisibility(View.GONE);
+                getView().findViewById(R.id.time_text_view).setVisibility(View.GONE);
+                getView().findViewById(R.id.next_button).setVisibility(View.GONE);
             }
         });
 
-        // Set the date picker to show a dd/mm/yyyy format
         dateEditText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // Create a calendar instance
+                //Create a calendar instance
                 final Calendar calendar = Calendar.getInstance();
 
-                // Create a date picker dialog with the current date as the default
+                //Create a date picker with the current date as the default
                 DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker datePicker, int year, int monthOfYear, int dayOfMonth) {
-                        // Set the selected date to the date edit text in the dd/mm/yyyy format
+                        //Set the selected date to the date in the dd/mm/yyyy format
                         dateEditText.setText(String.format(Locale.getDefault(), "%02d/%02d/%04d", dayOfMonth, monthOfYear + 1, year));
                     }
                 }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
 
-                // Show the date picker dialog
                 datePickerDialog.show();
             }
         });
 
-        // Set the time picker to show the time in the hh:mm format
         timeEditText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // Create a calendar instance
+
                 final Calendar calendar = Calendar.getInstance();
 
-                // Create a time picker dialog with the current time as the default
+                //Create a time picker with the current time as the default
                 TimePickerDialog timePickerDialog = new TimePickerDialog(getActivity(), new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker timePicker, int hourOfDay, int minute) {
-                        // Set the selected time to the time edit text in the hh:mm format
+                        //Set the selected time to the hh:mm format
                         timeEditText.setText(String.format(Locale.getDefault(), "%02d:%02d", hourOfDay, minute));
                     }
                 }, calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), true);
 
-                // Show the time picker dialog
                 timePickerDialog.show();
             }
         });
