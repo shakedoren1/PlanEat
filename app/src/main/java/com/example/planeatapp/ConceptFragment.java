@@ -32,12 +32,14 @@ public class ConceptFragment extends Fragment {
                 transaction.commit();
 
                 // Hide views
-//            dateEditText.setVisibility(View.GONE);
-//            timeEditText.setVisibility(View.GONE);
-//            nextButton.setVisibility(View.GONE);
-//            getView().findViewById(R.id.date_text_view).setVisibility(View.GONE);
-//            getView().findViewById(R.id.time_text_view).setVisibility(View.GONE);
-//            getView().findViewById(R.id.next_button).setVisibility(View.GONE);
+                nextButton.setVisibility(View.GONE);
+                getView().findViewById(R.id.bbq_button).setVisibility(View.GONE);
+                getView().findViewById(R.id.homemade_button).setVisibility(View.GONE);
+                getView().findViewById(R.id.picnic_button).setVisibility(View.GONE);
+                getView().findViewById(R.id.italian_button).setVisibility(View.GONE);
+                getView().findViewById(R.id.other_button).setVisibility(View.GONE);
+                getView().findViewById(R.id.concept_title).setVisibility(View.GONE);
+                getView().findViewById(R.id.next_button).setVisibility(View.GONE);
             }
         });
 
