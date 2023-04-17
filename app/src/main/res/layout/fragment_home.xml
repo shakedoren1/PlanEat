@@ -1,14 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".HomeFragment">
 
     <TextView
+        android:id="@+id/event_info"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="temp HOME fragment"
-        android:gravity="center"/>
+        android:layout_height="130dp"
+        android:gravity="center"
+        android:background="@color/purple_planEat"
+        android:textColor="@color/white"
+        android:text="Event Info" />
 
-</FrameLayout>
+    <TextView
+        android:id="@+id/guest_list_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/event_info"
+        android:layout_marginStart="35dp"
+        android:layout_marginTop="25dp"
+        android:text="Guest List" />
+
+    <Button
+        android:id="@+id/guest_list_button"
+        android:layout_width="300dp"
+        android:layout_height="80dp"
+        android:layout_below="@+id/guest_list_text"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="25dp"
+        android:gravity="left"
+        android:backgroundTint="@color/light_purple_planEat"
+        android:textColor="@color/black"
+        android:text="0/8 confirmed" />
+
+    <TextView
+        android:id="@+id/group_tasks_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/guest_list_button"
+        android:layout_marginStart="35dp"
+        android:layout_marginTop="25dp"
+        android:text="Group tasks" />
+
+    <Button
+        android:id="@+id/group_tasks_button"
+        android:layout_width="300dp"
+        android:layout_height="80dp"
+        android:layout_below="@+id/group_tasks_text"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="25dp"
+        android:gravity="left"
+        android:backgroundTint="@color/light_purple_planEat"
+        android:textColor="@color/black"
+        android:text="0/8 choose" />
+
+</RelativeLayout>

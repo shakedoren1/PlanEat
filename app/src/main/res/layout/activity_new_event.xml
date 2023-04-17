@@ -46,7 +46,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/planInfo"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="150dp"
+        android:layout_marginTop="100dp"
         android:text="Create New Event" />
 
 </RelativeLayout>
