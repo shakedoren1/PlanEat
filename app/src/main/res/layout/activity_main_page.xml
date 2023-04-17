@@ -6,21 +6,10 @@
     android:layout_height="match_parent"
     android:background="#c4c4c4">
 
-    <Button
-        android:id="@+id/nextButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:text="Go to event creation screens. This is temporary"
-        app:layout_constraintBottom_toBottomOf="@+id/fragment_container"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/fragment_container" />
-
     <FrameLayout
         android:id="@+id/fragment_container"
-        android:layout_width="408dp"
-        android:layout_height="269dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -40,18 +29,20 @@
             android:layout_height="wrap_content"
             app:menu="@menu/bottom_menu"
             android:background="@android:color/transparent"
-            android:layout_marginRight="20dp"
+            android:layout_marginEnd="20dp"
             app:labelVisibilityMode="unlabeled"
             app:itemIconTint="@color/bottom_item_background"
             app:itemTextColor="@color/bottom_item_background"/>
     </com.google.android.material.bottomappbar.BottomAppBar>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/newEventButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/ic_add"
-        app:maxImageSize="50dp"
         android:backgroundTint="@color/white"
+        app:backgroundTint="@color/black"
+        app:maxImageSize="50dp"
         app:layout_anchor="@id/bottomAppBar"/>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
