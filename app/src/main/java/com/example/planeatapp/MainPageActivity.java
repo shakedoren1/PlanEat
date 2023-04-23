@@ -17,6 +17,7 @@ public class MainPageActivity extends AppCompatActivity {
 
     BottomNavigationView bottomNavigationView; // BottomBar
     ActivityMainPageBinding binding; // fragments binding
+    private FragmentManager fragmentManager; // fragments manager
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,9 +65,25 @@ public class MainPageActivity extends AppCompatActivity {
      * @param fragment the fragment to insert.
      */
     public void replaceFragmentInMainPage(Fragment fragment){
-        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.fragment_container, fragment);
+        fragmentTransaction.addToBackStack(null); // Add the replaced fragment to the back stack
         fragmentTransaction.commit();
+    }
+    /**
+     * Allows the default back button of Android to work with the fragments.
+     * Make sure when the fragments are replaced they are added to the stack.
+     */
+    // TODO: Fix bug - when going back to a different fragment the bottom bar doesn't change.
+    @Override
+    public void onBackPressed() {
+        int count = getSupportFragmentManager().getBackStackEntryCount();
+        if (count == 0) {
+            super.onBackPressed();
+            //additional code
+        } else {
+            getSupportFragmentManager().popBackStack();
+        }
     }
 }
