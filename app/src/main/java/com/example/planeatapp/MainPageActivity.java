@@ -28,20 +28,20 @@ public class MainPageActivity extends AppCompatActivity {
         // setting the BottomBar
         bottomNavigationView = findViewById(R.id.BottomNavigationView);
         bottomNavigationView.setBackground(null);
-        replaceFragment(new HomeFragment()); // setting the default fragment to be the Home fragment
+        replaceFragmentInMainPage(new HomeFragment()); // setting the default fragment to be the Home fragment
         binding.BottomNavigationView.setOnItemSelectedListener(item -> {
             switch (item.getItemId()){
                 case R.id.home:
-                    replaceFragment(new HomeFragment());
+                    replaceFragmentInMainPage(new HomeFragment());
                     break;
                 case R.id.insights:
-                    replaceFragment(new InsightsFragment());
+                    replaceFragmentInMainPage(new InsightsFragment());
                     break;
                 case R.id.notifications:
-                    replaceFragment(new NotificationsFragment());
+                    replaceFragmentInMainPage(new NotificationsFragment());
                     break;
                 case R.id.user:
-                    replaceFragment(new UserFragment());
+                    replaceFragmentInMainPage(new UserFragment());
                     break;
             }
             return true;
@@ -59,11 +59,11 @@ public class MainPageActivity extends AppCompatActivity {
     }
 
     /**
-     * Use this method to insert a new fragment to the fragment_container in the main page.
+     * Use this public method to insert a new fragment to the fragment_container in the main page.
      *
      * @param fragment the fragment to insert.
      */
-    private void replaceFragment(Fragment fragment){
+    public void replaceFragmentInMainPage(Fragment fragment){
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.fragment_container, fragment);

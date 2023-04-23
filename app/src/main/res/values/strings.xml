@@ -1,8 +1,10 @@
 <resources>
     <string name="app_name">PlanEatApp</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="concept_hint">Enter concept of event</string>
+
+    <string name="back_arrow_description">Back arrow</string>
+    <string name="arrival_approved">Arrival approved</string>
+    <string name="confirmed_not_coming">Confirmed not coming</string>
 
 </resources>
