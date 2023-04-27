@@ -3,6 +3,8 @@ package com.example.planeatapp;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -59,11 +61,24 @@ public class ListFragment extends Fragment {
         // Set the title
         TextView listTitleTextView = view.findViewById(R.id.list_title);
         listTitleTextView.setText(listTitleText);
-
+        // Set the fragment
+        replaceFragmentInListFragment(insideFragment);
         // the back button
         ImageButton backButton = view.findViewById(R.id.back_button);
         // sets the backButton
         backButton.setOnClickListener(v -> ((MainPageActivity) requireActivity()).replaceFragmentInMainPage(new HomeFragment()));
         return view;
+    }
+
+    /**
+     * Use this public method to insert a new fragment to the fragment_container_inside in the List fragment.
+     *
+     * @param fragment the fragment to insert.
+     */
+    public void replaceFragmentInListFragment(Fragment fragment){
+        FragmentManager fragmentManager = getChildFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.fragment_container_inside, fragment);
+        fragmentTransaction.commit();
     }
 }

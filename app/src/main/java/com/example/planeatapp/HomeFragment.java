@@ -47,10 +47,15 @@ public class HomeFragment extends Fragment {
         AppCompatButton groupTasksButton = view.findViewById(R.id.group_tasks_button);
 
         // sets the guestListButton
-        guestListButton.setOnClickListener(v -> ((MainPageActivity) requireActivity()).replaceFragmentInMainPage(new ListFragment("Guest list", new GuestListFragment())));
+        String confirmedTitle = guestListButton.getText().toString();
+        guestListButton.setOnClickListener(v ->
+                ((MainPageActivity) requireActivity()).replaceFragmentInMainPage(
+                        new ListFragment("Guest list", new GuestListFragment(confirmedTitle))));
 
         // sets the groupTasksButton
-        groupTasksButton.setOnClickListener(v -> ((MainPageActivity) requireActivity()).replaceFragmentInMainPage(new ListFragment("Group task list", new GroupTaskListFragment())));
+        groupTasksButton.setOnClickListener(v ->
+                ((MainPageActivity) requireActivity()).replaceFragmentInMainPage(
+                        new ListFragment("Group task list", new GroupTaskListFragment())));
 
         return view;
     }

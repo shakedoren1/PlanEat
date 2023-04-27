@@ -34,7 +34,7 @@
         android:layout_below="@+id/list_title"/>
 
     <FrameLayout
-        android:id="@+id/fragment_container"
+        android:id="@+id/fragment_container_inside"
         android:layout_width="match_parent"
         android:layout_height="622dp"
         android:layout_below="@+id/list_title"

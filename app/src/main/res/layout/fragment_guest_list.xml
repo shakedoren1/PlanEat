@@ -9,15 +9,17 @@
         android:id="@+id/guest_list"
         android:layout_width="match_parent"
         android:layout_height="300dp"
-        android:layout_margin="20dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="20dp"
         android:background="@drawable/round_button"
-        android:textColor="@color/black"
-        android:paddingTop="10dp"
         android:paddingStart="20dp"
+        android:paddingTop="10dp"
         android:paddingEnd="20dp"
-        android:textSize="25sp"
-        android:textStyle="bold"
-        android:text="0/8 confirmed"/>
+        android:text="0/8 confirmed"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:textStyle="bold" />
 
     <View
         android:id="@+id/arrival_approved_circle"
@@ -34,6 +36,7 @@
         android:layout_below="@+id/guest_list"
         android:layout_toRightOf="@id/arrival_approved_circle"
         android:layout_marginStart="5dp"
+        android:textSize="10sp"
         android:text="@string/arrival_approved" />
 
     <View
@@ -52,6 +55,7 @@
         android:layout_below="@+id/guest_list"
         android:layout_toRightOf="@id/not_coming_circle"
         android:layout_marginStart="5dp"
+        android:textSize="10sp"
         android:text="@string/confirmed_not_coming" />
 
 </RelativeLayout>
