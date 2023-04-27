@@ -16,9 +16,6 @@ import android.view.ViewGroup;
  */
 public class HomeFragment extends Fragment {
 
-    private AppCompatButton guestListButton;
-    private AppCompatButton groupTasksButton;
-
     public HomeFragment() {
         // Required empty public constructor
     }
@@ -46,22 +43,14 @@ public class HomeFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         // attaching the buttons
-        guestListButton = view.findViewById(R.id.guest_list_button);
-        groupTasksButton = view.findViewById(R.id.group_tasks_button);
+        AppCompatButton guestListButton = view.findViewById(R.id.guest_list_button);
+        AppCompatButton groupTasksButton = view.findViewById(R.id.group_tasks_button);
 
-        guestListButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ((MainPageActivity) requireActivity()).replaceFragmentInMainPage(new ListFragment());
-            }
-        });
+        // sets the guestListButton
+        guestListButton.setOnClickListener(v -> ((MainPageActivity) requireActivity()).replaceFragmentInMainPage(new ListFragment("Guest list", new GuestListFragment())));
 
-        groupTasksButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ((MainPageActivity) requireActivity()).replaceFragmentInMainPage(new ListFragment());
-            }
-        });
+        // sets the groupTasksButton
+        groupTasksButton.setOnClickListener(v -> ((MainPageActivity) requireActivity()).replaceFragmentInMainPage(new ListFragment("Group task list", new GroupTaskListFragment())));
 
         return view;
     }

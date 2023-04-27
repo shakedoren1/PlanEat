@@ -6,5 +6,6 @@
     <string name="back_arrow_description">Back arrow</string>
     <string name="arrival_approved">Arrival approved</string>
     <string name="confirmed_not_coming">Confirmed not coming</string>
+    <string name="coming_soon">COMING SOON...</string>
 
 </resources>

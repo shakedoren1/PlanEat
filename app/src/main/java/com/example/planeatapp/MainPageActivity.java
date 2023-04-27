@@ -71,11 +71,11 @@ public class MainPageActivity extends AppCompatActivity {
         fragmentTransaction.addToBackStack(null); // Add the replaced fragment to the back stack
         fragmentTransaction.commit();
     }
+
     /**
      * Allows the default back button of Android to work with the fragments.
      * Make sure when the fragments are replaced they are added to the stack.
      */
-    // TODO: Fix bug - when changing fragments inside the home page and then changing the bottom bar, the back logic gets messed up
     @Override
     public void onBackPressed() {
         int count = getSupportFragmentManager().getBackStackEntryCount();
@@ -87,7 +87,7 @@ public class MainPageActivity extends AppCompatActivity {
             getSupportFragmentManager().popBackStack();
             // sets the bottom bar to the right state
             Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.fragment_container);
-            if (currentFragment instanceof HomeFragment) {
+            if (currentFragment instanceof HomeFragment || currentFragment instanceof ListFragment) {
                 bottomNavigationView.setSelectedItemId(R.id.home);
             } else if (currentFragment instanceof InsightsFragment) {
                 bottomNavigationView.setSelectedItemId(R.id.insights);
