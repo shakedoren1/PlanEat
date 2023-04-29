@@ -50,12 +50,14 @@ public class MainPageActivity extends AppCompatActivity {
 
 
         FloatingActionButton newEventBtn = findViewById(R.id.newEventButton);
-        newEventBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainPageActivity.this, NewEvent.class);
-                startActivity(intent);
-            }
+
+        newEventBtn.setOnClickListener(v -> {
+            SummaryFragment summaryFragment = new SummaryFragment();
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.replace(R.id.fragment_container, summaryFragment);
+            fragmentTransaction.addToBackStack(null);
+            fragmentTransaction.commit();
         });
     }
 
