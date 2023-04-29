@@ -7,8 +7,8 @@ import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -23,7 +23,6 @@ public class SummaryFragment extends Fragment {
     private EditText placeField;
     private EditText conceptField;
     private EditText participantsField;
-
     private Calendar calendar;
     private DatePickerDialog datePickerDialog;
     private TimePickerDialog timePickerDialog;
@@ -70,8 +69,25 @@ public class SummaryFragment extends Fragment {
         whenField.setOnClickListener(v -> datePickerDialog.show());
         timeField.setOnClickListener(v -> timePickerDialog.show());
 
+        Button createEventButton = view.findViewById(R.id.create_event_button);
+        createEventButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String description = descriptionField.getText().toString();
+                String when = whenField.getText().toString();
+                String time = timeField.getText().toString();
+                String place = placeField.getText().toString();
+                String concept = conceptField.getText().toString();
+
+                InvitePopup invitePopup = InvitePopup.newInstance(description, when, time, place, concept);
+                invitePopup.show(getFragmentManager(), "invite_popup");
+            }
+        });
+
+
         return view;
     }
+
 
     private void updateWhenField() {
         whenField.setText(DateFormat.format("MMM dd, yyyy", calendar));

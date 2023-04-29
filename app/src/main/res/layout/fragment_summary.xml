@@ -8,10 +8,11 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/white"
+        android:gravity="center"
         android:orientation="vertical"
         android:paddingTop="100dp"
-        android:paddingBottom="16dp"
-        android:background="@color/white">
+        android:paddingBottom="16dp">
 
         <!-- Description field -->
         <LinearLayout
@@ -34,10 +35,10 @@
                 android:layout_marginStart="16dp"
                 android:background="@color/background_planEat"
                 android:hint="Name your event"
-                android:textColor="@color/purple_planEat"
                 android:inputType="none"
                 android:minHeight="48dp"
-                android:textAlignment="center"/>
+                android:textAlignment="center"
+                android:textColor="@color/purple_planEat" />
         </LinearLayout>
 
         <!-- When field -->
@@ -95,7 +96,7 @@
                 android:inputType="none"
                 android:minHeight="48dp"
                 android:textAlignment="center"
-                android:textColor="@color/purple_planEat"/>
+                android:textColor="@color/purple_planEat" />
         </LinearLayout>
 
         <!-- Place field -->
@@ -123,7 +124,7 @@
                 android:inputType="text"
                 android:minHeight="48dp"
                 android:textAlignment="center"
-                android:textColor="@color/purple_planEat"/>
+                android:textColor="@color/purple_planEat" />
         </LinearLayout>
 
         <!-- Concept field -->
@@ -151,7 +152,7 @@
                 android:inputType="text"
                 android:minHeight="48dp"
                 android:textAlignment="center"
-                android:textColor="@color/purple_planEat"/>
+                android:textColor="@color/purple_planEat" />
         </LinearLayout>
 
         <!-- Participants field -->
@@ -179,8 +180,25 @@
                 android:inputType="number"
                 android:minHeight="48dp"
                 android:textAlignment="center"
-                android:textColor="@color/purple_planEat"/>
+                android:textColor="@color/purple_planEat" />
         </LinearLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/create_event_button"
+            android:onClick="showInfoPopup"
+            android:layout_width="318dp"
+            android:layout_height="64dp"
+            android:layout_marginTop="50dp"
+            android:gravity="center"
+            android:text="Create Final Event"
+            android:textAlignment="center"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            app:backgroundTint="@color/light_gray_planEat"
+            app:cornerRadius="4dp"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintTop_toBottomOf="@id/participants_field" />
 
         <FrameLayout
             android:id="@+id/fragment_container"
