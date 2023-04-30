@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
@@ -37,7 +38,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/light_gray_planEat"
-        android:padding="16dp">
+        android:padding="16dp"
+        android:layout_marginBottom="16dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -49,31 +51,67 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="16dp"
-                android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                android:padding="16dp"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
-                <Button
+                <com.google.android.material.button.MaterialButton
                     android:id="@+id/rsvp_yes_button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Yes!"
-                    android:layout_marginEnd="8dp"/>
+                    android:textSize="12dp"
+                    android:layout_marginEnd="8dp"
+                    android:background="@color/background_planEat"
+                    android:layout_gravity="center_horizontal"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    app:backgroundTint="@color/green_planEat"
+                    app:cornerRadius="16dp"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintTop_toBottomOf="@id/participants_field" />
 
-                <Button
+                <com.google.android.material.button.MaterialButton
                     android:id="@+id/rsvp_no_button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Nope, sorry!"
-                    android:layout_marginStart="8dp"/>
+                    android:textSize="12dp"
+                    android:layout_marginStart="8dp"
+                    android:background="@color/gray_planEat"
+                    android:layout_gravity="center_horizontal"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    app:backgroundTint="@color/red_planEat"
+                    app:cornerRadius="16dp"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintTop_toBottomOf="@id/participants_field" />
 
             </LinearLayout>
 
         </LinearLayout>
 
     </FrameLayout>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/whatsapp_export"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Send via WhatsApp"
+        android:gravity="center"
+        android:textSize="12dp"
+        android:drawableRight="@mipmap/whatsapp_icon"
+        android:background="@color/background_planEat"
+        android:layout_gravity="center_horizontal"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        app:backgroundTint="@color/light_gray_planEat"
+        app:cornerRadius="16dp"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintTop_toBottomOf="@id/participants_field" />
 
 </LinearLayout>

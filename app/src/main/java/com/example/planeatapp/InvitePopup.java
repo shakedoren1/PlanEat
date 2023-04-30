@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -35,6 +36,9 @@ public class InvitePopup extends DialogFragment {
         args.putString(CONCEPT_KEY, concept);
         invitePopup.setArguments(args);
         return invitePopup;
+
+
+
     }
 
     @NonNull
@@ -61,6 +65,14 @@ public class InvitePopup extends DialogFragment {
         // Get a reference to the message TextView and set its text
         TextView messageTextView = view.findViewById(R.id.message_textview);
         messageTextView.setText(message);
+
+        Button sendWhatsappButton = view.findViewById(R.id.whatsapp_export);
+        sendWhatsappButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Handle button click event here
+            }
+        });
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setView(view)
