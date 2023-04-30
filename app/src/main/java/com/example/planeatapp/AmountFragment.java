@@ -35,7 +35,7 @@ public class AmountFragment extends Fragment {
         nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
+                FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
                 transaction.replace(R.id.summary_fragment_container, new SummaryFragment());
                 transaction.addToBackStack(null);
                 transaction.commit();
