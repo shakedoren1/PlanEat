@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>PlanEat</title>
+        <!-- CSS -->
+        <link rel="stylesheet" href="styles/styles.css">
+    </head>
+    <body class="confirmation-page">
+        <div class="top-massage">
+            <h2>Glad to see you here friend! Let's make it happen!</h2>
+        </div>
+        <form method="post" class="contact-form">
+            <div class="confirmation-input" id="name-input">
+                <input type="text" required placeholder="Your name" id="name">
+            </div>
+            <div class="confirmation-input" id="event-title">
+                <h4>Will we see you at the ...?</h4>
+            </div>
+            <div class="confirmation-input" id="confirmation-options">
+                <label for="option1"><img src="icons/cancel.PNG" alt="Not coming" class="icon"></label>
+                <input type="radio" id="option1" name="option" value="Not coming">
+                <label for="option2"><img src="icons/checked.PNG" alt="Coming" class="icon"></label>
+                <input type="radio" id="option2" name="option" value="Coming">
+                <label for="option3"><img src="icons/plus-one.PNG" alt="Plus one" class="icon"></label>
+                <input type="radio" id="option3" name="option" value="Plus one">
+                <br><br>
+            </div>
+            <div class="submit-btn">
+                <button class="main-btn" id="btn">
+                    <span class="btn-text">Confirm</span>
+                </button>
+            </div>
+            <small id="error"></small>
+        </form>
+        <footer>
+            <br><br><br>
+            <p>PlanEat logo</p>
+        </footer>
+    </body>
+</html>

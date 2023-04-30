@@ -1,0 +1,9 @@
+body {
+    text-align: center;
+    background-color: #DBB7FF;
+}
+
+/* the size of the icons */
+.icon {
+    width: 40px;
+}
