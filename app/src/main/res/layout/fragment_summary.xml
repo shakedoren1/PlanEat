@@ -7,12 +7,24 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="641dp"
         android:background="@color/white"
         android:gravity="center"
         android:orientation="vertical"
-        android:paddingTop="100dp"
-        android:paddingBottom="16dp">
+        android:paddingTop="50dp"
+        android:paddingBottom="16dp"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp">
+
+        <TextView
+            android:id="@+id/detail_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Edit Details"
+            android:textSize="24dp"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:paddingBottom="16dp"/>
 
         <!-- Description field -->
         <LinearLayout
@@ -185,16 +197,16 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/create_event_button"
-            android:onClick="showInfoPopup"
             android:layout_width="318dp"
             android:layout_height="64dp"
             android:layout_marginTop="50dp"
             android:gravity="center"
+            android:onClick="showInfoPopup"
             android:text="Create Final Event"
             android:textAlignment="center"
+            android:textColor="@color/black"
             android:textSize="20sp"
             android:textStyle="bold"
-            android:textColor="@color/black"
             app:backgroundTint="@color/light_gray_planEat"
             app:cornerRadius="4dp"
             app:layout_constraintHorizontal_bias="0.5"
@@ -218,38 +230,7 @@
             app:layout_anchor="@id/bottomAppBar"
             app:layout_anchorGravity="top"
             app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
     </LinearLayout>
-
-    <com.google.android.material.bottomappbar.BottomAppBar
-        android:id="@+id/bottomAppBar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:background="@color/white"
-        app:fabCradleRoundedCornerRadius="50dp"
-        app:fabCradleMargin="10dp">
-
-        <com.google.android.material.bottomnavigation.BottomNavigationView
-            android:id="@+id/BottomNavigationView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:menu="@menu/bottom_menu"
-            android:background="@android:color/transparent"
-            android:layout_marginEnd="20dp"
-            app:labelVisibilityMode="unlabeled"
-            app:itemIconTint="@color/bottom_item_background"
-            app:itemTextColor="@color/bottom_item_background"/>
-    </com.google.android.material.bottomappbar.BottomAppBar>
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/newEventButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/ic_add"
-        android:backgroundTint="@color/white"
-        app:backgroundTint="@color/black"
-        app:maxImageSize="50dp"
-        app:layout_anchor="@id/bottomAppBar"
-        android:contentDescription="Add new event"/>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
