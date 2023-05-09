@@ -1,6 +1,7 @@
 package com.example.planeatapp;
 
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +12,11 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.FragmentTransaction;
+
+import android.content.Intent;
+import com.example.planeatapp.MainPageActivity;
+
 
 public class InvitePopup extends DialogFragment {
 
@@ -36,7 +42,6 @@ public class InvitePopup extends DialogFragment {
         args.putString(CONCEPT_KEY, concept);
         invitePopup.setArguments(args);
         return invitePopup;
-
 
 
     }
@@ -71,12 +76,33 @@ public class InvitePopup extends DialogFragment {
             @Override
             public void onClick(View view) {
                 // Handle button click event here
+                Intent intent = new Intent(getContext(), MainPageActivity.class);
+                startActivity(intent);
             }
         });
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setView(view)
-                .setPositiveButton("OK", null);
-        return builder.create();
+                .setNegativeButton("Skip", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        Intent intent = new Intent(getContext(), MainPageActivity.class);
+                        startActivity(intent);
+                    }
+                });
+
+        AlertDialog dialog = builder.create();
+
+        dialog.setOnShowListener(new DialogInterface.OnShowListener() {
+            @Override
+            public void onShow(DialogInterface dialogInterface) {
+                Button skipButton = dialog.getButton(AlertDialog.BUTTON_NEGATIVE);
+                if (skipButton != null) {
+                    skipButton.setX((dialog.getWindow().getDecorView().getWidth() - skipButton.getWidth()) / 2);
+                }
+            }
+        });
+
+        return dialog;
     }
 }

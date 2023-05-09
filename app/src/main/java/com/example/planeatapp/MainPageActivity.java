@@ -31,7 +31,7 @@ public class MainPageActivity extends AppCompatActivity {
         bottomNavigationView.setBackground(null);
         replaceFragmentInMainPage(new HomeFragment()); // setting the default fragment to be the Home fragment
         binding.BottomNavigationView.setOnItemSelectedListener(item -> {
-            switch (item.getItemId()){
+            switch (item.getItemId()) {
                 case R.id.home:
                     replaceFragmentInMainPage(new HomeFragment());
                     break;
@@ -52,14 +52,11 @@ public class MainPageActivity extends AppCompatActivity {
         FloatingActionButton newEventBtn = findViewById(R.id.newEventButton);
 
         newEventBtn.setOnClickListener(v -> {
-            SummaryFragment summaryFragment = new SummaryFragment();
-            FragmentManager fragmentManager = getSupportFragmentManager();
-            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-            fragmentTransaction.replace(R.id.fragment_container, summaryFragment);
-            fragmentTransaction.addToBackStack(null);
-            fragmentTransaction.commit();
+            Intent intent = new Intent(this, CreateEvent.class);
+            startActivity(intent);
         });
     }
+
 
     /**
      * Use this public method to insert a new fragment to the fragment_container in the main page.
