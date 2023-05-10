@@ -83,7 +83,7 @@ public class InvitePopup extends DialogFragment {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setView(view)
-                .setNegativeButton("Skip", new DialogInterface.OnClickListener() {
+                .setNegativeButton("Later", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         Intent intent = new Intent(getContext(), MainPageActivity.class);
