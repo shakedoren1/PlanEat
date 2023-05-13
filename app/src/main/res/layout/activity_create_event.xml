@@ -1,233 +1,178 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/background_planEat"
+    android:orientation="vertical"
+    android:paddingLeft="16sp"
+    android:paddingTop="80sp"
+    android:paddingRight="16sp"
+    android:paddingBottom="32sp">
 
-    <LinearLayout
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16sp"
+        android:layout_gravity="center"
+        android:text="What's cookin'?"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:textSize="36sp" />
+
+    <TableLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/background_planEat"
-        android:gravity="center"
-        android:orientation="vertical"
-        android:paddingLeft="16sp"
-        android:paddingTop="16sp"
-        android:paddingRight="16sp"
-        android:paddingBottom="16sp">
+        android:layout_height="wrap_content"
+        android:padding="16sp">
 
-        <TextView
-            android:id="@+id/detail_title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingBottom="16sp"
-            android:text="What's the occasion?"
-            android:textColor="@color/black"
-            android:textSize="24sp"
-            android:textStyle="bold"
-            android:gravity="center"
-            android:textAlignment="center"/>
-
-        <!-- Event title field -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
+        <TableRow android:layout_marginBottom="16sp">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Title"
+                android:layout_marginEnd="16sp"
                 android:textColor="@color/black"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                android:paddingTop="16sp"/>
+                android:textSize="24sp"
+                android:textStyle="bold"/>
 
             <EditText
                 android:id="@+id/description_field"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16sp"
-                android:background="@color/light_gray_planEat"
                 android:hint="BBQ at the park"
-                android:inputType="none"
                 android:minHeight="48sp"
                 android:textAlignment="textStart"
                 android:textColor="@color/black"
-                android:textSize="16dp"
-                android:paddingLeft="12sp"/>
-        </LinearLayout>
+                android:textSize="16sp"
+                android:layout_width="0sp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+        </TableRow>
 
-        <!-- When field -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:orientation="horizontal">
-
+        <TableRow android:layout_marginBottom="16sp">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Date"
+                android:layout_marginEnd="16sp"
                 android:textColor="@color/black"
-                android:textSize="20sp"
+                android:textSize="24sp"
                 android:textStyle="bold"/>
 
             <EditText
                 android:id="@+id/when_field"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:background="@color/light_gray_planEat"
-                android:focusable="false"
                 android:hint="22/05/2023"
-                android:inputType="none"
                 android:minHeight="48sp"
                 android:textAlignment="textStart"
                 android:textColor="@color/black"
                 android:textSize="16sp"
-                android:paddingLeft="12sp"/>
-        </LinearLayout>
+                android:layout_width="0sp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+        </TableRow>
 
-        <!-- Time field -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16sp"
-            android:orientation="horizontal">
-
+        <TableRow android:layout_marginBottom="16sp">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Time"
+                android:layout_marginEnd="16sp"
                 android:textColor="@color/black"
-                android:textSize="20sp"
+                android:textSize="24sp"
                 android:textStyle="bold"/>
 
             <EditText
                 android:id="@+id/time_field"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16sp"
-                android:background="@color/light_gray_planEat"
-                android:focusable="false"
-                android:hint="14:00"
-                android:inputType="none"
+                android:hint="2:00PM"
                 android:minHeight="48sp"
                 android:textAlignment="textStart"
                 android:textColor="@color/black"
                 android:textSize="16sp"
-                android:paddingLeft="12sp"/>
-        </LinearLayout>
+                android:layout_width="0sp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+        </TableRow>
 
-        <!-- Place field -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16sp"
-            android:orientation="horizontal">
-
+        <TableRow android:layout_marginBottom="16sp">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Location"
+                android:layout_marginEnd="16sp"
                 android:textColor="@color/black"
-                android:textSize="20sp"
+                android:textSize="24sp"
                 android:textStyle="bold"/>
 
             <EditText
                 android:id="@+id/place_field"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16sp"
-                android:background="@color/light_gray_planEat"
-                android:hint="Hayarkon Park, Rokach Blvd"
-                android:inputType="text"
+                android:hint="HaYarkon Park"
                 android:minHeight="48sp"
                 android:textAlignment="textStart"
                 android:textColor="@color/black"
                 android:textSize="16sp"
-                android:paddingLeft="12sp"/>
-        </LinearLayout>
+                android:layout_width="0sp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+        </TableRow>
 
-        <!-- Concept field -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16sp"
-            android:orientation="horizontal">
-
+        <TableRow android:layout_marginBottom="16sp">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Concept"
+                android:layout_marginEnd="16sp"
                 android:textColor="@color/black"
-                android:textSize="20sp"
+                android:textSize="24sp"
                 android:textStyle="bold"/>
 
             <EditText
                 android:id="@+id/concept_field"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16sp"
-                android:background="@color/light_gray_planEat"
-                android:hint="Italian"
-                android:inputType="text"
+                android:hint="BBQ!"
                 android:minHeight="48sp"
                 android:textAlignment="textStart"
                 android:textColor="@color/black"
                 android:textSize="16sp"
-                android:paddingLeft="12sp"/>
-        </LinearLayout>
+                android:layout_width="0sp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+        </TableRow>
 
-        <!-- Participants field -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16sp"
-            android:orientation="horizontal">
-
+        <TableRow android:layout_marginBottom="16sp">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Participants"
+                android:layout_marginEnd="16sp"
                 android:textColor="@color/black"
-                android:textSize="20sp"
+                android:textSize="24sp"
                 android:textStyle="bold"/>
 
             <EditText
                 android:id="@+id/participants_field"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16sp"
-                android:background="@color/light_gray_planEat"
-                android:hint="8 people"
-                android:inputType="number"
+                android:hint="8 Friends"
                 android:minHeight="48sp"
                 android:textAlignment="textStart"
                 android:textColor="@color/black"
                 android:textSize="16sp"
-                android:paddingLeft="12sp"/>
+                android:layout_width="0sp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+        </TableRow>
+    </TableLayout>
 
-        </LinearLayout>
-
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/create_event_button"
-            android:layout_width="318sp"
-            android:layout_height="64sp"
-            android:layout_marginTop="50sp"
-            android:gravity="center"
-            android:onClick="showInfoPopup"
-            android:text="Create"
-            android:textAlignment="center"
-            android:textColor="@color/white"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            app:backgroundTint="@color/purple_planEat"
-            app:cornerRadius="15sp"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintTop_toBottomOf="@id/participants_field" />
-
-    </LinearLayout>
-
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/create_event_button"
+        android:layout_width="200sp"
+        android:layout_height="50sp"
+        android:layout_gravity="center"
+        android:onClick="showInfoPopup"
+        android:text="Let's Plan It!"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:background="@color/purple_planEat"
+        app:cornerRadius="36sp"
+        app:layout_constraintHorizontal_bias="0.5" />
+</LinearLayout>
