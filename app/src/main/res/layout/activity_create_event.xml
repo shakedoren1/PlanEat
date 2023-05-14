@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/background_planEat"
+    android:orientation="vertical"
+    android:paddingLeft="16sp"
+    android:paddingTop="80sp"
+    android:paddingRight="16sp"
+    android:paddingBottom="32sp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16sp"
+        android:layout_gravity="center"
+        android:text="What's cookin'?"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:textSize="36sp" />
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16sp">
+
+        <TableRow android:layout_marginBottom="16sp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Title"
+                android:layout_marginEnd="16sp"
+                android:textColor="@color/black"
+                android:textSize="24sp"
+                android:textStyle="bold"/>
+
+            <EditText
+                android:id="@+id/description_field"
+                android:hint="BBQ at the park"
+                android:minHeight="48sp"
+                android:textAlignment="textStart"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:layout_width="0sp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+        </TableRow>
+
+        <TableRow android:layout_marginBottom="16sp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Date"
+                android:layout_marginEnd="16sp"
+                android:textColor="@color/black"
+                android:textSize="24sp"
+                android:textStyle="bold"/>
+
+            <EditText
+                android:id="@+id/when_field"
+                android:hint="22/05/2023"
+                android:minHeight="48sp"
+                android:textAlignment="textStart"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:layout_width="0sp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+        </TableRow>
+
+        <TableRow android:layout_marginBottom="16sp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Time"
+                android:layout_marginEnd="16sp"
+                android:textColor="@color/black"
+                android:textSize="24sp"
+                android:textStyle="bold"/>
+
+            <EditText
+                android:id="@+id/time_field"
+                android:hint="2:00 PM"
+                android:minHeight="48sp"
+                android:textAlignment="textStart"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:layout_width="0sp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+        </TableRow>
+
+        <TableRow android:layout_marginBottom="16sp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Location"
+                android:layout_marginEnd="16sp"
+                android:textColor="@color/black"
+                android:textSize="24sp"
+                android:textStyle="bold"/>
+
+            <EditText
+                android:id="@+id/place_field"
+                android:hint="HaYarkon Park"
+                android:minHeight="48sp"
+                android:textAlignment="textStart"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:layout_width="0sp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+        </TableRow>
+
+        <TableRow android:layout_marginBottom="16sp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Concept"
+                android:layout_marginEnd="16sp"
+                android:textColor="@color/black"
+                android:textSize="24sp"
+                android:textStyle="bold"/>
+
+            <EditText
+                android:id="@+id/concept_field"
+                android:hint="BBQ!"
+                android:minHeight="48sp"
+                android:textAlignment="textStart"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:layout_width="0sp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+        </TableRow>
+
+        <TableRow android:layout_marginBottom="16sp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Participants"
+                android:layout_marginEnd="16sp"
+                android:textColor="@color/black"
+                android:textSize="24sp"
+                android:textStyle="bold"/>
+
+            <EditText
+                android:id="@+id/participants_field"
+                android:hint="8 Friends"
+                android:minHeight="48sp"
+                android:textAlignment="textStart"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:layout_width="0sp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+        </TableRow>
+    </TableLayout>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/create_event_button"
+        android:layout_width="200sp"
+        android:layout_height="50sp"
+        android:layout_gravity="center"
+        android:onClick="showInfoPopup"
+        android:text="Let's Plan It!"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:background="@color/purple_planEat"
+        app:cornerRadius="36sp"
+        app:layout_constraintHorizontal_bias="0.5" />
+</LinearLayout>

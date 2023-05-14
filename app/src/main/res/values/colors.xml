@@ -3,7 +3,8 @@
     <color name="purple_200">#FFBB86FC</color>
     <color name="purple_500">#FF6200EE</color>
     <color name="purple_700">#FF3700B3</color>
-    <color name="background_planEat">#F5F5F5</color>
+    <color name="background_planEat">#F5F5F8</color>
+    <color name="light_background_planEat">#F9F9F9</color>
     <color name="purple_planEat">#6A1877</color>
     <color name="light_purple_planEat">#F3E7FF</color>
     <color name="gray_planEat">#B9B9B9</color>

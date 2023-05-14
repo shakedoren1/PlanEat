@@ -32,22 +32,22 @@ public class AmountFragment extends Fragment {
 
         Button nextButton = view.findViewById(R.id.next_button);
 
-        nextButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-                transaction.replace(R.id.summary_fragment_container, new SummaryFragment());
-                transaction.addToBackStack(null);
-                transaction.commit();
-
-                // Hide views
-                nextButton.setVisibility(View.GONE);
-                getView().findViewById(R.id.amount_title).setVisibility(View.GONE);
-                getView().findViewById(R.id.amount_picker).setVisibility(View.GONE);
-                getView().findViewById(R.id.next_button).setVisibility(View.GONE);
-            }
-
-        });
+//        nextButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+//                transaction.replace(R.id.summary_fragment_container, new SummaryFragment());
+//                transaction.addToBackStack(null);
+//                transaction.commit();
+//
+//                // Hide views
+//                nextButton.setVisibility(View.GONE);
+//                getView().findViewById(R.id.amount_title).setVisibility(View.GONE);
+//                getView().findViewById(R.id.amount_picker).setVisibility(View.GONE);
+//                getView().findViewById(R.id.next_button).setVisibility(View.GONE);
+//            }
+//
+//        });
 
         return view;
     }
