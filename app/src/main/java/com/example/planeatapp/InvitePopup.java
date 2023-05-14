@@ -61,11 +61,9 @@ public class InvitePopup extends DialogFragment {
             concept = arguments.getString(CONCEPT_KEY);
         }
         View view = LayoutInflater.from(getContext()).inflate(R.layout.fragment_invite_popup, null);
-        String message = "Hey friends! " +
-                "You're invited to join " + description + " and celebrate! " +
-                "The theme is " + concept + " on " + when + " at " + time + "! " +
-                "Hope to see you at " + place + "! " +
-                "To RSVP, click below!";
+        String message = "You're invited to join " + description + " and celebrate! " +
+                "The theme is " + concept + " on " + when + " at " + time + "! " + "Hope to see you at "
+                + place + "! " + "To RSVP, click below!";
         String num = "972544949953";
         TextView messageTextView = view.findViewById(R.id.message_textview);
         messageTextView.setText(message);
@@ -119,7 +117,7 @@ public class InvitePopup extends DialogFragment {
             public void onShow(DialogInterface dialogInterface) {
                 Button skipButton = dialog.getButton(AlertDialog.BUTTON_NEGATIVE);
                 if (skipButton != null) {
-                    skipButton.setX((dialog.getWindow().getDecorView().getWidth() - skipButton.getWidth()) / 2);
+                    skipButton.setX((dialog.getWindow().getDecorView().getWidth() - skipButton.getWidth()) * 4 / 10);
                 }
             }
         });
