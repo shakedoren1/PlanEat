@@ -5,13 +5,13 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:padding="16dp">
+    android:padding="16sp">
 
     <!-- Header containing image and text -->
     <RelativeLayout
         android:id="@+id/header_layout"
         android:layout_width="match_parent"
-        android:layout_height="87dp"
+        android:layout_height="87sp"
         android:gravity="center">
 
         <TextView
@@ -29,9 +29,8 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/light_gray_planEat"
-        android:padding="16dp"
-        android:layout_marginBottom="16dp">
+        android:padding="16sp"
+        android:layout_marginBottom="16sp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -44,16 +43,26 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="Hey friends! 😄"
-                android:textSize="20dp"
+                android:textSize="20sp"
                 android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/message_textview"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="16dp"
+                android:gravity="center"
+                android:padding="16sp"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-                android:textSize="16dp" />
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/message_outro"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="See you there! 🥳"
+                android:textSize="16sp"
+                android:textStyle="bold" />
 
         </LinearLayout>
 

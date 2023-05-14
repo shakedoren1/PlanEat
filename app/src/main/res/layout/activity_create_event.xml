@@ -84,7 +84,7 @@
 
             <EditText
                 android:id="@+id/time_field"
-                android:hint="2:00PM"
+                android:hint="2:00 PM"
                 android:minHeight="48sp"
                 android:textAlignment="textStart"
                 android:textColor="@color/black"
