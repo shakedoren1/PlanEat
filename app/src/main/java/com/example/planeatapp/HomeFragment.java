@@ -16,8 +16,17 @@ import android.view.ViewGroup;
  */
 public class HomeFragment extends Fragment {
 
+    private String eventID; // The ID of the event in the data base
+
     public HomeFragment() {
         // Required empty public constructor
+    }
+
+    /**
+     * A constructor that puts inside the eventID the current ID of the event in the data base.
+     */
+    public HomeFragment(String ID) {
+        eventID = ID;
     }
 
     /**
