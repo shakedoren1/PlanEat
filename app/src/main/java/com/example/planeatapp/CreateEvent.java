@@ -9,11 +9,24 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.text.format.DateFormat;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
 import java.util.Calendar;
+import java.util.HashMap;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class CreateEvent extends AppCompatActivity {
 
@@ -26,11 +39,25 @@ public class CreateEvent extends AppCompatActivity {
     private Calendar calendar;
     private DatePickerDialog datePickerDialog;
     private TimePickerDialog timePickerDialog;
+    // Server variables:
+    private Retrofit retrofit;
+    private RetrofitInterface retrofitInterface;
+    private String BASE_URL = "http://10.0.2.2:8080";
+    //?<<<<<<<<<<<<<<<<<
+    private String postURL = "http://10.0.2.2:8080/newEvent";
+    private String eventID = "0";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_event);
+
+        // Server setup
+        retrofit = new Retrofit.Builder()
+                .baseUrl(BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        retrofitInterface = retrofit.create(RetrofitInterface.class);
 
         descriptionField = findViewById(R.id.description_field);
         whenField = findViewById(R.id.when_field);
@@ -78,6 +105,9 @@ public class CreateEvent extends AppCompatActivity {
                 String time = timeField.getText().toString();
                 String place = placeField.getText().toString();
                 String concept = conceptField.getText().toString();
+                String number = participantsField.getText().toString();
+
+                insertEventToDatabase(description, when, time, place, concept, number);
 
                 InvitePopup invitePopup = InvitePopup.newInstance(description, when, time, place, concept);
                 invitePopup.show(getSupportFragmentManager(), "invite_popup");
@@ -91,5 +121,43 @@ public class CreateEvent extends AppCompatActivity {
 
     private void updateTimeField() {
         timeField.setText(DateFormat.format("h:mm a", calendar));
+    }
+
+    /**
+     * A POST request to server endpoint to insert the event to the database.
+     */
+    private void insertEventToDatabase(String description, String when, String time, String place, String concept, String number) {
+
+        HashMap <String, String> eventDetails = new HashMap<>();
+
+        eventDetails.put("title", description);
+        eventDetails.put("date", when);
+        eventDetails.put("time", time);
+        eventDetails.put("place", place);
+        eventDetails.put("concept", concept);
+        eventDetails.put("number", number);
+
+        Call<Void> call = retrofitInterface.executeNewEvent(eventDetails);
+
+        call.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                if (response.code() == 200) {
+                    Toast.makeText(CreateEvent.this,
+                            "event created successfully", Toast.LENGTH_SHORT).show();
+                    Log.e("Insert Event", "Event insertion succeeded");
+                } else {
+                    Toast.makeText(CreateEvent.this,
+                            "response not good", Toast.LENGTH_SHORT).show();
+                    Log.e("Insert Event", "Event insertion succeeded partly");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                Toast.makeText(CreateEvent.this, t.getMessage(), Toast.LENGTH_SHORT).show();
+                Log.e("Insert Event", "Event insertion failed");
+            }
+        });
     }
 }
