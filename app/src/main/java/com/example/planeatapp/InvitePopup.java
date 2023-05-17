@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -23,6 +24,7 @@ import androidx.fragment.app.DialogFragment;
 
 public class InvitePopup extends DialogFragment {
 
+    private static final String TAG = "InvitePopup";
     private static final String DESCRIPTION_KEY = "description_key";
     private static final String WHEN_KEY = "when_key";
     private static final String TIME_KEY = "time_key";
@@ -70,23 +72,15 @@ public class InvitePopup extends DialogFragment {
         AppCompatButton sendButton = view.findViewById(R.id.whatsapp_export);
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
+
             public void onClick(View view) {
-                boolean isWhatsAppInstalled = isAppInstalled();
-                if (isWhatsAppInstalled) {
-                    Intent sendIntent = new Intent();
-                    sendIntent.setAction(Intent.ACTION_SEND);
-                    sendIntent.putExtra(Intent.EXTRA_TEXT, message);
-                    sendIntent.setType("text/plain");
-                    sendIntent.setPackage("com.whatsapp");
-                    PackageManager packageManager = getContext().getPackageManager();
-                    if (sendIntent.resolveActivity(packageManager) != null) {
-                        startActivity(sendIntent);
-                    } else {
-                        Toast.makeText(getContext(), "WhatsApp not installed.", Toast.LENGTH_SHORT).show();
-                    }
-                } else {
-                    Toast.makeText(getContext(), "WhatsApp not installed.", Toast.LENGTH_SHORT).show();
-                }
+                Intent sendIntent = new Intent();
+                sendIntent.setAction(Intent.ACTION_SEND);
+                sendIntent.putExtra(Intent.EXTRA_TEXT, message);
+                sendIntent.setType("text/plain");
+                sendIntent.setPackage("com.whatsapp");
+                PackageManager packageManager = getContext().getPackageManager();
+                startActivity(sendIntent);
             }
 
             private boolean isAppInstalled() {
@@ -98,6 +92,7 @@ public class InvitePopup extends DialogFragment {
                 } catch (PackageManager.NameNotFoundException e) {
                     is_installed = false;
                     e.printStackTrace();
+                    Log.e(TAG, e.getMessage());
                 }
                 return is_installed;
             }
