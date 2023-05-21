@@ -1,31 +1,27 @@
+const e = require('express');
 const express = require('express');
 const app = express();
-const mongoClient = require('mongodb').MongoClient;
-
-// const url = "mongodb://127.0.0.1:27017";
-const url = "mongodb://localhost:27017";
-const dbName = 'PlanEat';
+const { MongoClient } = require('mongodb')
+const url = 'mongodb://127.0.0.1:27017';
+const databaseName = 'PlanEat';
 const collectionName = 'eventsInfo';
+const client = new MongoClient(url);
 
 app.use(express.json());
 
-function mongoConnect() {
-	console.log("Entered mongo function")
-	console.log(url)
-		mongoClient.connect(url, (err, db) => {
-		if (err) {
-		    console.log('Error while connecting to MongoDB client.');
-		  } else {
-		    console.log('connecting to MongoDB client.');
-		    const myDb = db.db(dbName);
-		    const collection = myDb.collection(collectionName);
-		    return collection;
-		}
-	});
+// A function that gets an event and insert it to the data base
+async function insertEvent(event) {
+  let result = await client.connect();
+  db = result.db(databaseName);
+  collection = db.collection(collectionName);
+  const insertResult = await collection.insertOne(event);
+  return insertResult;
 }
 
+// The call from the new event to insert a new event into the database
 app.post('/newEvent', (req, res) => {
-  console.log('Entered /newEvent');
+
+  console.log('Entered /newEvent'); // for debug
   const newEvent = {
     title: req.body.title,
     date: req.body.date,
@@ -34,30 +30,19 @@ app.post('/newEvent', (req, res) => {
     concept: req.body.concept,
     number: req.body.number,
   };
-  console.log(newEvent);
+  console.log(newEvent); // for debug
 
-  // collection = mongoConnect();
-
-  mongoClient.connect(url, (err, db) => {
-    if (err) {
-      console.log('Error while connecting to MongoDB client.');
-    } else {
-      console.log('connecting to MongoDB client.');
-      const myDb = db.db(dbName);
-      const collection = myDb.collection(collectionName);
+  (async () => {
+    try {
+      const response = await insertEvent(newEvent);
+      console.log(response); // for debug
+      res.status(200).json(response); // Send the responses of the insertion
+    } catch (error) {
+      console.error(error); // for debug
+      res.status(500).json({ error: 'Failed to insert event' });
     }
+  })();
 
-    collection.insertOne(newEvent, (err, result) => {
-      if (err) {
-        console.log('error in insert /newEvent');
-        res.status(500).send('Error while inserting a new event');
-      } else {
-        console.log('inside insert /newEvent');
-        const eventID = result.insertedId.toString(); // Retrieve the auto-incremented ID
-        res.status(200).json({ eventID }); // Send the ID in the response
-      }
-    });
-  });
 });
 
 app.listen(8080, () => {

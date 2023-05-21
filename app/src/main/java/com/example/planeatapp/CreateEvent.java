@@ -21,6 +21,7 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.Map;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -43,9 +44,8 @@ public class CreateEvent extends AppCompatActivity {
     private Retrofit retrofit;
     private RetrofitInterface retrofitInterface;
     private String BASE_URL = "http://10.0.2.2:8080";
-    //?<<<<<<<<<<<<<<<<<
-    private String postURL = "http://10.0.2.2:8080/newEvent";
-    private String eventID = "0";
+
+    private String eventID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -137,26 +137,32 @@ public class CreateEvent extends AppCompatActivity {
         eventDetails.put("concept", concept);
         eventDetails.put("number", number);
 
-        Call<Void> call = retrofitInterface.executeNewEvent(eventDetails);
+        Call<Map<String, String>> call = retrofitInterface.executeNewEvent(eventDetails);
 
-        call.enqueue(new Callback<Void>() {
+        call.enqueue(new Callback<Map<String, String>>() {
             @Override
-            public void onResponse(Call<Void> call, Response<Void> response) {
-                if (response.code() == 200) {
-                    Toast.makeText(CreateEvent.this,
-                            "event created successfully", Toast.LENGTH_SHORT).show();
-                    Log.e("Insert Event", "Event insertion succeeded");
+            public void onResponse(Call<Map<String, String>> call, Response<Map<String, String>> response) {
+                if (response.isSuccessful()) {
+                    Map<String, String> responseData = response.body();
+                    if (responseData != null && responseData.containsKey("insertedId")) {
+                        // Assign the inserted ID to the eventID variable
+                        eventID = responseData.get("insertedId");
+                        Toast.makeText(CreateEvent.this, eventID, Toast.LENGTH_SHORT).show();
+                        Log.e("Insert Event", "Event created successfully");
+                    } else {
+                        Toast.makeText(CreateEvent.this, "Failed to get inserted ID", Toast.LENGTH_SHORT).show();
+                        Log.e("Insert Event", "Failed to get inserted ID");
+                    }
                 } else {
-                    Toast.makeText(CreateEvent.this,
-                            "response not good", Toast.LENGTH_SHORT).show();
-                    Log.e("Insert Event", "Event insertion succeeded partly");
+                    Toast.makeText(CreateEvent.this, "Failed to insert event", Toast.LENGTH_SHORT).show();
+                    Log.e("Insert Event", "Event insertion failed: " + response.message());
                 }
             }
 
             @Override
-            public void onFailure(Call<Void> call, Throwable t) {
+            public void onFailure(Call<Map<String, String>> call, Throwable t) {
                 Toast.makeText(CreateEvent.this, t.getMessage(), Toast.LENGTH_SHORT).show();
-                Log.e("Insert Event", "Event insertion failed");
+                Log.e("Insert Event", "Event insertion failed: " + t.getMessage());
             }
         });
     }

@@ -36,7 +36,7 @@
         android:layout_alignBottom="@id/calendar_icon"
         android:layout_toRightOf="@id/calendar_icon"
         android:layout_marginStart="5dp"
-        android:text="Date: " />
+        android:text="Date" />
 
     <ImageView
         android:id="@+id/time_icon"
@@ -55,7 +55,7 @@
         android:layout_alignBottom="@id/calendar_icon"
         android:layout_toRightOf="@id/time_icon"
         android:layout_marginStart="5dp"
-        android:text="Time: " />
+        android:text="Time" />
 
     <TextView
         android:id="@+id/guest_list_text"
