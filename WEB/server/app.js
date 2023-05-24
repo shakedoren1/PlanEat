@@ -1,34 +1,65 @@
-const express = require('express')
-const app = express()
-const mongoClient = require('mongodb').mongoClient
+const express = require('express');
+const app = express();
+const mongoClient = require('mongodb').MongoClient;
 
-const url = "mongodb://localhost.27017"
+// const url = "mongodb://127.0.0.1:27017";
+const url = "mongodb://localhost:27017";
+const dbName = 'PlanEat';
+const collectionName = 'eventsInfo';
 
-app.use (express.json())
+app.use(express.json());
 
-mongoClient.connect(url, (err, db) => {
+function mongoConnect() {
+	console.log("Entered mongo function")
+	console.log(url)
+		mongoClient.connect(url, (err, db) => {
+		if (err) {
+		    console.log('Error while connecting to MongoDB client.');
+		  } else {
+		    console.log('connecting to MongoDB client.');
+		    const myDb = db.db(dbName);
+		    const collection = myDb.collection(collectionName);
+		    return collection;
+		}
+	});
+}
+
+app.post('/newEvent', (req, res) => {
+  console.log('Entered /newEvent');
+  const newEvent = {
+    title: req.body.title,
+    date: req.body.date,
+    time: req.body.time,
+    place: req.body.place,
+    concept: req.body.concept,
+    number: req.body.number,
+  };
+  console.log(newEvent);
+
+  // collection = mongoConnect();
+
+  mongoClient.connect(url, (err, db) => {
     if (err) {
-        console.log("Eror while connecting mongo client.")
+      console.log('Error while connecting to MongoDB client.');
     } else {
-        const myDB = db.db('myDB')
-        const collection = myDB.collection('myTable') // >>>>>>Change the name acording to the tables
-
-        app.post('/event', (req, res) => {
-            const newEvent = {
-                title: req.body.title,
-                date: req.body.date,
-                time: req.body.date,
-                place: req.body.place,
-                concept: req.body.concept,
-                number: req.body.number
-            }
-            collection.insertOne(newEvent, (err, result) => {
-                res.status(200).send()
-            })
-        })
+      console.log('connecting to MongoDB client.');
+      const myDb = db.db(dbName);
+      const collection = myDb.collection(collectionName);
     }
-})
 
-app.listen(3000, () => {
-    console.log("Listening on port 3000.")
+    collection.insertOne(newEvent, (err, result) => {
+      if (err) {
+        console.log('error in insert /newEvent');
+        res.status(500).send('Error while inserting a new event');
+      } else {
+        console.log('inside insert /newEvent');
+        const eventID = result.insertedId.toString(); // Retrieve the auto-incremented ID
+        res.status(200).json({ eventID }); // Send the ID in the response
+      }
+    });
+  });
+});
+
+app.listen(8080, () => {
+  console.log('Listening on port 8080.');
 });

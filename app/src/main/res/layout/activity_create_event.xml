@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -8,24 +8,28 @@
     android:background="@color/background_planEat"
     android:orientation="vertical"
     android:paddingLeft="16sp"
-    android:paddingTop="80sp"
+    android:paddingTop="20sp"
     android:paddingRight="16sp"
     android:paddingBottom="32sp">
 
     <TextView
+        android:id="@+id/create_event_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16sp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
         android:layout_gravity="center"
         android:text="What's cookin'?"
         android:textAlignment="center"
         android:textColor="@color/black"
-        android:textStyle="bold"
-        android:textSize="36sp" />
+        android:textSize="36sp"
+        android:textStyle="bold" />
 
     <TableLayout
+        android:id="@+id/create_event_table"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/create_event_title"
         android:padding="16sp">
 
         <TableRow android:layout_marginBottom="16sp">
@@ -165,14 +169,16 @@
         android:id="@+id/create_event_button"
         android:layout_width="200sp"
         android:layout_height="50sp"
+        android:layout_below="@+id/create_event_table"
+        android:layout_centerHorizontal="true"
         android:layout_gravity="center"
+        android:background="@color/purple_planEat"
         android:onClick="showInfoPopup"
         android:text="Let's Plan It!"
         android:textAlignment="center"
         android:textColor="@color/white"
         android:textSize="20sp"
         android:textStyle="bold"
-        android:background="@color/purple_planEat"
         app:cornerRadius="36sp"
         app:layout_constraintHorizontal_bias="0.5" />
-</LinearLayout>
+</RelativeLayout>
