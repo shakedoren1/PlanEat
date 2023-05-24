@@ -66,7 +66,6 @@ public class InvitePopup extends DialogFragment {
         String message = "You're invited to join " + description + " and celebrate! " +
                 "The theme is " + concept + " on " + when + " at " + time + "! " + "Hope to see you at "
                 + place + "! " + "To RSVP, click below!";
-        String num = "972544949953";
         TextView messageTextView = view.findViewById(R.id.message_textview);
         messageTextView.setText(message);
         AppCompatButton sendButton = view.findViewById(R.id.whatsapp_export);
