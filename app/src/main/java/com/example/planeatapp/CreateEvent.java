@@ -4,8 +4,6 @@ import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.text.format.DateFormat;
@@ -15,10 +13,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.IOException;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
@@ -107,10 +101,21 @@ public class CreateEvent extends AppCompatActivity {
                 String concept = conceptField.getText().toString();
                 String number = participantsField.getText().toString();
 
-                insertEventToDatabase(description, when, time, place, concept, number);
+                insertEventToDatabase(description, when, time, place, concept, number, new InsertEventCallback() {
+                    @Override
+                    public void onEventInserted(String eventId) {
+                        // Lines to be executed after event insertion succeeded
+                        InvitePopup invitePopup = InvitePopup.newInstance(description, when, time, place, concept, eventId);
+                        invitePopup.show(getSupportFragmentManager(), "invite_popup");
+                    }
 
-                InvitePopup invitePopup = InvitePopup.newInstance(description, when, time, place, concept);
-                invitePopup.show(getSupportFragmentManager(), "invite_popup");
+                    @Override
+                    public void onEventInsertionFailed(String errorMessage) {
+                        // Lines to be executed if event insertion failed
+                        Toast.makeText(CreateEvent.this, "Failed to insert event: " + errorMessage, Toast.LENGTH_SHORT).show();
+                        Log.e("Insert Event", "Event insertion failed: " + errorMessage);
+                    }
+                });
             }
         });
     }
@@ -126,7 +131,7 @@ public class CreateEvent extends AppCompatActivity {
     /**
      * A POST request to server endpoint to insert the event to the database.
      */
-    private void insertEventToDatabase(String description, String when, String time, String place, String concept, String number) {
+    private void insertEventToDatabase(String description, String when, String time, String place, String concept, String number, final InsertEventCallback callback) {
 
         HashMap <String, String> eventDetails = new HashMap<>();
 
@@ -147,11 +152,16 @@ public class CreateEvent extends AppCompatActivity {
                     if (responseData != null && responseData.containsKey("insertedId")) {
                         // Assign the inserted ID to the eventID variable
                         eventID = responseData.get("insertedId");
-                        Toast.makeText(CreateEvent.this, eventID, Toast.LENGTH_SHORT).show();
-                        Log.e("Insert Event", "Event created successfully");
+                        Toast.makeText(CreateEvent.this, "Event created successfully", Toast.LENGTH_SHORT).show();
+                        Log.e("Insert Event", "Event created successfully, ID: " + eventID);
+
+                        callback.onEventInserted(eventID); // Invoke the callback
+
                     } else {
                         Toast.makeText(CreateEvent.this, "Failed to get inserted ID", Toast.LENGTH_SHORT).show();
                         Log.e("Insert Event", "Failed to get inserted ID");
+
+                        callback.onEventInsertionFailed(response.message()); // Invoke the callback
                     }
                 } else {
                     Toast.makeText(CreateEvent.this, "Failed to insert event", Toast.LENGTH_SHORT).show();
@@ -165,5 +175,10 @@ public class CreateEvent extends AppCompatActivity {
                 Log.e("Insert Event", "Event insertion failed: " + t.getMessage());
             }
         });
+    }
+
+    interface InsertEventCallback {
+        void onEventInserted(String eventId);
+        void onEventInsertionFailed(String errorMessage);
     }
 }

@@ -1,14 +1,16 @@
 const { MongoClient } = require('mongodb')
+const { ObjectId } = require('mongodb');
 const url = 'mongodb://127.0.0.1:27017';
 const databaseName = 'PlanEat';
 const collectionName = 'eventsInfo';
 const client = new MongoClient(url);
+const checkID = '646dbe73793c55a7f1087fe0';
 
 async function getData() {
   let result = await client.connect();
   db = result.db(databaseName);
   collection = db.collection(collectionName);
-  let data = await collection.find({}).toArray();
+  let data = await collection.findOne({ _id: new ObjectId(checkID) });
   console.log(data);
 }
 
@@ -28,8 +30,8 @@ async function insertData() {
   console.log(typeof(insertResult));
 }
 
-// getData();
-insertData();
+getData();
+// insertData();
 // getData();
 
 

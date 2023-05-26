@@ -1,7 +1,7 @@
-const e = require('express');
 const express = require('express');
 const app = express();
 const { MongoClient } = require('mongodb')
+const { ObjectId } = require('mongodb');
 const url = 'mongodb://127.0.0.1:27017';
 const databaseName = 'PlanEat';
 const collectionName = 'eventsInfo';
@@ -18,10 +18,19 @@ async function insertEvent(event) {
   return insertResult;
 }
 
+// A function to retrieve event by ID from the database
+async function getEventById(eventId) {
+  let result = await client.connect();
+  db = result.db(databaseName);
+  collection = db.collection(collectionName);
+  const event = await collection.findOne({ _id: new ObjectId(eventId) });
+  return event;
+}
+
 // The call from the new event to insert a new event into the database
 app.post('/newEvent', (req, res) => {
-
   console.log('Entered /newEvent'); // for debug
+
   const newEvent = {
     title: req.body.title,
     date: req.body.date,
@@ -43,6 +52,23 @@ app.post('/newEvent', (req, res) => {
     }
   })();
 
+});
+
+// The call from the home page to to get an event info based on an id from the database
+app.get('/eventInfo/:id', async (req, res) => {
+  console.log('Entered /eventInfo'); // for debug
+
+  const eventId = req.params.id;
+  console.log(eventId); // for debug
+
+  try {
+    const event = await getEventById(eventId);
+    console.log(event); // for debug
+    res.status(200).json(event);
+  } catch (error) {
+    console.error(error); // for debug
+    res.status(500).json({ error: 'Failed to retrieve event info' });
+  }
 });
 
 app.listen(8080, () => {
