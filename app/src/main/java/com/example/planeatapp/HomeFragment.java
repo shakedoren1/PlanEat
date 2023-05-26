@@ -107,8 +107,17 @@ public class HomeFragment extends Fragment {
                 if (response.isSuccessful()) {
                     EventDetails eventInfo = response.body();
                     if (eventInfo != null) {
+                        // updating the home fragment with all the details received from the database
+                        String title = eventInfo.getTitle();
+                        updateText("title", title);
                         String date = eventInfo.getDate();
                         updateText("date", date);
+                        String time = eventInfo.getTime();
+                        updateText("time", time);
+                        String place = eventInfo.getPlace();
+                        updateText("place", place);
+                        String number = eventInfo.getNumber();
+                        updateText("number", number);
                     }
                 } else {
                     Log.e("Update Event Info", "Problem with retrieve event info" + response.message());
@@ -136,8 +145,11 @@ public class HomeFragment extends Fragment {
     private void updateText(String name, String text) {
         // putting all the relevant text_views into a hashMap
         HashMap<String, Integer> textMap = new HashMap<>();
+        textMap.put("title", R.id.event_title);
         textMap.put("date", R.id.date_text);
-        textMap.put("date", R.id.date_text);
+        textMap.put("time", R.id.time_text);
+        textMap.put("place", R.id.location_text);
+        textMap.put("number", R.id.potential_text);
 
         // putting the text received inside the relevant text_view
         if (textMap.containsKey(name)) {
