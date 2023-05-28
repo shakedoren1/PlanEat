@@ -8,7 +8,11 @@ import androidx.fragment.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Toast;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.toolbox.Volley;
 import com.example.planeatapp.databinding.ActivityMainPageBinding;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -19,10 +23,21 @@ public class MainPageActivity extends AppCompatActivity {
     ActivityMainPageBinding binding; // fragments binding
     private FragmentManager fragmentManager; // fragments manager
 
+    RequestQueue requestQueue;
+
+    // variable to store the GPT Response
+    private String gptResponse;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_page);
+
+        String gptResponse = getIntent().getStringExtra("GPTResponse");
+        setGPTResponse(gptResponse);
+
+        // Inside onCreate or another suitable function
+        requestQueue = Volley.newRequestQueue(this);
         // setting the fragments binding
         binding = ActivityMainPageBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
@@ -57,6 +72,26 @@ public class MainPageActivity extends AppCompatActivity {
         });
     }
 
+    public interface GPTResponseListener {
+        void onGPTResponse(String response);
+    }
+
+    private GPTResponseListener gptResponseListener;
+
+    public void setGPTResponseListener(GPTResponseListener gptResponseListener) {
+        this.gptResponseListener = gptResponseListener;
+    }
+
+    public void onResponse(String response) {
+        if(gptResponseListener != null){
+            gptResponseListener.onGPTResponse(response);
+        }
+    }
+
+    // setting the GPT Response
+    public void setGPTResponse(String gptResponse) {
+        this.gptResponse = gptResponse;
+    }
 
     /**
      * Use this public method to insert a new fragment to the fragment_container in the main page.

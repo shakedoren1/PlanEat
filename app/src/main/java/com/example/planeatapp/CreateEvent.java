@@ -2,10 +2,12 @@ package com.example.planeatapp;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
+import com.android.volley.RequestQueue;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.Volley;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.text.format.DateFormat;
@@ -15,16 +17,20 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.Map;
 
 import retrofit2.Call;
 import retrofit2.Callback;
-import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -51,6 +57,8 @@ public class CreateEvent extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_event);
+
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
 
         // Server setup
         retrofit = new Retrofit.Builder()
@@ -111,6 +119,40 @@ public class CreateEvent extends AppCompatActivity {
 
                 InvitePopup invitePopup = InvitePopup.newInstance(description, when, time, place, concept);
                 invitePopup.show(getSupportFragmentManager(), "invite_popup");
+
+
+                // The URL where your Node.js server is running
+                String url = "http://10.0.2.2:3000/predict";
+
+                // The prompt you want to send to GPT
+                String prompt = "You're invited to join " + description + " and celebrate! " +
+                        "The theme is " + concept + " on " + when + " at " + time + "! " + "Hope to see you at "
+                        + place + "! " + "To RSVP, click below!";
+
+                // Create the StringRequest
+                StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
+                        response -> {
+                            // This code will run when the server responds
+                            // The 'response' variable contains the GPT-generated text
+                            Intent intent = new Intent(CreateEvent.this, MainPageActivity.class);
+                            intent.putExtra("GPTResponse", response);
+                            startActivity(intent);
+                        }, error -> {
+                    // This code will run if there was an error
+                    Toast.makeText(CreateEvent.this, "Error: " + error.getMessage(), Toast.LENGTH_LONG).show();
+                }) {
+                    @Override
+                    protected Map<String, String> getParams() {
+                        // This function sets the POST parameters
+                        // In this case, you're sending the 'prompt' as a parameter
+                        Map<String, String> params = new HashMap<>();
+                        params.put("prompt", prompt);
+                        return params;
+                    }
+                };
+
+                // Add the request to the RequestQueue
+                requestQueue.add(stringRequest);
             }
         });
     }
@@ -137,19 +179,16 @@ public class CreateEvent extends AppCompatActivity {
         eventDetails.put("concept", concept);
         eventDetails.put("number", number);
 
+
         Call<Void> call = retrofitInterface.executeNewEvent(eventDetails);
 
         call.enqueue(new Callback<Void>() {
             @Override
-            public void onResponse(Call<Void> call, Response<Void> response) {
-                if (response.code() == 200) {
-                    Toast.makeText(CreateEvent.this,
-                            "event created successfully", Toast.LENGTH_SHORT).show();
-                    Log.e("Insert Event", "Event insertion succeeded");
+            public void onResponse(Call<Void> call, retrofit2.Response<Void> response) {
+                if(response.isSuccessful()){
+                    Toast.makeText(CreateEvent.this, "Event created successfully", Toast.LENGTH_SHORT).show();
                 } else {
-                    Toast.makeText(CreateEvent.this,
-                            "response not good", Toast.LENGTH_SHORT).show();
-                    Log.e("Insert Event", "Event insertion succeeded partly");
+                    Toast.makeText(CreateEvent.this, "Error: " + response.message(), Toast.LENGTH_SHORT).show();
                 }
             }
 

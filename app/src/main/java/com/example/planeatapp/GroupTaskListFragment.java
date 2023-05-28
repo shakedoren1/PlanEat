@@ -1,5 +1,6 @@
 package com.example.planeatapp;
 
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -13,7 +14,7 @@ import android.view.ViewGroup;
  * Use the {@link GroupTaskListFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class GroupTaskListFragment extends Fragment {
+public class GroupTaskListFragment extends Fragment implements MainPageActivity.GPTResponseListener {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -45,6 +46,20 @@ public class GroupTaskListFragment extends Fragment {
         fragment.setArguments(args);
         return fragment;
     }
+
+    @Override
+    public void onGPTResponse(String response) {
+        // Handle the response here
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof MainPageActivity) {
+            ((MainPageActivity) context).setGPTResponseListener(this);
+        }
+    }
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
