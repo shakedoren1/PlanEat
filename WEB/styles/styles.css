@@ -1,6 +1,19 @@
 body {
     text-align: center;
-    background-color: #DBB7FF;
+    background-color: #FAFAFA;
+}
+
+.main-btn {
+    background-color: #7A3585;
+    border-radius: 12px;
+    padding: 10px 20px;
+    border: none;
+    color: white;
+    font-size: 16px;
+}
+
+.id-from-URL {
+    color: #d1d1d1;
 }
 
 /* the size of the icons */
