@@ -26,7 +26,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 public class HomeFragment extends Fragment {
 
-    private String eventID; // The ID of the event in the data base
+    private static String eventID; // The ID of the event in the data base
+    private int flag = 0; // mark build
     // Server variables:
     private Retrofit retrofit;
     private RetrofitInterface retrofitInterface;
@@ -88,7 +89,11 @@ public class HomeFragment extends Fragment {
                 ((MainPageActivity) requireActivity()).replaceFragmentInMainPage(
                         new ListFragment("Group task list", new GroupTaskListFragment())));
 
-        updateEventInfo(eventID);
+        // only allows to be built one time
+        if (flag==0) {
+            updateEventInfo(eventID);
+            flag = 1;
+        }
 
         return view;
     }
@@ -129,14 +134,6 @@ public class HomeFragment extends Fragment {
                 Log.e("Update Event Info", "Failed to retrieve event info" + t.getMessage());
             }
         });
-    }
-
-    /**
-     * A method that updates the date text in the fragment to the date received from database.
-     */
-    private void updateDate(String date) {
-        TextView dateText = getView().findViewById(R.id.date_text);
-        dateText.setText(date);
     }
 
     /**
