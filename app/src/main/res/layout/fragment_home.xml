@@ -24,7 +24,7 @@
         android:layout_height="wrap_content"
         android:layout_alignBottom="@id/event_title"
         android:layout_marginBottom="15dp"
-        android:layout_marginStart="60dp"
+        android:layout_marginStart="20dp"
         android:src="@drawable/ic_calendar"
         app:tint="@color/white" />
 
@@ -36,14 +36,15 @@
         android:layout_alignBottom="@id/calendar_icon"
         android:layout_toRightOf="@id/calendar_icon"
         android:layout_marginStart="5dp"
-        android:text="Date: " />
+        android:text="Date" />
 
     <ImageView
         android:id="@+id/time_icon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@id/calendar_icon"
-        android:layout_marginStart="200dp"
+        android:layout_toRightOf="@id/calendar_icon"
+        android:layout_marginStart="100dp"
         android:src="@drawable/ic_time"
         app:tint="@color/white" />
 
@@ -55,7 +56,27 @@
         android:layout_alignBottom="@id/calendar_icon"
         android:layout_toRightOf="@id/time_icon"
         android:layout_marginStart="5dp"
-        android:text="Time: " />
+        android:text="Time" />
+
+    <ImageView
+        android:id="@+id/location_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/calendar_icon"
+        android:layout_toRightOf="@id/time_icon"
+        android:layout_marginStart="60dp"
+        android:src="@drawable/ic_location"
+        app:tint="@color/white" />
+
+    <TextView
+        android:id="@+id/location_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/white"
+        android:layout_alignBottom="@id/calendar_icon"
+        android:layout_toRightOf="@id/location_icon"
+        android:layout_marginStart="5dp"
+        android:text="Location" />
 
     <TextView
         android:id="@+id/guest_list_text"
@@ -64,7 +85,7 @@
         android:layout_below="@+id/event_title"
         android:layout_marginStart="35dp"
         android:layout_marginTop="25dp"
-        android:text="Guest List" />
+        android:text="Friends list" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/guest_list_button"
@@ -76,8 +97,63 @@
         android:gravity="start"
         android:background="@drawable/round_button"
         android:textColor="@color/black"
-        android:padding="10dp"
-        android:text="0/8 confirmed"/>
+        android:padding="10dp"/>
+
+    <TextView
+        android:id="@+id/answered_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:elevation="10dp"
+        android:layout_alignBaseline="@id/guest_list_button"
+        android:layout_alignStart="@id/guest_list_button"
+        android:paddingStart="10dp"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:text="0" />
+
+    <TextView
+        android:id="@+id/slesh_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:elevation="10dp"
+        android:layout_alignBaseline="@id/guest_list_button"
+        android:layout_toRightOf="@id/answered_text"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:text="/" />
+
+    <TextView
+        android:id="@+id/potential_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:elevation="10dp"
+        android:layout_alignBaseline="@id/guest_list_button"
+        android:layout_toRightOf="@id/slesh_text"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:text="10" />
+
+    <TextView
+        android:id="@+id/confirmed_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:elevation="10dp"
+        android:layout_alignBaseline="@id/guest_list_button"
+        android:layout_toRightOf="@id/potential_text"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:text=" confirmed" />
+
+    <TextView
+        android:id="@+id/confirmed_bottom_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:elevation="10dp"
+        android:layout_alignBottom="@id/guest_list_button"
+        android:layout_alignStart="@id/guest_list_button"
+        android:padding="20dp"
+        android:textColor="@color/black"
+        android:text="Oh no! nobody replied yet" />
 
     <ImageView
         android:id="@+id/arrow_icon_1"
@@ -96,7 +172,7 @@
         android:layout_below="@+id/guest_list_button"
         android:layout_marginStart="35dp"
         android:layout_marginTop="25dp"
-        android:text="Group Tasks" />
+        android:text="Don't forget these" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/group_tasks_button"
@@ -108,8 +184,63 @@
         android:gravity="start"
         android:background="@drawable/round_button"
         android:textColor="@color/black"
-        android:padding="10dp"
-        android:text="0/8 choose" />
+        android:padding="10dp"/>
+
+    <TextView
+        android:id="@+id/choose_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:elevation="10dp"
+        android:layout_alignBaseline="@id/group_tasks_button"
+        android:layout_alignStart="@id/group_tasks_button"
+        android:paddingStart="10dp"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:text="0" />
+
+    <TextView
+        android:id="@+id/slesh2_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:elevation="10dp"
+        android:layout_alignBaseline="@id/group_tasks_button"
+        android:layout_toRightOf="@id/choose_text"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:text="/" />
+
+    <TextView
+        android:id="@+id/need_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:elevation="10dp"
+        android:layout_alignBaseline="@id/group_tasks_button"
+        android:layout_toRightOf="@id/slesh2_text"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:text="8" />
+
+    <TextView
+        android:id="@+id/confirmed2_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:elevation="10dp"
+        android:layout_alignBaseline="@id/group_tasks_button"
+        android:layout_toRightOf="@id/need_text"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:text=" choose" />
+
+    <TextView
+        android:id="@+id/choose_bottom_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:elevation="10dp"
+        android:layout_alignBottom="@id/group_tasks_button"
+        android:layout_alignStart="@id/group_tasks_button"
+        android:padding="20dp"
+        android:textColor="@color/black"
+        android:text="Nothing was chosen yet" />
 
     <ImageView
         android:id="@+id/arrow_icon_2"

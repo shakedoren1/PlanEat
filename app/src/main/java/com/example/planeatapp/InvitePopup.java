@@ -30,16 +30,18 @@ public class InvitePopup extends DialogFragment {
     private static final String TIME_KEY = "time_key";
     private static final String PLACE_KEY = "place_key";
     private static final String CONCEPT_KEY = "concept_key";
+    private static final String EVENT_KEY = "event_key";
 
     private String description;
     private String when;
     private String time;
     private String place;
     private String concept;
+    private String eventID;
 
     private static final int MY_PERMISSIONS_REQUEST_SEND_SMS = 0;
 
-    public static InvitePopup newInstance(String description, String when, String time, String place, String concept) {
+    public static InvitePopup newInstance(String description, String when, String time, String place, String concept, String ID) {
         InvitePopup invitePopup = new InvitePopup();
         Bundle args = new Bundle();
         args.putString(DESCRIPTION_KEY, description);
@@ -47,6 +49,7 @@ public class InvitePopup extends DialogFragment {
         args.putString(TIME_KEY, time);
         args.putString(PLACE_KEY, place);
         args.putString(CONCEPT_KEY, concept);
+        args.putString(EVENT_KEY, ID);
         invitePopup.setArguments(args);
         return invitePopup;
     }
@@ -61,6 +64,7 @@ public class InvitePopup extends DialogFragment {
             time = arguments.getString(TIME_KEY);
             place = arguments.getString(PLACE_KEY);
             concept = arguments.getString(CONCEPT_KEY);
+            eventID = arguments.getString(EVENT_KEY);
         }
         View view = LayoutInflater.from(getContext()).inflate(R.layout.fragment_invite_popup, null);
         String message = "You're invited to join " + description + " and celebrate! " +
@@ -102,6 +106,7 @@ public class InvitePopup extends DialogFragment {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 Intent intent = new Intent(getContext(), MainPageActivity.class);
+                intent.putExtra("event_id", eventID); // sending the event id to the main page activity
                 startActivity(intent);
             }
         });

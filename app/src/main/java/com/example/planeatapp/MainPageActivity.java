@@ -7,11 +7,8 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
-import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
 import com.example.planeatapp.databinding.ActivityMainPageBinding;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -22,6 +19,7 @@ public class MainPageActivity extends AppCompatActivity {
     BottomNavigationView bottomNavigationView; // BottomBar
     ActivityMainPageBinding binding; // fragments binding
     private FragmentManager fragmentManager; // fragments manager
+    private String eventID; // the event id in the data base
 
     RequestQueue requestQueue;
 
@@ -33,22 +31,26 @@ public class MainPageActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_page);
 
+        // Retrieve the ID value from the intent
+        eventID = getIntent().getStringExtra("event_id");
+
         String gptResponse = getIntent().getStringExtra("GPTResponse");
         setGPTResponse(gptResponse);
 
         // Inside onCreate or another suitable function
         requestQueue = Volley.newRequestQueue(this);
+
         // setting the fragments binding
         binding = ActivityMainPageBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         // setting the BottomBar
         bottomNavigationView = findViewById(R.id.BottomNavigationView);
         bottomNavigationView.setBackground(null);
-        replaceFragmentInMainPage(new HomeFragment()); // setting the default fragment to be the Home fragment
+        replaceFragmentInMainPage(new HomeFragment(eventID)); // setting the default fragment to be the Home fragment
         binding.BottomNavigationView.setOnItemSelectedListener(item -> {
             switch (item.getItemId()) {
                 case R.id.home:
-                    replaceFragmentInMainPage(new HomeFragment());
+                    replaceFragmentInMainPage(new HomeFragment(eventID));
                     break;
                 case R.id.insights:
                     replaceFragmentInMainPage(new InsightsFragment());
