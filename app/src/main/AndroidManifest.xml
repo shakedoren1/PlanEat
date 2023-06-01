@@ -27,9 +27,6 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".NewEvent"
-            android:exported="false" />
-        <activity
             android:name=".MainPageActivity"
             android:exported="false"/>
     </application>
