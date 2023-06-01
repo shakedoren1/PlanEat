@@ -44,7 +44,7 @@
 
             <EditText
                 android:id="@+id/description_field"
-                android:hint="BBQ at the park"
+                android:hint="End of year brunch!"
                 android:minHeight="48sp"
                 android:textAlignment="textStart"
                 android:textColor="@color/black"
@@ -66,7 +66,7 @@
 
             <EditText
                 android:id="@+id/when_field"
-                android:hint="22/05/2023"
+                android:hint="22/07/2023"
                 android:minHeight="48sp"
                 android:textAlignment="textStart"
                 android:textColor="@color/black"
@@ -88,7 +88,7 @@
 
             <EditText
                 android:id="@+id/time_field"
-                android:hint="2:00 PM"
+                android:hint="11:00 AM"
                 android:minHeight="48sp"
                 android:textAlignment="textStart"
                 android:textColor="@color/black"
@@ -135,7 +135,7 @@
                 android:layout_width="0sp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:hint="BBQ!"
+                android:hint="Brunch!"
                 android:minHeight="48sp"
                 android:textAlignment="textStart"
                 android:textColor="@color/black"
@@ -154,6 +154,7 @@
 
             <EditText
                 android:id="@+id/participants_field"
+                android:inputType="number"
                 android:hint="8 Friends"
                 android:minHeight="48sp"
                 android:textAlignment="textStart"
