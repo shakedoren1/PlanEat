@@ -1,5 +1,6 @@
 package com.example.planeatapp;
 
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
@@ -9,6 +10,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.text.Html;
 import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.View;
@@ -109,56 +111,71 @@ public class CreateEvent extends AppCompatActivity {
                 String concept = conceptField.getText().toString();
                 String number = participantsField.getText().toString();
 
-                insertEventToDatabase(description, when, time, place, concept, number, new InsertEventCallback() {
-                    @Override
-                    public void onEventInserted(String eventId) {
-                        // Lines to be executed after event insertion succeeded
-                        InvitePopup invitePopup = InvitePopup.newInstance(description, when, time, place, concept, eventId);
-                        invitePopup.show(getSupportFragmentManager(), "invite_popup");
+                // Check if concept and number fields are empty
+                if (concept.isEmpty() || number.isEmpty()) {
+                    // Show popup for missing info
+                    showMissingInfoPopup();
+                } else {
 
-                        // The URL where your server.js server is running
-                        String url = "http://10.0.2.2:3000/predict";
+                    insertEventToDatabase(description, when, time, place, concept, number, new InsertEventCallback() {
+                        @Override
+                        public void onEventInserted(String eventId) {
+                            // Lines to be executed after event insertion succeeded
+                            InvitePopup invitePopup = InvitePopup.newInstance(description, when, time, place, concept, eventId);
+                            invitePopup.show(getSupportFragmentManager(), "invite_popup");
 
-                        // The prompt you want to send to GPT
-                        String prompt = "You're invited to join " + description + " and celebrate! " +
-                                "The theme is " + concept + " on " + when + " at " + time + "! " + "Hope to see you at "
-                                + place + "! " + "To RSVP, click below!";
+                            // The URL where your server.js server is running
+                            String url = "http://10.0.2.2:3000/predict";
 
-                        // Create the StringRequest
-                        StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
-                                response -> {
-                                    // This code will run when the server responds
-                                    // The 'response' variable contains the GPT-generated text
-                                    Intent intent = new Intent(CreateEvent.this, MainPageActivity.class);
-                                    intent.putExtra("GPTResponse", response);
-                                    startActivity(intent);
-                                }, error -> {
-                            // This code will run if there was an error
-                            Toast.makeText(CreateEvent.this, "Error: " + error.getMessage(), Toast.LENGTH_LONG).show();
-                        }) {
-                            @Override
-                            protected Map<String, String> getParams() {
-                                // This function sets the POST parameters
-                                // In this case, you're sending the 'prompt' as a parameter
-                                Map<String, String> params = new HashMap<>();
-                                params.put("prompt", prompt);
-                                return params;
-                            }
-                        };
+                            // The prompt you want to send to GPT
+                            String prompt = "You're invited to join " + description + " and celebrate! " +
+                                    "The theme is " + concept + " on " + when + " at " + time + "! " + "Hope to see you at "
+                                    + place + "! " + "To RSVP, click below!";
 
-                        // Add the request to the RequestQueue
-                        requestQueue.add(stringRequest);
-                    }
+                            // Create the StringRequest
+                            StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
+                                    response -> {
+                                        // This code will run when the server responds
+                                        // The 'response' variable contains the GPT-generated text
+                                        Intent intent = new Intent(CreateEvent.this, MainPageActivity.class);
+                                        intent.putExtra("GPTResponse", response);
+                                        startActivity(intent);
+                                    }, error -> {
+                                // This code will run if there was an error
+                                Toast.makeText(CreateEvent.this, "Error: " + error.getMessage(), Toast.LENGTH_LONG).show();
+                            }) {
+                                @Override
+                                protected Map<String, String> getParams() {
+                                    // This function sets the POST parameters
+                                    // In this case, you're sending the 'prompt' as a parameter
+                                    Map<String, String> params = new HashMap<>();
+                                    params.put("prompt", prompt);
+                                    return params;
+                                }
+                            };
 
-                    @Override
-                    public void onEventInsertionFailed(String errorMessage) {
-                        // Lines to be executed if event insertion failed
-                        Toast.makeText(CreateEvent.this, "Failed to insert event: " + errorMessage, Toast.LENGTH_SHORT).show();
-                        Log.e("Insert Event", "Event insertion failed: " + errorMessage);
-                    }
-                });
+                            // Add the request to the RequestQueue
+                            requestQueue.add(stringRequest);
+                        }
+
+                        @Override
+                        public void onEventInsertionFailed(String errorMessage) {
+                            // Lines to be executed if event insertion failed
+                            Toast.makeText(CreateEvent.this, "Failed to insert event: " + errorMessage, Toast.LENGTH_SHORT).show();
+                            Log.e("Insert Event", "Event insertion failed: " + errorMessage);
+                        }
+                    });
+                }
             }
         });
+    }
+
+    private void showMissingInfoPopup() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Missing Info")
+                .setMessage(Html.fromHtml("We're missing some important info about your event. Please make sure you tell us what the <b>concept</b> is and <b>how many people</b> are invited. Thank you! \uD83D\uDE0A"))
+                .setPositiveButton("OK", null)
+                .show();
     }
 
     private void updateWhenField() {
