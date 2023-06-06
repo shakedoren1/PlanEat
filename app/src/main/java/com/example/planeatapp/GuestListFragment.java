@@ -17,17 +17,8 @@ import android.widget.TextView;
  */
 public class GuestListFragment extends Fragment {
 
-    private String GuestListText; // the title of the guest list
-
     public GuestListFragment() {
         // Required empty public constructor
-    }
-
-    /**
-     * A constructor that puts inside the Guest_List the updated confirmed number from the home page.
-     */
-    public GuestListFragment(String confirmed) {
-        GuestListText = confirmed;
     }
 
     /**
@@ -53,9 +44,6 @@ public class GuestListFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_guest_list, container, false);
-        // Set the title
-        TextView listTitleTextView = view.findViewById(R.id.guest_list);
-        listTitleTextView.setText(GuestListText);
         return view;
     }
 }

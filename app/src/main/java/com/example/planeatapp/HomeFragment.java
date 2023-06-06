@@ -82,7 +82,7 @@ public class HomeFragment extends Fragment {
         String confirmedTitle = guestListButton.getText().toString();
         guestListButton.setOnClickListener(v ->
                 ((MainPageActivity) requireActivity()).replaceFragmentInMainPage(
-                        new ListFragment("Guest list", new GuestListFragment(confirmedTitle))));
+                        new ListFragment("Friends list", new GuestListFragment())));
 
         // sets the groupTasksButton
         groupTasksButton.setOnClickListener(v ->

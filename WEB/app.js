@@ -23,27 +23,61 @@ xhr1.onload = function () {
 };
 xhr1.send();
 
-// // Add an event listener to the submit button
-// document.getElementById('btn').addEventListener('click', function(event) {
-//     event.preventDefault(); // Prevent the default form submission behavior
+// Select the form element
+const form = document.querySelector('.contact-form');
 
-//     // Make an AJAX request to the server to insert confirmation when submiting the form
-//     const xhr2 = new XMLHttpRequest();
-//     xhr2.open('POST', 'http://localhost:8080/confirmation', true);
-//     xhr2.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-//     xhr2.onload = function () {
-//     if (xhr2.status === 200) {
-//         const response = JSON.parse(xhr2.responseText);
-//         // Display a toast notification
-//         Toastify({
-//             text: response.message,
-//             duration: 3000, // Toast duration in milliseconds (3 seconds)
-//             gravity: 'top', // Position the toast at the top of the screen
-//             close: true // Show a close button on the toast
-//             }).showToast();
-//         // Reset the form
-//         document.querySelector('.contact-form').reset(); 
-//     }
-//     };
-//     xhr2.send(new FormData(document.querySelector('.contact-form')));
-// });
+// Add event listener to form submission
+form.addEventListener('submit', function (e) {
+  e.preventDefault(); // Prevent the default form submission behavior
+  submitConfirmation(); // Call the function to submit the confirmation
+});
+
+function submitConfirmation() {
+    // Get the form data
+    const nameInput = document.getElementById('name');
+    const optionInput = document.querySelector('input[name="option"]:checked');
+  
+    // Validate the form inputs
+    if (!nameInput.value || !optionInput) {
+      // Show an error message if any of the required fields are missing
+      displayToast('Please fill in all fields.', 'error');
+      return;
+    }
+  
+    // Create a new object to store the form data
+    const formData = {
+      eventID: eventID,
+      name: nameInput.value,
+      option: optionInput.value,
+    };
+  
+    // alert(JSON.stringify(formData)); // for debug
+
+    // Make an AJAX request to submit the confirmation
+    const xhr2 = new XMLHttpRequest();
+    xhr2.open('POST', 'http://localhost:8080/confirmation', true);
+    xhr2.setRequestHeader('Content-Type', 'application/json'); // Set the request header
+    xhr2.onload = function () {
+      if (xhr2.status === 200) {
+        // Show a success message if the confirmation was submitted successfully
+        displayToast('Confirmation received!', 'success');
+        form.reset(); // Reset the form
+      } else {
+        // Show an error message if there was an issue with submitting the confirmation
+        displayToast('Failed to submit confirmation.', 'error');
+      }
+    };
+    xhr2.send(JSON.stringify(formData)); // Convert the object to JSON string before sending
+  }
+
+function displayToast(message, type) {
+    Toastify({
+      text: message,
+      duration: 3000,
+      close: true,
+      gravity: 'top',
+      position: 'center',
+      backgroundColor: type === 'success' ? '#32CD32' : '#FF0000',
+    }).showToast();
+}
+  

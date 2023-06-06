@@ -8,7 +8,7 @@ let collectionName = '';
 const client = new MongoClient(url);
 
 app.use(express.json());
-
+// Allowing to run the website on the server
 app.use(express.static(__dirname + '/..'));
 
 // A function that gets an item and insert it to the collection
@@ -76,7 +76,7 @@ app.get('/eventInfo/:id', async (req, res) => {
 });
 
 // The call from the website to insert a confirmation into the database
-app.post('/confirmation', express.urlencoded({ extended: true }), (req, res) => {
+app.post('/confirmation', (req, res) => {
   console.log('Entered /confirmation'); // for debug
 
   collectionName = 'confirmations'
