@@ -2,7 +2,7 @@ const express = require('express');
 const app = express();
 const { MongoClient } = require('mongodb')
 const { ObjectId } = require('mongodb');
-const url = 'mongodb://127.0.0.1:27017';
+const url = 'mongodb+srv://PlanEatList:PlanEat123@planeat.selzkm5.mongodb.net/?retryWrites=true&w=majority';
 const databaseName = 'PlanEat';
 let collectionName = '';
 const client = new MongoClient(url);

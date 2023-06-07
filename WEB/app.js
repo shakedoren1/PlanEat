@@ -19,6 +19,10 @@ xhr1.onload = function () {
     // Update the event title
     const eventTitle = document.getElementById('event-title');
     eventTitle.innerHTML += `<h4>Will we see you at the ${eventData.title} on ${eventData.date} at ${eventData.place}?</h4>`;
+  } else {
+    // Update the event title to indicate error
+    const eventTitle = document.getElementById('event-title');
+    eventTitle.innerHTML += `<h4>Problem receiving the event data</h4>`;
   }
 };
 xhr1.send();
