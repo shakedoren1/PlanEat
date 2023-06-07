@@ -5,9 +5,18 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
+
+import java.util.HashMap;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -20,6 +29,9 @@ public class GroupTaskListFragment extends Fragment implements MainPageActivity.
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+
+    private Retrofit retrofit;
+    private RetrofitInterface retrofitInterface;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -51,6 +63,48 @@ public class GroupTaskListFragment extends Fragment implements MainPageActivity.
     public void onGPTResponse(String response) {
         // Handle the response here
     }
+
+    private void updateEventInfo(String id) {
+        Log.e("Update Event Info", "passed: " + id );
+
+        Call<EventDetails> call = retrofitInterface.executeEventInfo(id);
+
+        call.enqueue(new Callback<EventDetails>() {
+            @Override
+            public void onResponse(Call<EventDetails> call, Response<EventDetails> response) {
+                if (response.isSuccessful()) {
+                    EventDetails eventInfo = response.body();
+                    if (eventInfo != null) {
+                        // updating the home fragment with all the details received from the database
+                        String content = eventInfo.getConcept();
+                        updateText("Ingredient List", content);
+                    }
+                } else {
+                    Log.e("Update List", "Problem retrieving list from DB" + response.message());
+                }
+            }
+
+
+            @Override
+            public void onFailure(Call<EventDetails> call, Throwable t) {
+                Log.e("Update Event Info", "Failed to retrieve event info" + t.getMessage());
+            }
+        });
+    }
+
+    private void updateText(String name, String text) {
+        // putting all the relevant text_views into a hashMap
+        HashMap<String, Integer> textMap = new HashMap<>();
+        textMap.put("item", R.id.item_list);
+
+        // putting the text received inside the relevant text_view
+        if (textMap.containsKey(name)) {
+            int nameId = textMap.get(name);
+            TextView textView = getView().findViewById(nameId);
+            textView.setText(text);
+        }
+    }
+
 
     @Override
     public void onAttach(Context context) {
