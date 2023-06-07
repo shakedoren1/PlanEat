@@ -18,7 +18,6 @@
         <activity
             android:name=".CreateEvent"
             android:exported="true"
-            android:label="@string/title_activity_create_event"
             android:theme="@style/Theme.PlanEatApp.NoActionBar" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

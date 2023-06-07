@@ -6,6 +6,7 @@
         <title>PlanEat</title>
         <!-- CSS -->
         <link rel="stylesheet" href="styles/styles.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css" />
     </head>
     <body class="confirmation-page">
         <header>
@@ -13,18 +14,18 @@
             <div class="id-from-URL" id="event-id">
                 <!-- Entered in the URL -->
             </div>
-            <br><br>
-            <p>PlanEat logo</p>
+            <img src="icons/logo.png" alt="PlanEat logo" class="logo">
         </header>
         <div class="top-massage">
             <h2>Glad to see you here friend! Let's make it happen!</h2>
         </div>
         <form method="post" class="contact-form">
+            <input type="hidden" name="eventID" id="eventID"> <!-- Hidden input for eventID, updated when the website is loaded -->
             <div class="confirmation-input" id="name-input">
-                <input type="text" required placeholder="Your name" id="name">
+                <input type="text" required placeholder="Your name" name="name" id="name">
             </div>
             <div class="confirmation-input" id="event-title">
-                <h4>Will we see you at the </h4>
+                <!-- Entered based on the ID in the URL -->
             </div>
             <div class="confirmation-input" id="confirmation-options">
                 <label for="option1"><img src="icons/cancel.PNG" alt="Not coming" class="icon"></label>
@@ -41,10 +42,15 @@
             <small id="error"></small>
         </form>
 
+        <!-- toast message -->
+        <div id="toast-container" class="toast-container"></div>
+
         <!-- java script -->
         <script src="app.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
     </body>
 </html>
 
 <!-- for checkings -->
 <!-- file:///C:/Users/shake/miLabMobile/PlanEat/WEB/index.html?eventID=6464ca6394605dd2bf4f54cd -->
+<!-- http://localhost:8080//index.html?eventID=6464ca6394605dd2bf4f54cd -->
