@@ -31,8 +31,10 @@ public class HomeFragment extends Fragment {
     // Server variables:
     private Retrofit retrofit;
     private RetrofitInterface retrofitInterface;
+    // for emulator
+//    private String BASE_URL = "http://10.0.2.2:8080";
+    // based on WIFI IP
     private String BASE_URL = "http://10.0.0.8:8080";
-
     public HomeFragment() {
         // Required empty public constructor
     }
