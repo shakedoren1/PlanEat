@@ -14,7 +14,7 @@ app.use(express.json());
 // Allowing to run the website on the server
 app.use(express.static(__dirname + '/..'));
 
-// A function that gets an item and insert it to the collection
+// A function that gets an item and inserts it in the collection
 async function insertItem(item, colName) {
   let result = await client.connect();
   db = result.db(databaseName);
@@ -111,17 +111,21 @@ app.get('/prompt', async (req, res) => {
       messages: [
         {
           role: "user",  
-          content: `Hi, I'm planning a Italian Meal in a potluck style for 10 friends at My house. Can you create a list of things we need to bring please? Make sure the list contains appetizers, mains, sides, dessert, drinks and any other food or non-food items needed, not ingredients or partial dishes. Have only the names of things, have appropriate amounts and be thorough please. No intro and no outro or tips. Thank you! Please return this as a JSON file where each item has an amount and an item name.`
+          content: `Hi, I'm planning a ${req.body.concept} in a potluck style for ${req.body.number} friends at My house. Can you create a list of things we need to bring please? Make sure the list contains appetizers, mains, sides, dessert, drinks and any other food or non-food items needed, not ingredients or partial dishes. Have only the names of things, have appropriate amounts and be thorough please. No intro and no outro or tips. Thank you! Please return this as a JSON file where each item has an amount and an item name.`
         }
       ]
     }, {
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer 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`
+        'Authorization': `Bearer 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`
       }
     });
 
     let prompt = response.data.choices[0].message.content;
+
+    collectionName = 'Ingredients'
+    insertItem(JSON.parse(prompt), collectionName);
+
     res.status(200).json({ prompt });
 
   } catch (error) {
@@ -131,18 +135,6 @@ app.get('/prompt', async (req, res) => {
 }
 });
 
-app.post('/ingredients', async (req, res) => {
-  collectionName = 'Ingredients'
-  const prompt = req.body.prompt;
-
-  try {
-    const response = await insertItem({ content: prompt }, collectionName);
-    res.status(200).json(response);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'Failed to insert ingredient list' });
-  }
-});
 
 // The call from the group task list page to to get a list based on an id from the database
 app.get('/listInfo/:id', async (req, res) => {
