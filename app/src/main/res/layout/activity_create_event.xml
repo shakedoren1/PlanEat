@@ -8,7 +8,7 @@
     android:background="@color/background_planEat"
     android:orientation="vertical"
     android:paddingLeft="16sp"
-    android:paddingTop="20sp"
+    android:paddingTop="40sp"
     android:paddingRight="16sp"
     android:paddingBottom="32sp">
 
@@ -30,7 +30,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/create_event_title"
-        android:padding="16sp">
+        android:paddingTop="40sp"
+        android:paddingBottom="30sp"
+        android:paddingLeft="16sp"
+        android:paddingRight="16sp">
 
         <TableRow android:layout_marginBottom="16sp">
             <TextView

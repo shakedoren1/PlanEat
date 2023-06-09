@@ -5,9 +5,17 @@
     android:layout_height="match_parent"
     tools:context=".NotificationsFragment">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="temp NOTIFICATIONS fragment"
-        android:gravity="center"/>
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/test_notif"
+        android:layout_width="350dp"
+        android:layout_height="80dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="28dp"
+        android:layout_marginTop="25dp"
+        android:background="@drawable/round_button"
+        android:padding="10dp"
+
+        android:text="Congratulations! You created your first event!"
+        android:textColor="@color/black"
+        android:textSize="18sp" />
 </FrameLayout>
