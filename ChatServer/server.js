@@ -105,8 +105,8 @@ app.post('/confirmation', (req, res) => {
 
 app.post('/prompt', async (req, res) => {
   try {
-    console.log(req.body.concept)
-    console.log(req.body.number)
+    // console.log(req.body.concept)
+    // console.log(req.body.number)
     const response = await axios.post('https://api.openai.com/v1/chat/completions', {
       model: "gpt-3.5-turbo-0301",
       messages: [
@@ -126,10 +126,14 @@ app.post('/prompt', async (req, res) => {
 
     collectionName = 'Ingredients'
     
-    const itemId = await insertItem(JSON.parse(prompt), collectionName);
+    // const itemId = await insertItem(JSON.parse(prompt), collectionName);
     
-    res.status(200).json({ prompt, insertedId: itemId.toString() });
+    // res.status(200).json({ prompt, insertedId: itemId.toString() });
 
+    const result = await insertItem(JSON.parse(prompt), collectionName);
+
+    res.status(200).json({ prompt, insertedId: result.insertedId.toString() });
+    
   } catch (error) {
     console.error('Error:', error);
     console.error('Error details:', error.response.data);
@@ -142,6 +146,7 @@ app.post('/prompt', async (req, res) => {
 app.get('/listInfo/:id', async (req, res) => {
   console.log('Entered /listInfo'); // for debug
 
+  collectionName = 'Ingredients'
   const listId = req.params.id;
   console.log(listId); // for debug
 
