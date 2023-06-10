@@ -1,25 +1,19 @@
 package com.example.planeatapp;
 
-import android.Manifest;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.AppCompatButton;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.DialogFragment;
 
 public class InvitePopup extends DialogFragment {
@@ -31,6 +25,7 @@ public class InvitePopup extends DialogFragment {
     private static final String PLACE_KEY = "place_key";
     private static final String CONCEPT_KEY = "concept_key";
     private static final String EVENT_KEY = "event_key";
+    private static final String LIST_KEY = "list_key";
 
     private String description;
     private String when;
@@ -38,10 +33,11 @@ public class InvitePopup extends DialogFragment {
     private String place;
     private String concept;
     private String eventID;
+    private String listID;
 
     private static final int MY_PERMISSIONS_REQUEST_SEND_SMS = 0;
 
-    public static InvitePopup newInstance(String description, String when, String time, String place, String concept, String ID) {
+    public static InvitePopup newInstance(String description, String when, String time, String place, String concept, String ID, String listID) {
         InvitePopup invitePopup = new InvitePopup();
         Bundle args = new Bundle();
         args.putString(DESCRIPTION_KEY, description);
@@ -50,6 +46,7 @@ public class InvitePopup extends DialogFragment {
         args.putString(PLACE_KEY, place);
         args.putString(CONCEPT_KEY, concept);
         args.putString(EVENT_KEY, ID);
+        args.putString(LIST_KEY, listID);
         invitePopup.setArguments(args);
         return invitePopup;
     }
@@ -65,6 +62,7 @@ public class InvitePopup extends DialogFragment {
             place = arguments.getString(PLACE_KEY);
             concept = arguments.getString(CONCEPT_KEY);
             eventID = arguments.getString(EVENT_KEY);
+            listID =  arguments.getString(LIST_KEY);
         }
         View view = LayoutInflater.from(getContext()).inflate(R.layout.fragment_invite_popup, null);
         String message = "You're invited to join " + description + " and celebrate! " +
@@ -84,6 +82,7 @@ public class InvitePopup extends DialogFragment {
                 sendIntent.setType("text/plain");
                 sendIntent.setPackage("com.whatsapp");
                 PackageManager packageManager = getContext().getPackageManager();
+                //move to HomeFragment after WhatsApp
                 startActivity(sendIntent);
             }
 
@@ -107,6 +106,8 @@ public class InvitePopup extends DialogFragment {
             public void onClick(DialogInterface dialogInterface, int i) {
                 Intent intent = new Intent(getContext(), MainPageActivity.class);
                 intent.putExtra("event_id", eventID); // sending the event id to the main page activity
+                intent.putExtra("list_id", listID); // sending the list id to the main page activity
+                Log.e("Insert List ID", "Popup listID: " + listID);
                 startActivity(intent);
             }
         });

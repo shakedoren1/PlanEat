@@ -2,21 +2,16 @@ package com.example.planeatapp;
 
 import android.content.Context;
 import android.os.Bundle;
-
 import androidx.fragment.app.Fragment;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
-
-import java.util.HashMap;
-
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -32,6 +27,7 @@ public class GroupTaskListFragment extends Fragment implements MainPageActivity.
 
     private Retrofit retrofit;
     private RetrofitInterface retrofitInterface;
+    private String BASE_URL = "http://10.0.2.2:8080"; // replace this with your server's URL
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -64,48 +60,6 @@ public class GroupTaskListFragment extends Fragment implements MainPageActivity.
         // Handle the response here
     }
 
-    private void updateEventInfo(String id) {
-        Log.e("Update Event Info", "passed: " + id );
-
-        Call<EventDetails> call = retrofitInterface.executeEventInfo(id);
-
-        call.enqueue(new Callback<EventDetails>() {
-            @Override
-            public void onResponse(Call<EventDetails> call, Response<EventDetails> response) {
-                if (response.isSuccessful()) {
-                    EventDetails eventInfo = response.body();
-                    if (eventInfo != null) {
-                        // updating the home fragment with all the details received from the database
-                        String content = eventInfo.getConcept();
-                        updateText("Ingredient List", content);
-                    }
-                } else {
-                    Log.e("Update List", "Problem retrieving list from DB" + response.message());
-                }
-            }
-
-
-            @Override
-            public void onFailure(Call<EventDetails> call, Throwable t) {
-                Log.e("Update Event Info", "Failed to retrieve event info" + t.getMessage());
-            }
-        });
-    }
-
-    private void updateText(String name, String text) {
-        // putting all the relevant text_views into a hashMap
-        HashMap<String, Integer> textMap = new HashMap<>();
-        textMap.put("item", R.id.item_list);
-
-        // putting the text received inside the relevant text_view
-        if (textMap.containsKey(name)) {
-            int nameId = textMap.get(name);
-            TextView textView = getView().findViewById(nameId);
-            textView.setText(text);
-        }
-    }
-
-
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -114,10 +68,18 @@ public class GroupTaskListFragment extends Fragment implements MainPageActivity.
         }
     }
 
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // Initialize retrofit and retrofitInterface here
+        retrofit = new Retrofit.Builder()
+                .baseUrl(BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        retrofitInterface = retrofit.create(RetrofitInterface.class);
+
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
@@ -128,6 +90,37 @@ public class GroupTaskListFragment extends Fragment implements MainPageActivity.
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_group_task_list, container, false);
+        View view = inflater.inflate(R.layout.fragment_group_task_list, container, false);
+
+        // Call updateIngredientListInfo here
+        updateIngredientListInfo(mParam1); // assuming mParam1 is the ID for the ingredient list
+
+        return view;
+    }
+
+    private void updateIngredientListInfo(String id) {
+        Log.e("Update Ingredient List Info", "passed: " + id );
+
+        Call<ListDetails> call = retrofitInterface.executeListInfo(id);
+
+        call.enqueue(new Callback<ListDetails>() {
+            @Override
+            public void onResponse(Call<ListDetails> call, Response<ListDetails> response) {
+                if (response.isSuccessful()) {
+                    ListDetails ingredientList = response.body();
+                    if (ingredientList != null) {
+                        // updating the fragment with the ingredient list received from the database
+                        // TODO: Update your UI here with the retrieved ingredient list
+                    }
+                } else {
+                    Log.e("Update Ingredient List Info", "Problem with retrieving ingredient list" + response.message());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ListDetails> call, Throwable t) {
+                Log.e("Update Ingredient List Info", "Failed to retrieve ingredient list" + t.getMessage());
+            }
+        });
     }
 }

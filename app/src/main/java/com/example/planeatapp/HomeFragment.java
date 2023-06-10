@@ -1,7 +1,6 @@
 package com.example.planeatapp;
 
 import android.os.Bundle;
-
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.fragment.app.Fragment;
 
@@ -12,7 +11,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import java.util.HashMap;
-
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -27,6 +25,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class HomeFragment extends Fragment {
 
     private static String eventID; // The ID of the event in the data base
+    private static String listID; // The ID of the list in the data base
     private int flag = 0; // mark build
     // Server variables:
     private Retrofit retrofit;
@@ -38,7 +37,7 @@ public class HomeFragment extends Fragment {
     }
 
     /**
-     * A constructor that puts inside the eventID the current ID of the event in the data base.
+     * A constructor that puts the current ID of the event in the data base inside the eventID.
      */
     public HomeFragment(String ID) {
         eventID = ID;

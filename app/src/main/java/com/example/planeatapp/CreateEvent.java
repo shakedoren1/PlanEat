@@ -139,7 +139,7 @@ public class CreateEvent extends AppCompatActivity {
                                 @Override
                                 public void onListInserted(String listId) {
                                     // If list is successfully created, show the popup
-                                    InvitePopup invitePopup = InvitePopup.newInstance(description, when, time, place, concept, eventId);
+                                    InvitePopup invitePopup = InvitePopup.newInstance(description, when, time, place, concept, eventId, listId);
                                     invitePopup.show(getSupportFragmentManager(), "invite_popup");
                                     // Create the StringRequest
                                     StringRequest stringRequest = new StringRequest(Request.Method.POST, BASE_URL,
@@ -147,7 +147,8 @@ public class CreateEvent extends AppCompatActivity {
                                                 // This code will run when the server responds
                                                 // The 'response' variable contains the GPT-generated text
                                                 Intent intent = new Intent(CreateEvent.this, MainPageActivity.class);
-                                                intent.putExtra("GPTResponse", response);
+                                                intent.putExtra("listID", listID);
+//                                                intent.putExtra("GPTResponse", response);
                                                 startActivity(intent);
                                             }, error -> {
                                         // This code will run if there was an error
