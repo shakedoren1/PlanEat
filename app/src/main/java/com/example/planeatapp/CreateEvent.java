@@ -28,8 +28,12 @@ import java.util.Map;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
+import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+
+import java.util.concurrent.TimeUnit;
 
 public class CreateEvent extends AppCompatActivity {
 
@@ -49,6 +53,8 @@ public class CreateEvent extends AppCompatActivity {
 
     private String eventID;
 
+    private String listID;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,9 +62,16 @@ public class CreateEvent extends AppCompatActivity {
 
         RequestQueue requestQueue = Volley.newRequestQueue(this);
 
+        OkHttpClient okHttpClient = new OkHttpClient.Builder()
+                .connectTimeout(2, TimeUnit.MINUTES) // connect timeout
+                .readTimeout(2, TimeUnit.MINUTES)    // socket timeout
+                .writeTimeout(2, TimeUnit.MINUTES)   // write timeout
+                .build();
+
         // Server setup
         retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
+                .client(okHttpClient) // set the custom OkHttpClient
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         retrofitInterface = retrofit.create(RetrofitInterface.class);
@@ -121,41 +134,44 @@ public class CreateEvent extends AppCompatActivity {
                         @Override
                         public void onEventInserted(String eventId) {
                             // Lines to be executed after event insertion succeeded
-                            InvitePopup invitePopup = InvitePopup.newInstance(description, when, time, place, concept, eventId);
-                            invitePopup.show(getSupportFragmentManager(), "invite_popup");
-
-                            // The URL where your server.js server is running
-                            String url = "http://10.0.2.2:3000/predict";
-
-                            // The prompt you want to send to GPT
-                            String prompt = "You're invited to join " + description + " and celebrate! " +
-                                    "The theme is " + concept + " on " + when + " at " + time + "! " + "Hope to see you at "
-                                    + place + "! " + "To RSVP, click below!";
-
-                            // Create the StringRequest
-                            StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
-                                    response -> {
-                                        // This code will run when the server responds
-                                        // The 'response' variable contains the GPT-generated text
-                                        Intent intent = new Intent(CreateEvent.this, MainPageActivity.class);
-                                        intent.putExtra("GPTResponse", response);
-                                        startActivity(intent);
-                                    }, error -> {
-                                // This code will run if there was an error
-                                Toast.makeText(CreateEvent.this, "Error: " + error.getMessage(), Toast.LENGTH_LONG).show();
-                            }) {
+                            // Now attempt to create the list
+                            insertListToDatabase(concept, number, new InsertListCallback() {
                                 @Override
-                                protected Map<String, String> getParams() {
-                                    // This function sets the POST parameters
-                                    // In this case, you're sending the 'prompt' as a parameter
-                                    Map<String, String> params = new HashMap<>();
-                                    params.put("prompt", prompt);
-                                    return params;
+                                public void onListInserted(String listId) {
+                                    // If list is successfully created, show the popup
+                                    InvitePopup invitePopup = InvitePopup.newInstance(description, when, time, place, concept, eventId);
+                                    invitePopup.show(getSupportFragmentManager(), "invite_popup");
+                                    // Create the StringRequest
+                                    StringRequest stringRequest = new StringRequest(Request.Method.POST, BASE_URL,
+                                            response -> {
+                                                // This code will run when the server responds
+                                                // The 'response' variable contains the GPT-generated text
+                                                Intent intent = new Intent(CreateEvent.this, MainPageActivity.class);
+                                                intent.putExtra("GPTResponse", response);
+                                                startActivity(intent);
+                                            }, error -> {
+                                        // This code will run if there was an error
+                                        Toast.makeText(CreateEvent.this, "Error: " + error.getMessage(), Toast.LENGTH_LONG).show();
+                                    })  {
+                                        @Override
+                                        protected Map<String, String> getParams() {
+                                            Map<String, String> params = new HashMap<>();
+                                            params.put("concept", concept);
+                                            params.put("number", number);
+                                            return params;
+                                        }
+                                    };
+                                    // Add the request to the RequestQueue
+                                    requestQueue.add(stringRequest);
                                 }
-                            };
 
-                            // Add the request to the RequestQueue
-                            requestQueue.add(stringRequest);
+                                @Override
+                                public void onListInsertionFailed(String errorMessage) {
+                                    // Lines to be executed if list insertion failed
+                                    Toast.makeText(CreateEvent.this, "Failed to insert list: " + errorMessage, Toast.LENGTH_SHORT).show();
+                                    Log.e("Insert List", "List insertion failed: " + errorMessage);
+                                }
+                            });
                         }
 
                         @Override
@@ -209,6 +225,7 @@ public class CreateEvent extends AppCompatActivity {
             public void onResponse(Call<Map<String, String>> call, Response<Map<String, String>> response) {
                 if (response.isSuccessful()) {
                     Map<String, String> responseData = response.body();
+                    Log.d("Response", "Response data: " + responseData); // Log entire response data
                     if (responseData != null && responseData.containsKey("insertedId")) {
                         // Assign the inserted ID to the eventID variable
                         eventID = responseData.get("insertedId");
@@ -223,6 +240,7 @@ public class CreateEvent extends AppCompatActivity {
 
                         callback.onEventInsertionFailed(response.message()); // Invoke the callback
                     }
+
                 } else {
                     Toast.makeText(CreateEvent.this, "Failed to insert event", Toast.LENGTH_SHORT).show();
                     Log.e("Insert Event", "Event insertion failed: " + response.message());
@@ -237,8 +255,58 @@ public class CreateEvent extends AppCompatActivity {
         });
     }
 
+    private void insertListToDatabase(String concept, String number, final InsertListCallback callback) {
+
+        HashMap <String, String> listDetails = new HashMap<>();
+
+        listDetails.put("concept", concept);
+        listDetails.put("number", number);
+
+        Call<Map<String, String>> call = retrofitInterface.executePrompt(listDetails);
+
+        call.enqueue(new Callback<Map<String, String>>() {
+            @Override
+            public void onResponse(Call<Map<String, String>> call, Response<Map<String, String>> response) {
+                if (response.isSuccessful()) {
+                    Map<String, String> responseData = response.body();
+                    if (responseData != null && responseData.containsKey("insertedId")) {
+                        // Assign the inserted ID to the listID variable
+                        listID = responseData.get("insertedId");
+                        Toast.makeText(CreateEvent.this, "List created successfully", Toast.LENGTH_SHORT).show();
+                        Log.e("Insert List", "List created successfully, ID: " + listID);
+
+                        callback.onListInserted(listID); // Invoke the callback
+
+                    } else {
+                        Toast.makeText(CreateEvent.this, "Failed to get inserted ID", Toast.LENGTH_SHORT).show();
+                        Log.e("Insert List", "Failed to get inserted ID");
+
+                        callback.onListInsertionFailed(response.message()); // Invoke the callback
+                    }
+
+                } else {
+                    Toast.makeText(CreateEvent.this, "Failed to insert list", Toast.LENGTH_SHORT).show();
+                    Log.e("Insert List", "List insertion failed: " + response.message());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Map<String, String>> call, Throwable t) {
+                Toast.makeText(CreateEvent.this, t.getMessage(), Toast.LENGTH_SHORT).show();
+                Log.e("Insert List", "List insertion failed: " + t.getMessage());
+            }
+        });
+    }
+
+
+
     interface InsertEventCallback {
         void onEventInserted(String eventId);
         void onEventInsertionFailed(String errorMessage);
+    }
+
+    interface InsertListCallback {
+        void onListInserted(String listId);
+        void onListInsertionFailed(String errorMessage);
     }
 }

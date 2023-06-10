@@ -8,7 +8,6 @@ const url = 'mongodb+srv://PlanEatList:PlanEat123@planeat.selzkm5.mongodb.net/?r
 const databaseName = 'PlanEat';
 let collectionName = '';
 const client = new MongoClient(url);
-let prompt = '';
 
 app.use(express.json());
 // Allowing to run the website on the server
@@ -104,8 +103,10 @@ app.post('/confirmation', (req, res) => {
 });
 
 
-app.get('/prompt', async (req, res) => {
+app.post('/prompt', async (req, res) => {
   try {
+    console.log(req.body.concept)
+    console.log(req.body.number)
     const response = await axios.post('https://api.openai.com/v1/chat/completions', {
       model: "gpt-3.5-turbo-0301",
       messages: [
@@ -124,9 +125,10 @@ app.get('/prompt', async (req, res) => {
     let prompt = response.data.choices[0].message.content;
 
     collectionName = 'Ingredients'
-    insertItem(JSON.parse(prompt), collectionName);
-
-    res.status(200).json({ prompt });
+    
+    const itemId = await insertItem(JSON.parse(prompt), collectionName);
+    
+    res.status(200).json({ prompt, insertedId: itemId.toString() });
 
   } catch (error) {
     console.error('Error:', error);

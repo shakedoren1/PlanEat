@@ -8,6 +8,7 @@ import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 public interface RetrofitInterface {
 
@@ -16,4 +17,11 @@ public interface RetrofitInterface {
 
     @GET("eventInfo/{id}")
     Call<EventDetails> executeEventInfo(@Path("id") String id);
+
+    @POST("/prompt")
+    Call<Map<String, String>> executePrompt(@Body HashMap<String, String> map);
+
+    @GET("listInfo/{id}")
+    Call<ListDetails> executeListInfo(@Path("id") String id);
+
 }
