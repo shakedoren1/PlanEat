@@ -20,6 +20,7 @@ public class MainPageActivity extends AppCompatActivity {
     ActivityMainPageBinding binding; // fragments binding
     private FragmentManager fragmentManager; // fragments manager
     private String eventID; // the event id in the data base
+    private String listID; // the list id in the data base
 
     RequestQueue requestQueue;
 
@@ -33,6 +34,7 @@ public class MainPageActivity extends AppCompatActivity {
 
         // Retrieve the ID value from the intent
         eventID = getIntent().getStringExtra("event_id");
+        listID = getIntent().getStringExtra("list_id");
 
         String gptResponse = getIntent().getStringExtra("GPTResponse");
         setGPTResponse(gptResponse);
@@ -101,6 +103,13 @@ public class MainPageActivity extends AppCompatActivity {
      * @param fragment the fragment to insert.
      */
     public void replaceFragmentInMainPage(Fragment fragment){
+        // Pass listID to HomeFragment
+        if (fragment instanceof HomeFragment) {
+            Bundle bundle = new Bundle();
+            bundle.putString("listID", listID);
+            bundle.putString("eventID", eventID);
+            fragment.setArguments(bundle);
+        }
         fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.fragment_container, fragment);

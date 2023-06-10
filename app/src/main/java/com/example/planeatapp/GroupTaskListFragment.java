@@ -7,6 +7,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
+
+import java.util.List;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -24,14 +28,12 @@ public class GroupTaskListFragment extends Fragment implements MainPageActivity.
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+    private static String listID = "";
 
     private Retrofit retrofit;
     private RetrofitInterface retrofitInterface;
     private String BASE_URL = "http://10.0.2.2:8080"; // replace this with your server's URL
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    private TextView itemListTextView;
 
     public GroupTaskListFragment() {
         // Required empty public constructor
@@ -81,8 +83,8 @@ public class GroupTaskListFragment extends Fragment implements MainPageActivity.
         retrofitInterface = retrofit.create(RetrofitInterface.class);
 
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+            listID = getArguments().getString("listID");
+            Log.e("Insert List ID", "TaskList List ID: " + listID);
         }
     }
 
@@ -92,8 +94,16 @@ public class GroupTaskListFragment extends Fragment implements MainPageActivity.
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_group_task_list, container, false);
 
+        // Find the TextView
+        itemListTextView = view.findViewById(R.id.item_list);
+        // Set the text as listID
+        if (itemListTextView != null) {
+            itemListTextView.setText(listID);
+        } else {
+            Log.e("GroupTaskListFragment", "item_list TextView is not found");
+        }
         // Call updateIngredientListInfo here
-        updateIngredientListInfo(mParam1); // assuming mParam1 is the ID for the ingredient list
+        updateIngredientListInfo(listID);
 
         return view;
     }
@@ -101,24 +111,31 @@ public class GroupTaskListFragment extends Fragment implements MainPageActivity.
     private void updateIngredientListInfo(String id) {
         Log.e("Update Ingredient List Info", "passed: " + id );
 
-        Call<ListDetails> call = retrofitInterface.executeListInfo(id);
+        Call<IngredientList> call = retrofitInterface.executeListInfo(id);
 
-        call.enqueue(new Callback<ListDetails>() {
+        call.enqueue(new Callback<IngredientList>() {
             @Override
-            public void onResponse(Call<ListDetails> call, Response<ListDetails> response) {
+            public void onResponse(Call<IngredientList> call, Response<IngredientList> response) {
                 if (response.isSuccessful()) {
-                    ListDetails ingredientList = response.body();
-                    if (ingredientList != null) {
-                        // updating the fragment with the ingredient list received from the database
-                        // TODO: Update your UI here with the retrieved ingredient list
+                    IngredientList ingredientList = response.body();
+                    if (ingredientList != null && itemListTextView != null) {
+                        List<PotluckItem> potluckItems = ingredientList.getPotluckItems();
+                        if (potluckItems != null) {
+                            // Iterate over the received potluck items and append them to the TextView
+                            for (PotluckItem item : potluckItems) {
+                                itemListTextView.append(item.getAmount() + " " + item.getItem_name() + "\n");
+                            }
+                        } else {
+                            Log.e("Update Ingredient List Info", "PotluckItems is null");
+                        }
                     }
                 } else {
-                    Log.e("Update Ingredient List Info", "Problem with retrieving ingredient list" + response.message());
+                    Log.e("Update Ingredient List Info", "Problem with retrieving ingredient list: " + response.message());
                 }
             }
 
             @Override
-            public void onFailure(Call<ListDetails> call, Throwable t) {
+            public void onFailure(Call<IngredientList> call, Throwable t) {
                 Log.e("Update Ingredient List Info", "Failed to retrieve ingredient list" + t.getMessage());
             }
         });

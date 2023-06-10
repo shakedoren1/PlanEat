@@ -20,5 +20,5 @@ public interface RetrofitInterface {
     Call<Map<String, String>> executePrompt(@Body HashMap<String, String> map);
 
     @GET("listInfo/{id}")
-    Call<ListDetails> executeListInfo(@Path("id") String id);
+    Call<IngredientList> executeListInfo(@Path("id") String id);
 }

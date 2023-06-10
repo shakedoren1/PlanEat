@@ -57,8 +57,14 @@ public class HomeFragment extends Fragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
+
+        // Get listID from arguments
+        Bundle arguments = getArguments();
+        if (arguments != null) {
+            listID = arguments.getString("listID");
+            eventID = arguments.getString("eventID");
+        }
 
         // Server setup
         retrofit = new Retrofit.Builder()
@@ -84,9 +90,19 @@ public class HomeFragment extends Fragment {
                         new ListFragment("Friends list", new GuestListFragment())));
 
         // sets the groupTasksButton
-        groupTasksButton.setOnClickListener(v ->
-                ((MainPageActivity) requireActivity()).replaceFragmentInMainPage(
-                        new ListFragment("Group task list", new GroupTaskListFragment())));
+        groupTasksButton.setOnClickListener(v -> {
+            GroupTaskListFragment groupTaskListFragment = new GroupTaskListFragment();
+
+            // Pass listID to GroupTaskListFragment
+            Bundle bundle = new Bundle();
+            bundle.putString("listID", listID);
+            groupTaskListFragment.setArguments(bundle);
+
+            Log.e("HomeFragment", "Home listID: " + listID);  // add this line
+
+            ((MainPageActivity) requireActivity()).replaceFragmentInMainPage(
+                    new ListFragment("Group task list", groupTaskListFragment));
+        });
 
         // only allows to be built one time
         if (flag==0) {

@@ -151,7 +151,7 @@ app.get('/listInfo/:id', async (req, res) => {
   console.log(listId); // for debug
 
   try {
-    const list = await getItemById(listId, collectionName);
+    const list = await getEventById(listId, collectionName);
     console.log(list); // for debug
     res.status(200).json(list);
   } catch (error) {
