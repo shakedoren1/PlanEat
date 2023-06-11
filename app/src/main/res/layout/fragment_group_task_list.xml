@@ -24,12 +24,13 @@
 
     <EditText
         android:id="@+id/item_list"
-        android:textColor="@color/black"
-        android:text="Oops there's no list yet!"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
-        android:padding="10dp" />
+        android:minHeight="48dp"
+        android:padding="10dp"
+        android:text="Oops there's no list yet!"
+        android:textColor="@color/black" />
 
 </LinearLayout>

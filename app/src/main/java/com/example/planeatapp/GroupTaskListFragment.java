@@ -87,7 +87,6 @@ public class GroupTaskListFragment extends Fragment implements MainPageActivity.
             Log.e("Insert List ID", "TaskList List ID: " + listID);
         }
     }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -96,13 +95,8 @@ public class GroupTaskListFragment extends Fragment implements MainPageActivity.
 
         // Find the TextView
         itemListTextView = view.findViewById(R.id.item_list);
-        // Set the text as listID
-        if (itemListTextView != null) {
+        // Removed the line that sets the text to "listID"
 
-            itemListTextView.setText("listID");
-        } else {
-            Log.e("GroupTaskListFragment", "item_list TextView is not found");
-        }
         // Call updateIngredientListInfo here
         updateIngredientListInfo(listID);
 
