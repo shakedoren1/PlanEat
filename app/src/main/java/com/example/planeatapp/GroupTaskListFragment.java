@@ -123,7 +123,7 @@ public class GroupTaskListFragment extends Fragment implements MainPageActivity.
                         appendItemsToTextView("Appetizers", ingredientList.getAppetizers());
                         appendItemsToTextView("Mains", ingredientList.getMains());
                         appendItemsToTextView("Sides", ingredientList.getSides());
-                        appendItemsToTextView("Desserts", ingredientList.getDesserts());
+                        appendItemsToTextView("Dessert", ingredientList.getDessert());
                         appendItemsToTextView("Drinks", ingredientList.getDrinks());
                         appendItemsToTextView("Other", ingredientList.getOther());
                     }
@@ -145,7 +145,7 @@ public class GroupTaskListFragment extends Fragment implements MainPageActivity.
             itemListTextView.append(category + ":\n");
             // Iterate over the received potluck items and append them to the TextView
             for (PotluckItem item : items) {
-                itemListTextView.append(item.getAmount() + " " + item.getName() + "\n");
+                itemListTextView.append(item.getAmount() + " " + item.getItem() + "\n");
             }
             // Add a newline for spacing between categories
             itemListTextView.append("\n");

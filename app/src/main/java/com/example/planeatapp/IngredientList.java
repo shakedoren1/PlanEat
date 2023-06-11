@@ -12,8 +12,8 @@ public class IngredientList {
     @SerializedName("Sides")
     private List<PotluckItem> Sides;
 
-    @SerializedName("Desserts")
-    private List<PotluckItem> Desserts;
+    @SerializedName("Dessert")
+    private List<PotluckItem> Dessert;
 
     @SerializedName("Drinks")
     private List<PotluckItem> Drinks;
@@ -34,8 +34,8 @@ public class IngredientList {
         return Sides;
     }
 
-    public List<PotluckItem> getDesserts() {
-        return Desserts;
+    public List<PotluckItem> getDessert() {
+        return Dessert;
     }
 
     public List<PotluckItem> getDrinks() {
