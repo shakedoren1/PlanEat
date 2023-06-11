@@ -99,7 +99,7 @@ public class GroupTaskListFragment extends Fragment implements MainPageActivity.
         // Set the text as listID
         if (itemListTextView != null) {
 
-            itemListTextView.setText("");
+            itemListTextView.setText("listID");
         } else {
             Log.e("GroupTaskListFragment", "item_list TextView is not found");
         }
