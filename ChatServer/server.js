@@ -112,7 +112,7 @@ app.post('/prompt', async (req, res) => {
       messages: [
         {
           role: "user",  
-          content: `Hi, I'm planning a ${req.body.concept} in a potluck style for ${req.body.number} friends at My house. Can you create a list of things we need to bring please? Make sure the list contains Appetizers, Mains, Sides, Dessert, Drinks and Others food or non-food items needed, not ingredients or partial dishes. Have only the names of things, have appropriate amounts and be thorough please. No intro and no outro or tips. Thank you! Please return this as a JSON file where each item has an amount and an item name.`
+          content: `Hi, I'm planning a ${req.body.concept} in a potluck style for ${req.body.number} friends at My house. Can you create a list of things we need to bring please? Make sure the list contains Appetizers, Mains, Sides, Dessert, Drinks and Others food or non-food items needed, not ingredients or partial dishes. Have only the names of things, have appropriate amounts and be thorough please. No intro and no outro or tips. Thank you! Please return this as a JSON file where each item has an "amount" and an "item" name in that order and the headers are as stated vefore.`
         }
       ]
     }, {
