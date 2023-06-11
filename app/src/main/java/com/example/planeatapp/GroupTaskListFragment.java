@@ -98,7 +98,8 @@ public class GroupTaskListFragment extends Fragment implements MainPageActivity.
         itemListTextView = view.findViewById(R.id.item_list);
         // Set the text as listID
         if (itemListTextView != null) {
-            itemListTextView.setText(listID);
+
+            itemListTextView.setText("");
         } else {
             Log.e("GroupTaskListFragment", "item_list TextView is not found");
         }
@@ -119,15 +120,12 @@ public class GroupTaskListFragment extends Fragment implements MainPageActivity.
                 if (response.isSuccessful()) {
                     IngredientList ingredientList = response.body();
                     if (ingredientList != null && itemListTextView != null) {
-                        List<PotluckItem> potluckItems = ingredientList.getPotluckItems();
-                        if (potluckItems != null) {
-                            // Iterate over the received potluck items and append them to the TextView
-                            for (PotluckItem item : potluckItems) {
-                                itemListTextView.append(item.getAmount() + " " + item.getItem_name() + "\n");
-                            }
-                        } else {
-                            Log.e("Update Ingredient List Info", "PotluckItems is null");
-                        }
+                        appendItemsToTextView("Appetizers", ingredientList.getAppetizers());
+                        appendItemsToTextView("Mains", ingredientList.getMains());
+                        appendItemsToTextView("Sides", ingredientList.getSides());
+                        appendItemsToTextView("Desserts", ingredientList.getDesserts());
+                        appendItemsToTextView("Drinks", ingredientList.getDrinks());
+                        appendItemsToTextView("Other", ingredientList.getOther());
                     }
                 } else {
                     Log.e("Update Ingredient List Info", "Problem with retrieving ingredient list: " + response.message());
@@ -139,5 +137,20 @@ public class GroupTaskListFragment extends Fragment implements MainPageActivity.
                 Log.e("Update Ingredient List Info", "Failed to retrieve ingredient list" + t.getMessage());
             }
         });
+    }
+
+    private void appendItemsToTextView(String category, List<PotluckItem> items) {
+        if (items != null) {
+            // Append the category name to the TextView
+            itemListTextView.append(category + ":\n");
+            // Iterate over the received potluck items and append them to the TextView
+            for (PotluckItem item : items) {
+                itemListTextView.append(item.getAmount() + " " + item.getName() + "\n");
+            }
+            // Add a newline for spacing between categories
+            itemListTextView.append("\n");
+        } else {
+            Log.e("Update Ingredient List Info", category + " is null");
+        }
     }
 }
