@@ -11,21 +11,28 @@ const eventIDInput = document.getElementById('eventID');
 eventIDInput.value = eventID;
 
 // Make an AJAX request to the server to get the event info by the ID
-const xhr1 = new XMLHttpRequest();
-xhr1.open('GET', `http://localhost:8080/eventInfo/${eventID}`, true);
-xhr1.onload = function () {
-  if (xhr1.status === 200) {
-    const eventData = JSON.parse(xhr1.responseText);
-    // Update the event title
-    const eventTitle = document.getElementById('event-title');
-    eventTitle.innerHTML += `<h4>Will we see you at the ${eventData.title} on ${eventData.date} at ${eventData.place}?</h4>`;
-  } else {
-    // Update the event title to indicate error
-    const eventTitle = document.getElementById('event-title');
-    eventTitle.innerHTML += `<h4>Problem receiving the event data</h4>`;
-  }
-};
-xhr1.send();
+if (eventID != null) {
+  const xhr1 = new XMLHttpRequest();
+  xhr1.open('GET', `http://localhost:8080/eventInfo/${eventID}`, true);
+  xhr1.onload = function () {
+    if (xhr1.status === 200) {
+      const eventData = JSON.parse(xhr1.responseText);
+      // Update the event title
+      const eventTitle = document.getElementById('event-title');
+      eventTitle.innerHTML += `<h4>Will we see you at the ${eventData.title} on ${eventData.date} at ${eventData.place}?</h4>`;
+    } else {
+      // Update the event title to indicate error
+      const eventTitle = document.getElementById('event-title');
+      eventTitle.innerHTML += `<h4>Problem receiving the event data</h4>`;
+    }
+  };
+  xhr1.send();
+} else {
+  // Update the event title to indicate error
+  const eventTitle = document.getElementById('event-title');
+  eventTitle.innerHTML += `<h4>Event ID is null</h4>`;
+}
+
 
 // Select the form element
 const form = document.querySelector('.contact-form');

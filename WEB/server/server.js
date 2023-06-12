@@ -29,6 +29,15 @@ async function getEventById(eventId, colName) {
   return event;
 }
 
+// A function to retrieve all the confirmations of an event by ID from the database
+async function getConfirmationsByEventId(eventId, colName) {
+  let result = await client.connect();
+  db = result.db(databaseName);
+  collection = db.collection(colName);
+  const confirmations = await collection.find({ eventID: eventId }).toArray();
+  return confirmations;
+}
+
 // The call from the creatEvent to insert a new event into the database
 app.post('/newEvent', (req, res) => {
   console.log('Entered /newEvent'); // for debug
@@ -42,15 +51,15 @@ app.post('/newEvent', (req, res) => {
     concept: req.body.concept,
     number: req.body.number,
   };
-  console.log(newEvent); // for debug
+  // console.log(newEvent); // for debug
 
   (async () => {
     try {
       const response = await insertItem(newEvent, collectionName);
-      console.log(response); // for debug
+      // console.log(response); // for debug
       res.status(200).json(response); // Send the responses of the insertion
     } catch (error) {
-      console.error(error); // for debug
+      // console.error(error); // for debug
       res.status(500).json({ error: 'Failed to insert event' });
     }
   })();
@@ -63,14 +72,18 @@ app.get('/eventInfo/:id', async (req, res) => {
 
   collectionName = 'eventsInfo'
   const eventId = req.params.id;
-  console.log(eventId); // for debug
+  // console.log(eventId); // for debug
 
-  try {
-    const event = await getEventById(eventId, collectionName);
-    console.log(event); // for debug
-    res.status(200).json(event);
-  } catch (error) {
-    console.error(error); // for debug
+  if (eventId != null) {
+    try {
+      const event = await getEventById(eventId, collectionName);
+      // console.log(event); // for debug
+      res.status(200).json(event);
+    } catch (error) {
+      // console.error(error); // for debug
+      res.status(500).json({ error: 'Failed to retrieve event info' });
+    }
+  } else {
     res.status(500).json({ error: 'Failed to retrieve event info' });
   }
 });
@@ -85,21 +98,45 @@ app.post('/confirmation', (req, res) => {
     name: req.body.name,
     option: req.body.option,
   };
-  console.log(newconfirmation); // for debug
+  // console.log(newconfirmation); // for debug
 
   (async () => {
     try {
       const response = await insertItem(newconfirmation, collectionName);
-      console.log(response); // for debug
+      // console.log(response); // for debug
       res.status(200).json({ message: 'Confirmation received!' }); // Send the responses of the insertion
     } catch (error) {
-      console.error(error); // for debug
+      // console.error(error); // for debug
       res.status(500).json({ error: 'Failed to insert confirmation' });
     }
   })();
 
 });
 
+// The call to get confirmations for an event based on an id from the database
+app.get('/eventCon/:id', async (req, res) => {
+  console.log('Entered /eventCon'); // for debug
+
+  collectionName = 'confirmations'
+  const eventId = req.params.id;
+  console.log(eventId); // for debug
+
+  if (eventId != null) {
+    try {
+      const confirmations = await getConfirmationsByEventId(eventId, collectionName);
+      console.log(confirmations); // for debug
+      res.status(200).json(confirmations);
+      console.log("200"); // for debug
+    } catch (error) {
+      console.error(error); // for debug
+      res.status(500).json({ error: 'Failed to retrieve event info' });
+    }
+  } else {
+    res.status(500).json({ error: 'Failed to retrieve event info' });
+  }
+});
+
 app.listen(8080, () => {
   console.log('Listening on port 8080.');
 });
+

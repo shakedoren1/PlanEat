@@ -9,9 +9,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.HashMap;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -27,7 +29,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class HomeFragment extends Fragment {
 
     private static String eventID; // The ID of the event in the data base
-    private int flag = 0; // mark build
+    private boolean firstBuilt = true; // mark build
+    private int circles = 0; // number of confirmations drawn
     // Server variables:
     private Retrofit retrofit;
     private RetrofitInterface retrofitInterface;
@@ -92,9 +95,10 @@ public class HomeFragment extends Fragment {
                         new ListFragment("Group task list", new GroupTaskListFragment())));
 
         // only allows to be built one time
-        if (flag==0) {
+        if (firstBuilt) {
             updateEventInfo(eventID);
-            flag = 1;
+            updateFriendsList(eventID);
+            firstBuilt = false;
         }
 
         return view;
@@ -158,4 +162,60 @@ public class HomeFragment extends Fragment {
         }
     }
 
+    /**
+     * A GET request to server endpoint to get the friends list info from the database based on the event ID.
+     */
+    private void updateFriendsList(String id) {
+        Log.e("Update Friends List", "passed: " + id );
+
+        Call<List<Confirmation>> call = retrofitInterface.executeEventCon(id);
+
+        call.enqueue(new Callback<List<Confirmation>>() {
+            @Override
+            public void onResponse(Call<List<Confirmation>> call, Response<List<Confirmation>> response) {
+                if (response.isSuccessful()) {
+                    List<Confirmation> confirmations = response.body();
+                    if (confirmations != null) {
+                        for (Confirmation confirmation : confirmations) {
+                            String name = confirmation.getName();
+                            String option = confirmation.getOption();
+                            // Convert the first character of name to uppercase
+                            char firstLetter = Character.toUpperCase(name.charAt(0));
+                            // Call the drawCircle method with the uppercase first letter and option
+                            drawCircle(firstLetter, option);
+                        }
+                    } else {
+                        Log.e("Update Friends List", "No confirmations yet");
+                    }
+                } else {
+                    Log.e("Update Friends List", "Problem with retrieve event confirmations" + response.message());
+                }
+            }
+
+
+
+            @Override
+            public void onFailure(Call<List<Confirmation>> call, Throwable t) {
+                Log.e("Update Friends List", "Failed to retrieve event confirmations" + t.getMessage());
+            }
+        });
+    }
+
+    /**
+     * A method to draw the circle for each confirmation received
+     */
+    private void drawCircle(char letter, String option) {
+        if (circles == 0) {
+            drawFirstCircle(letter, option);
+        } else {
+            //implement
+        }
+    }
+
+    /**
+     * A method to draw the first circle
+     */
+    private void drawFirstCircle(char letter, String option) {
+        // implement
+    }
 }
