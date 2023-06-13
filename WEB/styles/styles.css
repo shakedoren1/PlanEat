@@ -1,36 +1,39 @@
+/* SWITCHED TO WORK IN REPLIT */
+
+
 body {
     text-align: center;
     background-color: #FAFAFA;
-}
-
-/* the size of the icons */
-.logo {
+  }
+  
+  /* the size of the icons */
+  .logo {
     width: 200px;
-}
-
-/* the confirm button */
-.main-btn {
+  }
+  
+  /* the confirm button */
+  .main-btn {
     background-color: #7A3585;
     border-radius: 12px;
     padding: 10px 20px;
     border: none;
     color: white;
     font-size: 16px;
-}
-
-/* the event ID - TEMP */
-.id-from-URL {
+  }
+  
+  /* the event ID - TEMP */
+  .id-from-URL {
     color: #d1d1d1;
-}
-
-/* the size of the icons */
-.icon {
+  }
+  
+  /* the size of the icons */
+  .icon {
     width: 40px;
-}
-
-/* the toast message */
-.toast-container {
+  }
+  
+  /* the toast message */
+  .toast-container {
     position: fixed;
     top: 100px;
     right: 100px;
-}
+  }

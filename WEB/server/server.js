@@ -1,3 +1,5 @@
+// SWITCHED TO WORK IN REPLIT
+
 const express = require('express');
 const app = express();
 const { MongoClient } = require('mongodb')
@@ -6,10 +8,12 @@ const url = 'mongodb+srv://PlanEatList:PlanEat123@planeat.selzkm5.mongodb.net/?r
 const databaseName = 'PlanEat';
 let collectionName = '';
 const client = new MongoClient(url);
+const cors = require('cors');
+app.use(cors()); // Enable CORS for all routes
 
 app.use(express.json());
-// Allowing to run the website on the server
-app.use(express.static(__dirname + '/..'));
+// Allowing to run the website on the server localy
+// app.use(express.static(__dirname + '/..'));
 
 // A function that gets an item and insert it to the collection
 async function insertItem(item, colName) {
@@ -98,7 +102,7 @@ app.post('/confirmation', (req, res) => {
     name: req.body.name,
     option: req.body.option,
   };
-  // console.log(newconfirmation); // for debug
+  console.log(newconfirmation); // for debug
 
   (async () => {
     try {
@@ -126,7 +130,6 @@ app.get('/eventCon/:id', async (req, res) => {
       const confirmations = await getConfirmationsByEventId(eventId, collectionName);
       console.log(confirmations); // for debug
       res.status(200).json(confirmations);
-      console.log("200"); // for debug
     } catch (error) {
       console.error(error); // for debug
       res.status(500).json({ error: 'Failed to retrieve event info' });
