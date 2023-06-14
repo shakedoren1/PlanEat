@@ -32,7 +32,7 @@ public class GroupTaskListFragment extends Fragment implements MainPageActivity.
 
     private Retrofit retrofit;
     private RetrofitInterface retrofitInterface;
-    private String BASE_URL = "http://10.0.2.2:8080"; // replace this with your server's URL
+    private String BASE_URL = "http://websiteserver.shakedoren1.repl.co"; // replace this with your server's URL
     private TextView itemListTextView;
 
     public GroupTaskListFragment() {
