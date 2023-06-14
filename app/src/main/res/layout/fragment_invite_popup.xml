@@ -67,7 +67,7 @@
         </LinearLayout>
 
     </FrameLayout>
-
+//add relative layout
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/whatsapp_export"
         android:layout_width="196dp"
@@ -85,5 +85,12 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintTop_toBottomOf="@id/participants_field"
         tools:ignore="TextContrastCheck" />
+
+    <View
+        android:id="@+id/whatsapp_icon"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_alignStart="@id/whatsapp_export"
+        android:background="@drawable/green_circle" />
 
 </LinearLayout>

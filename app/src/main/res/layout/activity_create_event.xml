@@ -176,13 +176,13 @@
         android:layout_below="@+id/create_event_table"
         android:layout_centerHorizontal="true"
         android:layout_gravity="center"
-        android:background="@color/purple_planEat"
         android:onClick="showInfoPopup"
         android:text="Let's Plan It!"
         android:textAlignment="center"
         android:textColor="@color/white"
         android:textSize="20sp"
         android:textStyle="bold"
-        app:cornerRadius="36sp"
-        app:layout_constraintHorizontal_bias="0.5" />
+        android:background="@drawable/dark_round_button"
+        android:padding="10dp"/>
+
 </RelativeLayout>
