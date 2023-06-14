@@ -2,6 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/fragment_home_id"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".HomeFragment">
@@ -153,7 +154,87 @@
         android:layout_alignStart="@id/guest_list_button"
         android:padding="20dp"
         android:textColor="@color/black"
-        android:text="Oh no! nobody replied yet" />
+        android:text="Oh no! nobody replied yet"
+         />
+
+    <View
+        android:id="@+id/friend_circle_back_0"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_alignStart="@id/guest_list_button"
+        android:layout_alignBottom="@id/guest_list_button"
+        android:layout_margin="17dp"
+        android:background="@drawable/green_circle"
+        android:elevation="10dp"
+        android:visibility="invisible" />
+
+    <View
+        android:id="@+id/friend_circle_front_0"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_alignStart="@id/friend_circle_back_0"
+        android:layout_alignTop="@id/friend_circle_back_0"
+        android:layout_alignEnd="@id/friend_circle_back_0"
+        android:layout_alignBottom="@id/friend_circle_back_0"
+        android:layout_centerInParent="true"
+        android:layout_margin="3dp"
+        android:background="@drawable/light_circle"
+        android:elevation="10dp"
+        android:visibility="invisible" />
+
+    <TextView
+        android:id="@+id/friend_circle_name_0"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:elevation="10dp"
+        android:layout_alignStart="@id/friend_circle_back_0"
+        android:layout_alignTop="@id/friend_circle_back_0"
+        android:layout_alignEnd="@id/friend_circle_back_0"
+        android:layout_alignBottom="@id/friend_circle_back_0"
+        android:textColor="@color/black"
+        android:text="T"
+        android:gravity="center"
+        android:visibility="invisible" />
+
+    <View
+        android:id="@+id/friend_circle_back_0.1"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_alignLeft="@id/friend_circle_back_0"
+        android:layout_alignBottom="@id/guest_list_button"
+        android:layout_marginStart="35dp"
+        android:layout_marginBottom="17dp"
+        android:background="@drawable/green_circle"
+        android:elevation="10dp"
+        android:visibility="invisible" />
+
+    <View
+        android:id="@+id/friend_circle_front_0.1"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_alignStart="@id/friend_circle_back_0.1"
+        android:layout_alignTop="@id/friend_circle_back_0.1"
+        android:layout_alignEnd="@id/friend_circle_back_0.1"
+        android:layout_alignBottom="@id/friend_circle_back_0.1"
+        android:layout_centerInParent="true"
+        android:layout_margin="3dp"
+        android:background="@drawable/light_circle"
+        android:elevation="10dp"
+        android:visibility="invisible" />
+
+    <TextView
+        android:id="@+id/friend_circle_name_0.1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:elevation="10dp"
+        android:layout_alignStart="@id/friend_circle_back_0.1"
+        android:layout_alignTop="@id/friend_circle_back_0.1"
+        android:layout_alignEnd="@id/friend_circle_back_0.1"
+        android:layout_alignBottom="@id/friend_circle_back_0.1"
+        android:textColor="@color/black"
+        android:text="R"
+        android:gravity="center"
+        android:visibility="invisible" />
 
     <ImageView
         android:id="@+id/arrow_icon_1"

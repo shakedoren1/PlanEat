@@ -1,6 +1,7 @@
 package com.example.planeatapp;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -21,4 +22,7 @@ public interface RetrofitInterface {
 
     @GET("listInfo/{id}")
     Call<IngredientList> executeListInfo(@Path("id") String id);
+
+    @GET("eventCon/{id}")
+    Call<List<Confirmation>> executeEventCon(@Path("id") String id);
 }

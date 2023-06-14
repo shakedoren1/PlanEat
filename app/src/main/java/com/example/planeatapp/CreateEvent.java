@@ -49,8 +49,10 @@ public class CreateEvent extends AppCompatActivity {
     // Server variables:
     private Retrofit retrofit;
     private RetrofitInterface retrofitInterface;
-    private String BASE_URL = "http://10.0.2.2:8080";
-
+    // for emulator
+//    private String BASE_URL = "http://10.0.2.2:8080";
+    // based on WIFI IP
+    private String BASE_URL = "https://websiteserver.shakedoren1.repl.co";
     private String eventID;
 
     private String listID;

@@ -1,15 +1,19 @@
+// SWITCHED TO WORK IN REPLIT
+
 const express = require('express');
 const app = express();
 const { MongoClient } = require('mongodb')
 const { ObjectId } = require('mongodb');
-const url = 'mongodb://127.0.0.1:27017';
+const url = 'mongodb+srv://PlanEatList:PlanEat123@planeat.selzkm5.mongodb.net/?retryWrites=true&w=majority';
 const databaseName = 'PlanEat';
 let collectionName = '';
 const client = new MongoClient(url);
+const cors = require('cors');
+app.use(cors()); // Enable CORS for all routes
 
 app.use(express.json());
-// Allowing to run the website on the server
-app.use(express.static(__dirname + '/..'));
+// Allowing to run the website on the server localy
+// app.use(express.static(__dirname + '/..'));
 
 // A function that gets an item and insert it to the collection
 async function insertItem(item, colName) {
@@ -29,6 +33,15 @@ async function getEventById(eventId, colName) {
   return event;
 }
 
+// A function to retrieve all the confirmations of an event by ID from the database
+async function getConfirmationsByEventId(eventId, colName) {
+  let result = await client.connect();
+  db = result.db(databaseName);
+  collection = db.collection(colName);
+  const confirmations = await collection.find({ eventID: eventId }).toArray();
+  return confirmations;
+}
+
 // The call from the creatEvent to insert a new event into the database
 app.post('/newEvent', (req, res) => {
   console.log('Entered /newEvent'); // for debug
@@ -42,15 +55,15 @@ app.post('/newEvent', (req, res) => {
     concept: req.body.concept,
     number: req.body.number,
   };
-  console.log(newEvent); // for debug
+  // console.log(newEvent); // for debug
 
   (async () => {
     try {
       const response = await insertItem(newEvent, collectionName);
-      console.log(response); // for debug
+      // console.log(response); // for debug
       res.status(200).json(response); // Send the responses of the insertion
     } catch (error) {
-      console.error(error); // for debug
+      // console.error(error); // for debug
       res.status(500).json({ error: 'Failed to insert event' });
     }
   })();
@@ -63,14 +76,18 @@ app.get('/eventInfo/:id', async (req, res) => {
 
   collectionName = 'eventsInfo'
   const eventId = req.params.id;
-  console.log(eventId); // for debug
+  // console.log(eventId); // for debug
 
-  try {
-    const event = await getEventById(eventId, collectionName);
-    console.log(event); // for debug
-    res.status(200).json(event);
-  } catch (error) {
-    console.error(error); // for debug
+  if (eventId != null) {
+    try {
+      const event = await getEventById(eventId, collectionName);
+      // console.log(event); // for debug
+      res.status(200).json(event);
+    } catch (error) {
+      // console.error(error); // for debug
+      res.status(500).json({ error: 'Failed to retrieve event info' });
+    }
+  } else {
     res.status(500).json({ error: 'Failed to retrieve event info' });
   }
 });
@@ -90,16 +107,39 @@ app.post('/confirmation', (req, res) => {
   (async () => {
     try {
       const response = await insertItem(newconfirmation, collectionName);
-      console.log(response); // for debug
+      // console.log(response); // for debug
       res.status(200).json({ message: 'Confirmation received!' }); // Send the responses of the insertion
     } catch (error) {
-      console.error(error); // for debug
+      // console.error(error); // for debug
       res.status(500).json({ error: 'Failed to insert confirmation' });
     }
   })();
 
 });
 
+// The call to get confirmations for an event based on an id from the database
+app.get('/eventCon/:id', async (req, res) => {
+  console.log('Entered /eventCon'); // for debug
+
+  collectionName = 'confirmations'
+  const eventId = req.params.id;
+  console.log(eventId); // for debug
+
+  if (eventId != null) {
+    try {
+      const confirmations = await getConfirmationsByEventId(eventId, collectionName);
+      console.log(confirmations); // for debug
+      res.status(200).json(confirmations);
+    } catch (error) {
+      console.error(error); // for debug
+      res.status(500).json({ error: 'Failed to retrieve event info' });
+    }
+  } else {
+    res.status(500).json({ error: 'Failed to retrieve event info' });
+  }
+});
+
 app.listen(8080, () => {
   console.log('Listening on port 8080.');
 });
+

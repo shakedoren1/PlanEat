@@ -2,15 +2,20 @@ package com.example.planeatapp;
 
 import android.os.Bundle;
 import androidx.appcompat.widget.AppCompatButton;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.HashMap;
+import java.util.List;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -27,11 +32,18 @@ public class HomeFragment extends Fragment {
     private static String eventID; // The ID of the event in the data base
     private static String listID; // The ID of the list in the data base
     private int flag = 0; // mark build
+    private boolean firstBuilt = true; // mark build
+    private RelativeLayout relativeLayout; // the RelativeLayout in fragment_home
+    private int circles = 0; // number of confirmations drawn
+    private int friend_circle_back_id; // the id of the last circle drawn
+
     // Server variables:
     private Retrofit retrofit;
     private RetrofitInterface retrofitInterface;
-    private String BASE_URL = "http://10.0.2.2:8080";
-
+    // for emulator
+//    private String BASE_URL = "http://10.0.2.2:8080";
+    // based on WIFI IP
+    private String BASE_URL = "http://websiteserver.shakedoren1.repl.co";
     public HomeFragment() {
         // Required empty public constructor
     }
@@ -105,9 +117,10 @@ public class HomeFragment extends Fragment {
         });
 
         // only allows to be built one time
-        if (flag==0) {
+        if (firstBuilt) {
             updateEventInfo(eventID);
-            flag = 1;
+            updateFriendsList(eventID);
+            firstBuilt = false;
         }
 
         return view;
@@ -171,4 +184,194 @@ public class HomeFragment extends Fragment {
         }
     }
 
+    /**
+     * A GET request to server endpoint to get the friends list info from the database based on the event ID.
+     */
+    private void updateFriendsList(String id) {
+        Log.e("Update Friends List", "passed: " + id );
+
+        Call<List<Confirmation>> call = retrofitInterface.executeEventCon(id);
+
+        call.enqueue(new Callback<List<Confirmation>>() {
+            @Override
+            public void onResponse(Call<List<Confirmation>> call, Response<List<Confirmation>> response) {
+                if (response.isSuccessful()) {
+                    List<Confirmation> confirmations = response.body();
+                    if (confirmations != null) {
+                        for (Confirmation confirmation : confirmations) {
+                            if (circles < 7) { // The amount of circles to fit in the screen
+                                String name = confirmation.getName();
+                                String option = confirmation.getOption();
+                                // Convert the first character of name to uppercase
+                                char firstLetter = Character.toUpperCase(name.charAt(0));
+                                // Call the drawCircle method with the uppercase first letter and option
+                                drawCircle(firstLetter, option);
+                            } else {
+                                // Count the circles and update the answered_text
+                                circles++;
+                                TextView answeredText = getView().findViewById(R.id.answered_text);
+                                answeredText.setText(String.valueOf(circles));
+                            }
+
+                        }
+                    } else {
+                        Log.e("Update Friends List", "No confirmations yet");
+                    }
+                } else {
+                    Log.e("Update Friends List", "Problem with retrieve event confirmations" + response.message());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Confirmation>> call, Throwable t) {
+                Log.e("Update Friends List", "Failed to retrieve event confirmations" + t.getMessage());
+            }
+        });
+    }
+
+    /**
+     * A method to draw the circle for each confirmation received
+     */
+    private void drawCircle(char letter, String option) {
+        drawBackCircle(option);
+        drawFrontCircle();
+        drawLetter(letter);
+    }
+
+    /**
+     * A method to draw the back circle
+     */
+    private void drawBackCircle(String option) {
+        // Retrieves the RelativeLayout from fragment_home
+        relativeLayout = getView().findViewById(R.id.fragment_home_id);
+
+        // Find the confirmed_bottom_text TextView and set its visibility to "invisible"
+        TextView confirmedBottomText = getView().findViewById(R.id.confirmed_bottom_text);
+        confirmedBottomText.setVisibility(View.INVISIBLE);
+
+        // Creates a new instance of the View class
+        View circleView = new View(getContext());
+
+        // Set the ID of the circleView
+        int generatedId = View.generateViewId();
+        circleView.setId(generatedId);
+        if (circles == 0) { // first circle
+            friend_circle_back_id = generatedId;
+        }
+
+        // Sets the desired attributes for the view
+        int circleSizeInDp = 25;
+        int circleMarginInDp = 17;
+        int circleMarginBTWInDp = 35;
+        int circleElevationInDp = 10;
+
+        // Converts dp to pixels
+        float scale = getResources().getDisplayMetrics().density;
+        int circleSize = (int) (circleSizeInDp * scale + 0.5f);
+        int circleMargin = (int) (circleMarginInDp * scale + 0.5f);
+        int circleMarginBTW = (int) (circleMarginBTWInDp * scale + 0.5f);
+        int circleElevation = (int) (circleElevationInDp * scale + 0.5f);
+
+        // updates the view
+        RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(circleSize, circleSize);
+        if (circles == 0) { // first circle
+            layoutParams.addRule(RelativeLayout.ALIGN_START, R.id.guest_list_button);
+            layoutParams.setMargins(circleMargin, circleMargin, circleMargin, circleMargin);
+        } else {
+            layoutParams.addRule(RelativeLayout.ALIGN_LEFT, friend_circle_back_id);
+            layoutParams.setMargins(circleMarginBTW, circleMargin, circleMargin, circleMargin);
+        }
+        layoutParams.addRule(RelativeLayout.ALIGN_BOTTOM, R.id.guest_list_button);
+        circleView.setLayoutParams(layoutParams);
+        circleView.setElevation(circleElevation);
+
+        // Set background based on the option parameter
+        if (option.equals("Coming")) {
+            circleView.setBackgroundResource(R.drawable.green_circle);
+        } else {
+            circleView.setBackgroundResource(R.drawable.red_circle);
+        }
+
+        // Adds the view to the RelativeLayout
+        relativeLayout.addView(circleView);
+
+        // Count the circles, update the answered_text and friend_circle_back_id
+        circles++;
+        TextView answeredText = getView().findViewById(R.id.answered_text);
+        answeredText.setText(String.valueOf(circles));
+        friend_circle_back_id = generatedId;
+    }
+
+    /**
+     * A method to draw the front circle
+     */
+    private void drawFrontCircle() {
+        // Creates a new instance of the View class
+        View circleView = new View(getContext());
+
+        // Set the ID of the circleView
+        int generatedId = View.generateViewId();
+        circleView.setId(generatedId);
+
+        // Sets the desired attributes for the view
+        int circleSizeInDp = 20;
+        int circleMarginInDp = 3;
+        int circleElevationInDp = 10;
+
+        // Converts dp to pixels
+        float scale = getResources().getDisplayMetrics().density;
+        int circleSize = (int) (circleSizeInDp * scale + 0.5f);
+        int circleMargin = (int) (circleMarginInDp * scale + 0.5f);
+        int circleElevation = (int) (circleElevationInDp * scale + 0.5f);
+
+        // updates the view
+        RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(circleSize, circleSize);
+        layoutParams.addRule(RelativeLayout.ALIGN_START, friend_circle_back_id);
+        layoutParams.addRule(RelativeLayout.ALIGN_TOP, friend_circle_back_id);
+        layoutParams.addRule(RelativeLayout.ALIGN_END, friend_circle_back_id);
+        layoutParams.addRule(RelativeLayout.ALIGN_BOTTOM, friend_circle_back_id);
+        layoutParams.addRule(RelativeLayout.CENTER_IN_PARENT, RelativeLayout.TRUE);
+        layoutParams.setMargins(circleMargin, circleMargin, circleMargin, circleMargin);
+        circleView.setLayoutParams(layoutParams);
+        circleView.setElevation(circleElevation);
+        circleView.setBackgroundResource(R.drawable.light_circle);
+
+        // Adds the view to the RelativeLayout
+        relativeLayout.addView(circleView);
+    }
+
+    /**
+     * A method to draw the letter inside the circle
+     */
+    private void drawLetter(char letter) {
+        // Creates a new instance of the View class
+        TextView letterView = new TextView(getContext());
+
+        // Set the ID of the letterView
+        int generatedId = TextView.generateViewId();
+        letterView.setId(generatedId);
+
+        // Sets the desired attributes for the view
+        int ElevationInDp = 10;
+
+        // Converts dp to pixels
+        float scale = getResources().getDisplayMetrics().density;
+        int Elevation = (int) (ElevationInDp * scale + 0.5f);
+
+        // updates the view
+        RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        layoutParams.addRule(RelativeLayout.ALIGN_START, friend_circle_back_id);
+        layoutParams.addRule(RelativeLayout.ALIGN_TOP, friend_circle_back_id);
+        layoutParams.addRule(RelativeLayout.ALIGN_END, friend_circle_back_id);
+        layoutParams.addRule(RelativeLayout.ALIGN_BOTTOM, friend_circle_back_id);
+        int textColor = ContextCompat.getColor(getContext(), R.color.black);
+        letterView.setTextColor(textColor);
+        letterView.setText(String.valueOf(letter));
+        letterView.setGravity(Gravity.CENTER);
+        letterView.setLayoutParams(layoutParams);
+        letterView.setElevation(Elevation);
+
+        // Adds the view to the RelativeLayout
+        relativeLayout.addView(letterView);
+    }
 }
