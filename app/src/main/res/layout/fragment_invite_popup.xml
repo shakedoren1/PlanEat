@@ -79,11 +79,11 @@
             android:layout_width="130dp"
             android:layout_height="55dp"
             android:layout_gravity="center_horizontal"
-            android:background="@color/background_planEat"
             app:backgroundTint="@color/purple_planEat"
             app:cornerRadius="16dp"
             app:layout_constraintHorizontal_bias="0.5"
-            tools:ignore="TextContrastCheck,SpeakableTextPresentCheck" />
+            tools:ignore="TextContrastCheck,SpeakableTextPresentCheck"
+            android:background="@drawable/dark_round_button"/>
 
         <TextView
             android:layout_width="wrap_content"

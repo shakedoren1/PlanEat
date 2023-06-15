@@ -321,7 +321,7 @@
         android:layout_alignStart="@id/group_tasks_button"
         android:padding="20dp"
         android:textColor="@color/black"
-        android:text="Nothing was chosen yet" />
+        android:text="Click to see the full list! 🍴🥤" />
 
     <ImageView
         android:id="@+id/arrow_icon_2"

@@ -81,22 +81,8 @@ public class InvitePopup extends DialogFragment {
                 sendIntent.setType("text/plain");
                 sendIntent.setPackage("com.whatsapp");
                 PackageManager packageManager = getContext().getPackageManager();
-                //move to HomeFragment after WhatsApp
+                //Start whatsapp
                 startActivity(sendIntent);
-            }
-
-            private boolean isAppInstalled() {
-                PackageManager packageManager = getContext().getPackageManager();
-                boolean is_installed;
-                try {
-                    packageManager.getPackageInfo("com.whatsapp", PackageManager.GET_ACTIVITIES);
-                    is_installed = true;
-                } catch (PackageManager.NameNotFoundException e) {
-                    is_installed = false;
-                    e.printStackTrace();
-                    Log.e(TAG, e.getMessage());
-                }
-                return is_installed;
             }
         });
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
