@@ -73,7 +73,8 @@
             android:layout_alignStart="@id/calendar_icon"
             android:layout_marginTop="10dp"
             android:src="@drawable/ic_location"
-            app:tint="@color/white" />
+            app:tint="@color/white"
+            android:contentDescription="TODO" />
 
         <TextView
             android:id="@+id/location_text"
