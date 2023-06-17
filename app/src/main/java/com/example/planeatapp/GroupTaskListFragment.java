@@ -2,12 +2,16 @@ package com.example.planeatapp;
 
 import android.content.Context;
 import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
+import android.text.style.ImageSpan;
 import android.text.style.StyleSpan;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -40,6 +44,8 @@ public class GroupTaskListFragment extends Fragment implements MainPageActivity.
     private RetrofitInterface retrofitInterface;
     private String BASE_URL = "http://websiteserver.shakedoren1.repl.co"; // replace this with your server's URL
     private TextView itemListTextView;
+    private Drawable checkboxIcon;
+
 
     public GroupTaskListFragment() {
         // Required empty public constructor
@@ -104,6 +110,11 @@ public class GroupTaskListFragment extends Fragment implements MainPageActivity.
         itemListTextView = view.findViewById(R.id.item_list);
         // Removed the line that sets the text to "listID"
 
+        // Initialize the icon drawable here, where the context is available
+        checkboxIcon = ContextCompat.getDrawable(getContext(), R.drawable.check_box);
+        if (checkboxIcon != null) {
+            checkboxIcon.setBounds(0, 0, checkboxIcon.getIntrinsicWidth(), checkboxIcon.getIntrinsicHeight());
+        }
         // Call updateIngredientListInfo here
         updateIngredientListInfo(listID);
 
@@ -151,12 +162,18 @@ public class GroupTaskListFragment extends Fragment implements MainPageActivity.
         if (items != null) {
             // Create a new SpannableStringBuilder, apply the bold style to it, and append it to the TextView
             SpannableStringBuilder categorySB = new SpannableStringBuilder(category + ":\n");
-            categorySB.setSpan(new StyleSpan(Typeface.BOLD), 0, categorySB.length(), Spannable.SPAN_INCLUSIVE_INCLUSIVE);
+//            categorySB.setSpan(new StyleSpan(Typeface.BOLD), 0, categorySB.length(), Spannable.SPAN_INCLUSIVE_INCLUSIVE);
             itemListTextView.append(categorySB);
 
             // Iterate over the received potluck items and append them to the TextView
             for (PotluckItem item : items) {
-                itemListTextView.append(item.getAmount() + " " + item.getItem() + "\n");
+                // Create a SpannableStringBuilder for the item
+                SpannableStringBuilder itemSB = new SpannableStringBuilder(" " + item.getAmount() + " " + item.getItem() + "\n");
+                // Set the icon to the left of the text (at the start of the Spannable)
+                if (checkboxIcon != null) {
+                    itemSB.setSpan(new ImageSpan(checkboxIcon, ImageSpan.ALIGN_BASELINE), 0, 1, Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
+                }
+                itemListTextView.append(itemSB);
             }
 
             // Add a newline for spacing between categories

@@ -154,7 +154,7 @@ public class CreateEvent extends AppCompatActivity {
                                                 startActivity(intent);
                                             }, error -> {
                                         // This code will run if there was an error
-                                        Toast.makeText(CreateEvent.this, "Error: " + error.getMessage(), Toast.LENGTH_LONG).show();
+//                                        Toast.makeText(CreateEvent.this, "Error1: " + error.getMessage(), Toast.LENGTH_LONG).show();
                                     })  {
                                         @Override
                                         protected Map<String, String> getParams() {
