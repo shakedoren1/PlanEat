@@ -116,7 +116,7 @@ public class HomeFragment extends Fragment {
             Log.e("HomeFragment", "Home listID: " + listID);  // add this line
 
             ((MainPageActivity) requireActivity()).replaceFragmentInMainPage(
-                    new ListFragment("Group task list", groupTaskListFragment));
+                    new ListFragment("Don't forget these", groupTaskListFragment));
         });
 
         // only allows to be built one time
