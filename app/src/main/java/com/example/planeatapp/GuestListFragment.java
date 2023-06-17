@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -33,6 +34,7 @@ public class GuestListFragment extends Fragment {
     private RelativeLayout relativeLayout; // the RelativeLayout in fragment_home
     private boolean firstFriend = true; // mark first friend
     private int last_view_id; // the id of the last friend drawn
+    private ProgressBar loadingProgress; // the progress bar
 
     // Server variables:
     private Retrofit retrofit;
@@ -80,6 +82,7 @@ public class GuestListFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_guest_list, container, false);
+        loadingProgress = view.findViewById(R.id.loading_progress);
 
         // Updating from the data base the friends confirmation
         updateFriends(eventID);
@@ -112,6 +115,8 @@ public class GuestListFragment extends Fragment {
                     } else {
                         Log.e("Update Friends confirmations", "No confirmations yet");
                     }
+                    // dismissing the loading sign
+                    loadingProgress.setVisibility(View.GONE);
                 } else {
                     Log.e("Update Friends confirmations", "Problem with retrieve event confirmations" + response.message());
                 }

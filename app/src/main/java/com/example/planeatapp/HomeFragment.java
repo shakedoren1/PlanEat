@@ -155,6 +155,7 @@ public class HomeFragment extends Fragment {
                         String number = eventInfo.getNumber();
                         updateText("number", number);
                     }
+                    // dismissing the loading sign
                     defaultView.setVisibility(View.VISIBLE);
                     loadingProgress.setVisibility(View.GONE);
                 } else {
@@ -248,7 +249,7 @@ public class HomeFragment extends Fragment {
      */
     private void drawBackCircle(String option) {
         // Retrieves the RelativeLayout from fragment_home
-        relativeLayout = getView().findViewById(R.id.fragment_home_id);
+        relativeLayout = getView().findViewById(R.id.default_home);
 
         // Find the confirmed_bottom_text TextView and set its visibility to "invisible"
         TextView confirmedBottomText = getView().findViewById(R.id.confirmed_bottom_text);
