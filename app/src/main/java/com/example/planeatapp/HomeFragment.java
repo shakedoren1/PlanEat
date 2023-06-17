@@ -10,6 +10,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -31,19 +32,18 @@ public class HomeFragment extends Fragment {
 
     private static String eventID; // The ID of the event in the data base
     private static String listID; // The ID of the list in the data base
-    private int flag = 0; // mark build
     private boolean firstBuilt = true; // mark build
     private RelativeLayout relativeLayout; // the RelativeLayout in fragment_home
     private int circles = 0; // number of confirmations drawn
     private int friend_circle_back_id; // the id of the last circle drawn
+    private ProgressBar loadingProgress; // the progress bar
+    private View defaultView; // the home default view
 
     // Server variables:
     private Retrofit retrofit;
     private RetrofitInterface retrofitInterface;
-    // for emulator
-//    private String BASE_URL = "http://10.0.2.2:8080";
-    // based on WIFI IP
     private String BASE_URL = "http://websiteserver.shakedoren1.repl.co";
+
     public HomeFragment() {
         // Required empty public constructor
     }
@@ -91,6 +91,9 @@ public class HomeFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_home, container, false);
+        defaultView = view.findViewById(R.id.default_home);
+        loadingProgress = view.findViewById(R.id.loading_progress);
+
         // attaching the buttons
         AppCompatButton guestListButton = view.findViewById(R.id.guest_list_button);
         AppCompatButton groupTasksButton = view.findViewById(R.id.group_tasks_button);
@@ -99,7 +102,7 @@ public class HomeFragment extends Fragment {
         String confirmedTitle = guestListButton.getText().toString();
         guestListButton.setOnClickListener(v ->
                 ((MainPageActivity) requireActivity()).replaceFragmentInMainPage(
-                        new ListFragment("Friends list", new GuestListFragment())));
+                        new ListFragment("Friends list", new GuestListFragment(eventID))));
 
         // sets the groupTasksButton
         groupTasksButton.setOnClickListener(v -> {
@@ -152,6 +155,9 @@ public class HomeFragment extends Fragment {
                         String number = eventInfo.getNumber();
                         updateText("number", number);
                     }
+                    // dismissing the loading sign
+                    defaultView.setVisibility(View.VISIBLE);
+                    loadingProgress.setVisibility(View.GONE);
                 } else {
                     Log.e("Update Event Info", "Problem with retrieve event info" + response.message());
                 }
@@ -243,7 +249,7 @@ public class HomeFragment extends Fragment {
      */
     private void drawBackCircle(String option) {
         // Retrieves the RelativeLayout from fragment_home
-        relativeLayout = getView().findViewById(R.id.fragment_home_id);
+        relativeLayout = getView().findViewById(R.id.default_home);
 
         // Find the confirmed_bottom_text TextView and set its visibility to "invisible"
         TextView confirmedBottomText = getView().findViewById(R.id.confirmed_bottom_text);
@@ -299,6 +305,8 @@ public class HomeFragment extends Fragment {
         circles++;
         TextView answeredText = getView().findViewById(R.id.answered_text);
         answeredText.setText(String.valueOf(circles));
+
+        // Updates last_friend_id to the current id
         friend_circle_back_id = generatedId;
     }
 

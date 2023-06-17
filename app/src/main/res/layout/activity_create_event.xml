@@ -189,6 +189,14 @@
             android:background="@drawable/dark_round_button"
             android:padding="10dp"/>
 
+        <ProgressBar
+            android:id="@+id/loading_progress"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="130dp"
+            android:layout_gravity="center_vertical"
+            android:visibility="gone" />
+
     </RelativeLayout>
 
 </ScrollView>

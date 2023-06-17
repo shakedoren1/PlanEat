@@ -3,6 +3,7 @@ package com.example.planeatapp;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -16,6 +17,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -36,33 +38,23 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import java.util.concurrent.TimeUnit;
 
 public class CreateEvent extends AppCompatActivity {
-
-    private EditText descriptionField;
-    private EditText whenField;
-    private EditText timeField;
-    private EditText placeField;
-    private EditText conceptField;
-    private EditText participantsField;
+    private EditText descriptionField, whenField, timeField, placeField, conceptField, participantsField;
     private Calendar calendar;
     private DatePickerDialog datePickerDialog;
     private TimePickerDialog timePickerDialog;
+    private ProgressBar loadingProgress;
+
     // Server variables:
     private Retrofit retrofit;
     private RetrofitInterface retrofitInterface;
-    // for emulator
-//    private String BASE_URL = "http://10.0.2.2:8080";
-    // based on WIFI IP
-    private String BASE_URL = "https://websiteserver.shakedoren1.repl.co";
-    private String eventID;
-
-    private String listID;
+    private String eventID, listID, BASE_URL = "https://websiteserver.shakedoren1.repl.co";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_event);
-
         RequestQueue requestQueue = Volley.newRequestQueue(this);
+        loadingProgress = findViewById(R.id.loading_progress);
 
         OkHttpClient okHttpClient = new OkHttpClient.Builder()
                 .connectTimeout(2, TimeUnit.MINUTES) // connect timeout
@@ -119,6 +111,9 @@ public class CreateEvent extends AppCompatActivity {
         createEventButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // showing the progress bar
+                loadingProgress.setVisibility(View.VISIBLE);
+
                 String description = descriptionField.getText().toString();
                 String when = whenField.getText().toString();
                 String time = timeField.getText().toString();
@@ -142,6 +137,9 @@ public class CreateEvent extends AppCompatActivity {
                                 public void onListInserted(String listId) {
                                     // If list is successfully created, show the popup
                                     InvitePopup invitePopup = InvitePopup.newInstance(description, when, time, place, concept, eventId, listId);
+                                    // dismissing the progress bar
+                                    loadingProgress.setVisibility(View.GONE);
+                                    //Showing the popup
                                     invitePopup.show(getSupportFragmentManager(), "invite_popup");
                                     // Create the StringRequest
                                     StringRequest stringRequest = new StringRequest(Request.Method.POST, BASE_URL,
@@ -300,8 +298,6 @@ public class CreateEvent extends AppCompatActivity {
             }
         });
     }
-
-
 
     interface InsertEventCallback {
         void onEventInserted(String eventId);
