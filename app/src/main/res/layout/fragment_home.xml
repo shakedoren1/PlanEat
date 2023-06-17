@@ -95,10 +95,11 @@
         android:layout_below="@+id/guest_list_text"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="25dp"
-        android:gravity="start"
         android:background="@drawable/round_button"
+        android:gravity="start"
+        android:padding="10dp"
         android:textColor="@color/black"
-        android:padding="10dp"/>
+        tools:ignore="SpeakableTextPresentCheck" />
 
     <TextView
         android:id="@+id/answered_text"
@@ -262,10 +263,11 @@
         android:layout_below="@+id/group_tasks_text"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="25dp"
-        android:gravity="start"
         android:background="@drawable/round_button"
+        android:gravity="start"
+        android:padding="10dp"
         android:textColor="@color/black"
-        android:padding="10dp"/>
+        tools:ignore="SpeakableTextPresentCheck" />
 
     <TextView
         android:id="@+id/choose_text"
