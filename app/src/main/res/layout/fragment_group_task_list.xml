@@ -22,7 +22,7 @@
         android:textSize="20sp"
         android:textStyle="bold"/>
 
-    <EditText
+    <TextView
         android:id="@+id/item_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -30,7 +30,8 @@
         android:layout_marginEnd="20dp"
         android:minHeight="48dp"
         android:padding="10dp"
-        android:text="Oops there's no list yet!"
+        android:text="Please wait for the list to load 🔄"
+        android:textSize="16sp"
         android:textColor="@color/black" />
 
 </LinearLayout>

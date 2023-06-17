@@ -68,22 +68,47 @@
 
     </FrameLayout>
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/whatsapp_export"
-        android:layout_width="196dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:background="@color/background_planEat"
-        android:drawableRight="@mipmap/whatsapp_icon"
-        android:gravity="center"
-        android:text="Share via "
-        android:textColor="@color/white"
-        android:textSize="12sp"
-        android:textStyle="bold"
-        app:backgroundTint="@color/purple_planEat"
-        app:cornerRadius="16dp"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintTop_toBottomOf="@id/participants_field"
-        tools:ignore="TextContrastCheck" />
+    <RelativeLayout
+        android:id="@+id/button_layout"
+        android:layout_width="match_parent"
+        android:layout_height="87sp"
+        android:gravity="center">
 
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/whatsapp_export"
+            android:layout_width="130dp"
+            android:layout_height="55dp"
+            android:layout_gravity="center_horizontal"
+            app:backgroundTint="@color/purple_planEat"
+            app:cornerRadius="16dp"
+            app:layout_constraintHorizontal_bias="0.5"
+            tools:ignore="TextContrastCheck,SpeakableTextPresentCheck"
+            android:background="@drawable/dark_round_button"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@id/whatsapp_export"
+            android:layout_alignBottom="@id/whatsapp_export"
+            android:elevation="10dp"
+            android:gravity="center"
+            android:layout_toLeftOf="@+id/whatsapp_icon"
+            android:text="Share via "
+            android:textColor="@color/white"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            android:layout_marginStart="10dp" />
+
+        <View
+            android:id="@+id/whatsapp_icon"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_alignTop="@+id/whatsapp_export"
+            android:layout_alignEnd="@id/whatsapp_export"
+            android:layout_alignBottom="@+id/whatsapp_export"
+            android:layout_margin="10dp"
+            android:background="@drawable/whatsapp_icon"
+            android:elevation="10dp"
+            android:gravity="center" />
+    </RelativeLayout>
 </LinearLayout>

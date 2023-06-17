@@ -68,7 +68,6 @@ public class InvitePopup extends DialogFragment {
         String message = "You're invited to join " + description + " and celebrate! " +
                 "The theme is " + concept + " on " + when + " at " + time + "! " + "Hope to see you at "
                 + place + "! " + "To RSVP, click below! \n https://planeat-website.shakedoren1.repl.co/?eventID=" + eventID;
-        String num = "972544949953";
         TextView messageTextView = view.findViewById(R.id.message_textview);
         messageTextView.setText(message);
         AppCompatButton sendButton = view.findViewById(R.id.whatsapp_export);
@@ -82,22 +81,8 @@ public class InvitePopup extends DialogFragment {
                 sendIntent.setType("text/plain");
                 sendIntent.setPackage("com.whatsapp");
                 PackageManager packageManager = getContext().getPackageManager();
-                //move to HomeFragment after WhatsApp
+                //Start whatsapp
                 startActivity(sendIntent);
-            }
-
-            private boolean isAppInstalled() {
-                PackageManager packageManager = getContext().getPackageManager();
-                boolean is_installed;
-                try {
-                    packageManager.getPackageInfo("com.whatsapp", PackageManager.GET_ACTIVITIES);
-                    is_installed = true;
-                } catch (PackageManager.NameNotFoundException e) {
-                    is_installed = false;
-                    e.printStackTrace();
-                    Log.e(TAG, e.getMessage());
-                }
-                return is_installed;
             }
         });
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
