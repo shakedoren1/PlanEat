@@ -7,335 +7,352 @@
     android:layout_height="match_parent"
     tools:context=".HomeFragment">
 
-    <TextView
-        android:id="@+id/event_title"
+    <RelativeLayout
+        android:id="@+id/default_home"
         android:layout_width="match_parent"
-        android:layout_height="130dp"
-        android:paddingStart="40dp"
-        android:paddingTop="15dp"
-        android:background="@color/purple_planEat"
-        android:textColor="@color/white"
-        android:text="Event Title"
-        android:textSize="30sp"
-        android:textStyle="bold"/>
+        android:layout_height="match_parent"
+        android:visibility="gone" >
 
-    <ImageView
-        android:id="@+id/calendar_icon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@id/event_title"
-        android:layout_marginTop="60dp"
-        android:layout_marginStart="40dp"
-        android:src="@drawable/ic_calendar"
-        app:tint="@color/white" />
+        <TextView
+            android:id="@+id/event_title"
+            android:layout_width="match_parent"
+            android:layout_height="130dp"
+            android:paddingStart="40dp"
+            android:paddingTop="15dp"
+            android:background="@color/purple_planEat"
+            android:textColor="@color/white"
+            android:text="Event title"
+            android:textSize="30sp"
+            android:textStyle="bold"/>
 
-    <TextView
-        android:id="@+id/date_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@color/white"
-        android:layout_alignBottom="@id/calendar_icon"
-        android:layout_toRightOf="@id/calendar_icon"
-        android:layout_marginStart="5dp"
-        android:text="Date" />
+        <ImageView
+            android:id="@+id/calendar_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@id/event_title"
+            android:layout_marginTop="60dp"
+            android:layout_marginStart="40dp"
+            android:src="@drawable/ic_calendar"
+            app:tint="@color/white" />
 
-    <ImageView
-        android:id="@+id/time_icon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@id/calendar_icon"
-        android:layout_toRightOf="@id/calendar_icon"
-        android:layout_marginStart="150dp"
-        android:src="@drawable/ic_time"
-        app:tint="@color/white" />
+        <TextView
+            android:id="@+id/date_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:layout_alignBottom="@id/calendar_icon"
+            android:layout_toRightOf="@id/calendar_icon"
+            android:layout_marginStart="5dp"
+            android:text="Date" />
 
-    <TextView
-        android:id="@+id/time_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@color/white"
-        android:layout_alignBottom="@id/calendar_icon"
-        android:layout_toRightOf="@id/time_icon"
-        android:layout_marginStart="5dp"
-        android:text="Time" />
+        <ImageView
+            android:id="@+id/time_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/calendar_icon"
+            android:layout_toRightOf="@id/calendar_icon"
+            android:layout_marginStart="150dp"
+            android:src="@drawable/ic_time"
+            app:tint="@color/white" />
 
-    <ImageView
-        android:id="@+id/location_icon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/calendar_icon"
-        android:layout_alignStart="@id/calendar_icon"
-        android:layout_marginTop="10dp"
-        android:src="@drawable/ic_location"
-        app:tint="@color/white" />
+        <TextView
+            android:id="@+id/time_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:layout_alignBottom="@id/calendar_icon"
+            android:layout_toRightOf="@id/time_icon"
+            android:layout_marginStart="5dp"
+            android:text="Time" />
 
-    <TextView
-        android:id="@+id/location_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@color/white"
-        android:layout_alignBottom="@id/location_icon"
-        android:layout_toRightOf="@id/location_icon"
-        android:layout_marginStart="5dp"
-        android:text="Location" />
+        <ImageView
+            android:id="@+id/location_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/calendar_icon"
+            android:layout_alignStart="@id/calendar_icon"
+            android:layout_marginTop="10dp"
+            android:src="@drawable/ic_location"
+            app:tint="@color/white" />
 
-    <TextView
-        android:id="@+id/guest_list_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/event_title"
-        android:layout_marginStart="35dp"
-        android:layout_marginTop="25dp"
-        android:text="Friends list" />
+        <TextView
+            android:id="@+id/location_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:layout_alignBottom="@id/location_icon"
+            android:layout_toRightOf="@id/location_icon"
+            android:layout_marginStart="5dp"
+            android:text="Location" />
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/guest_list_button"
-        android:layout_width="300dp"
-        android:layout_height="80dp"
-        android:layout_below="@+id/guest_list_text"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="25dp"
-        android:gravity="start"
-        android:background="@drawable/round_button"
-        android:textColor="@color/black"
-        android:padding="10dp"
-        android:contentDescription="The amount of people confirmed"/>
+        <TextView
+            android:id="@+id/guest_list_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/event_title"
+            android:layout_marginStart="35dp"
+            android:layout_marginTop="25dp"
+            android:text="Friends list" />
 
-    <TextView
-        android:id="@+id/answered_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:elevation="10dp"
-        android:layout_alignBaseline="@id/guest_list_button"
-        android:layout_alignStart="@id/guest_list_button"
-        android:paddingStart="10dp"
-        android:textColor="@color/black"
-        android:textStyle="bold"
-        android:text="0" />
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/guest_list_button"
+            android:layout_width="300dp"
+            android:layout_height="80dp"
+            android:layout_below="@+id/guest_list_text"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="25dp"
+            android:gravity="start"
+            android:background="@drawable/round_button"
+            android:textColor="@color/black"
+            android:padding="10dp"
+            android:contentDescription="The amount of people confirmed"/>
 
-    <TextView
-        android:id="@+id/slesh_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:elevation="10dp"
-        android:layout_alignBaseline="@id/guest_list_button"
-        android:layout_toRightOf="@id/answered_text"
-        android:textColor="@color/black"
-        android:textStyle="bold"
-        android:text="/" />
+        <TextView
+            android:id="@+id/answered_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:elevation="10dp"
+            android:layout_alignBaseline="@id/guest_list_button"
+            android:layout_alignStart="@id/guest_list_button"
+            android:paddingStart="10dp"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:text="0" />
 
-    <TextView
-        android:id="@+id/potential_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:elevation="10dp"
-        android:layout_alignBaseline="@id/guest_list_button"
-        android:layout_toRightOf="@id/slesh_text"
-        android:textColor="@color/black"
-        android:textStyle="bold"
-        android:text="10" />
+        <TextView
+            android:id="@+id/slesh_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:elevation="10dp"
+            android:layout_alignBaseline="@id/guest_list_button"
+            android:layout_toRightOf="@id/answered_text"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:text="/" />
 
-    <TextView
-        android:id="@+id/confirmed_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:elevation="10dp"
-        android:layout_alignBaseline="@id/guest_list_button"
-        android:layout_toRightOf="@id/potential_text"
-        android:textColor="@color/black"
-        android:textStyle="bold"
-        android:text=" confirmed" />
+        <TextView
+            android:id="@+id/potential_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:elevation="10dp"
+            android:layout_alignBaseline="@id/guest_list_button"
+            android:layout_toRightOf="@id/slesh_text"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:text="10" />
 
-    <TextView
-        android:id="@+id/confirmed_bottom_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:elevation="10dp"
-        android:layout_alignBottom="@id/guest_list_button"
-        android:layout_alignStart="@id/guest_list_button"
-        android:padding="20dp"
-        android:textColor="@color/black"
-        android:text="Oh no! nobody replied yet"
-         />
+        <TextView
+            android:id="@+id/confirmed_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:elevation="10dp"
+            android:layout_alignBaseline="@id/guest_list_button"
+            android:layout_toRightOf="@id/potential_text"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:text=" confirmed" />
 
-    <View
-        android:id="@+id/friend_circle_back_0"
-        android:layout_width="25dp"
-        android:layout_height="25dp"
-        android:layout_alignStart="@id/guest_list_button"
-        android:layout_alignBottom="@id/guest_list_button"
-        android:layout_marginStart="17dp"
-        android:layout_marginTop="17dp"
-        android:layout_marginEnd="17dp"
-        android:layout_marginBottom="17dp"
-        android:background="@drawable/green_circle"
-        android:elevation="10dp"
-        android:visibility="invisible" />
+        <TextView
+            android:id="@+id/confirmed_bottom_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:elevation="10dp"
+            android:layout_alignBottom="@id/guest_list_button"
+            android:layout_alignStart="@id/guest_list_button"
+            android:padding="20dp"
+            android:textColor="@color/black"
+            android:text="Oh no! nobody replied yet"
+             />
 
-    <View
-        android:id="@+id/friend_circle_front_0"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        android:layout_alignStart="@id/friend_circle_back_0"
-        android:layout_alignTop="@id/friend_circle_back_0"
-        android:layout_alignEnd="@id/friend_circle_back_0"
-        android:layout_alignBottom="@id/friend_circle_back_0"
-        android:layout_centerInParent="true"
-        android:layout_margin="3dp"
-        android:background="@drawable/light_circle"
-        android:elevation="10dp"
-        android:visibility="invisible" />
+        <View
+            android:id="@+id/friend_circle_back_0"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_alignStart="@id/guest_list_button"
+            android:layout_alignBottom="@id/guest_list_button"
+            android:layout_marginStart="17dp"
+            android:layout_marginTop="17dp"
+            android:layout_marginEnd="17dp"
+            android:layout_marginBottom="17dp"
+            android:background="@drawable/green_circle"
+            android:elevation="10dp"
+            android:visibility="invisible" />
 
-    <TextView
-        android:id="@+id/friend_circle_name_0"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:elevation="10dp"
-        android:layout_alignStart="@id/friend_circle_back_0"
-        android:layout_alignTop="@id/friend_circle_back_0"
-        android:layout_alignEnd="@id/friend_circle_back_0"
-        android:layout_alignBottom="@id/friend_circle_back_0"
-        android:textColor="@color/black"
-        android:text="T"
-        android:gravity="center"
-        android:visibility="invisible" />
+        <View
+            android:id="@+id/friend_circle_front_0"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_alignStart="@id/friend_circle_back_0"
+            android:layout_alignTop="@id/friend_circle_back_0"
+            android:layout_alignEnd="@id/friend_circle_back_0"
+            android:layout_alignBottom="@id/friend_circle_back_0"
+            android:layout_centerInParent="true"
+            android:layout_margin="3dp"
+            android:background="@drawable/light_circle"
+            android:elevation="10dp"
+            android:visibility="invisible" />
 
-    <View
-        android:id="@+id/friend_circle_back_0.1"
-        android:layout_width="25dp"
-        android:layout_height="25dp"
-        android:layout_alignLeft="@id/friend_circle_back_0"
-        android:layout_alignBottom="@id/guest_list_button"
-        android:layout_marginStart="35dp"
-        android:layout_marginBottom="17dp"
-        android:background="@drawable/green_circle"
-        android:elevation="10dp"
-        android:visibility="invisible" />
+        <TextView
+            android:id="@+id/friend_circle_name_0"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:elevation="10dp"
+            android:layout_alignStart="@id/friend_circle_back_0"
+            android:layout_alignTop="@id/friend_circle_back_0"
+            android:layout_alignEnd="@id/friend_circle_back_0"
+            android:layout_alignBottom="@id/friend_circle_back_0"
+            android:textColor="@color/black"
+            android:text="T"
+            android:gravity="center"
+            android:visibility="invisible" />
 
-    <View
-        android:id="@+id/friend_circle_front_0.1"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        android:layout_alignStart="@id/friend_circle_back_0.1"
-        android:layout_alignTop="@id/friend_circle_back_0.1"
-        android:layout_alignEnd="@id/friend_circle_back_0.1"
-        android:layout_alignBottom="@id/friend_circle_back_0.1"
-        android:layout_centerInParent="true"
-        android:layout_margin="3dp"
-        android:background="@drawable/light_circle"
-        android:elevation="10dp"
-        android:visibility="invisible" />
+        <View
+            android:id="@+id/friend_circle_back_0.1"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_alignLeft="@id/friend_circle_back_0"
+            android:layout_alignBottom="@id/guest_list_button"
+            android:layout_marginStart="35dp"
+            android:layout_marginBottom="17dp"
+            android:background="@drawable/green_circle"
+            android:elevation="10dp"
+            android:visibility="invisible" />
 
-    <TextView
-        android:id="@+id/friend_circle_name_0.1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:elevation="10dp"
-        android:layout_alignStart="@id/friend_circle_back_0.1"
-        android:layout_alignTop="@id/friend_circle_back_0.1"
-        android:layout_alignEnd="@id/friend_circle_back_0.1"
-        android:layout_alignBottom="@id/friend_circle_back_0.1"
-        android:textColor="@color/black"
-        android:text="R"
-        android:gravity="center"
-        android:visibility="invisible" />
+        <View
+            android:id="@+id/friend_circle_front_0.1"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_alignStart="@id/friend_circle_back_0.1"
+            android:layout_alignTop="@id/friend_circle_back_0.1"
+            android:layout_alignEnd="@id/friend_circle_back_0.1"
+            android:layout_alignBottom="@id/friend_circle_back_0.1"
+            android:layout_centerInParent="true"
+            android:layout_margin="3dp"
+            android:background="@drawable/light_circle"
+            android:elevation="10dp"
+            android:visibility="invisible" />
 
-    <ImageView
-        android:id="@+id/arrow_icon_1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:elevation="10dp"
-        android:layout_alignBaseline="@id/guest_list_button"
-        android:layout_alignEnd="@id/guest_list_button"
-        android:layout_marginEnd="10dp"
-        android:src="@drawable/ic_double_arrow_right" />
+        <TextView
+            android:id="@+id/friend_circle_name_0.1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:elevation="10dp"
+            android:layout_alignStart="@id/friend_circle_back_0.1"
+            android:layout_alignTop="@id/friend_circle_back_0.1"
+            android:layout_alignEnd="@id/friend_circle_back_0.1"
+            android:layout_alignBottom="@id/friend_circle_back_0.1"
+            android:textColor="@color/black"
+            android:text="R"
+            android:gravity="center"
+            android:visibility="invisible" />
 
-    <TextView
-        android:id="@+id/group_tasks_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/guest_list_button"
-        android:layout_marginStart="35dp"
-        android:layout_marginTop="25dp"
-        android:text="Don't forget these" />
+        <ImageView
+            android:id="@+id/arrow_icon_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:elevation="10dp"
+            android:layout_alignBaseline="@id/guest_list_button"
+            android:layout_alignEnd="@id/guest_list_button"
+            android:layout_marginEnd="10dp"
+            android:src="@drawable/ic_double_arrow_right" />
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/group_tasks_button"
-        android:layout_width="300dp"
-        android:layout_height="80dp"
-        android:layout_below="@+id/group_tasks_text"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="25dp"
-        android:gravity="start"
-        android:background="@drawable/round_button"
-        android:textColor="@color/black"
-        android:padding="10dp"
-        android:contentDescription="The things to bring for the event"/>
+        <TextView
+            android:id="@+id/group_tasks_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/guest_list_button"
+            android:layout_marginStart="35dp"
+            android:layout_marginTop="25dp"
+            android:text="Don't forget these" />
 
-    <TextView
-        android:id="@+id/choose_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:elevation="10dp"
-        android:layout_alignBaseline="@id/group_tasks_button"
-        android:layout_alignStart="@id/group_tasks_button"
-        android:paddingStart="10dp"
-        android:textColor="@color/black"
-        android:textStyle="bold"
-        android:text="0" />
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/group_tasks_button"
+            android:layout_width="300dp"
+            android:layout_height="80dp"
+            android:layout_below="@+id/group_tasks_text"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="25dp"
+            android:gravity="start"
+            android:background="@drawable/round_button"
+            android:textColor="@color/black"
+            android:padding="10dp"
+            android:contentDescription="The things to bring for the event"/>
 
-    <TextView
-        android:id="@+id/slesh2_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:elevation="10dp"
-        android:layout_alignBaseline="@id/group_tasks_button"
-        android:layout_toRightOf="@id/choose_text"
-        android:textColor="@color/black"
-        android:textStyle="bold"
-        android:text="/" />
+        <TextView
+            android:id="@+id/choose_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:elevation="10dp"
+            android:layout_alignBaseline="@id/group_tasks_button"
+            android:layout_alignStart="@id/group_tasks_button"
+            android:paddingStart="10dp"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:text="0" />
 
-    <TextView
-        android:id="@+id/need_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:elevation="10dp"
-        android:layout_alignBaseline="@id/group_tasks_button"
-        android:layout_toRightOf="@id/slesh2_text"
-        android:textColor="@color/black"
-        android:textStyle="bold"
-        android:text="8" />
+        <TextView
+            android:id="@+id/slesh2_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:elevation="10dp"
+            android:layout_alignBaseline="@id/group_tasks_button"
+            android:layout_toRightOf="@id/choose_text"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:text="/" />
 
-    <TextView
-        android:id="@+id/confirmed2_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:elevation="10dp"
-        android:layout_alignBaseline="@id/group_tasks_button"
-        android:layout_toRightOf="@id/need_text"
-        android:textColor="@color/black"
-        android:textStyle="bold"
-        android:text=" choose" />
+        <TextView
+            android:id="@+id/need_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:elevation="10dp"
+            android:layout_alignBaseline="@id/group_tasks_button"
+            android:layout_toRightOf="@id/slesh2_text"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:text="8" />
 
-    <TextView
-        android:id="@+id/choose_bottom_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:elevation="10dp"
-        android:layout_alignBottom="@id/group_tasks_button"
-        android:layout_alignStart="@id/group_tasks_button"
-        android:padding="20dp"
-        android:textColor="@color/black"
-        android:text="Nothing was chosen yet" />
+        <TextView
+            android:id="@+id/confirmed2_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:elevation="10dp"
+            android:layout_alignBaseline="@id/group_tasks_button"
+            android:layout_toRightOf="@id/need_text"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:text=" choose" />
 
-    <ImageView
-        android:id="@+id/arrow_icon_2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:elevation="10dp"
-        android:layout_alignBaseline="@id/group_tasks_button"
-        android:layout_alignEnd="@id/group_tasks_button"
-        android:layout_marginEnd="10dp"
-        android:src="@drawable/ic_double_arrow_right" />
+        <TextView
+            android:id="@+id/choose_bottom_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:elevation="10dp"
+            android:layout_alignBottom="@id/group_tasks_button"
+            android:layout_alignStart="@id/group_tasks_button"
+            android:padding="20dp"
+            android:textColor="@color/black"
+            android:text="Nothing was chosen yet" />
+
+        <ImageView
+            android:id="@+id/arrow_icon_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:elevation="10dp"
+            android:layout_alignBaseline="@id/group_tasks_button"
+            android:layout_alignEnd="@id/group_tasks_button"
+            android:layout_marginEnd="10dp"
+            android:src="@drawable/ic_double_arrow_right" />
+
+    </RelativeLayout>
+
+<ProgressBar
+        android:id="@+id/loading_progress"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="130dp"
+        android:layout_gravity="center_vertical"
+        android:elevation="11dp"
+        android:visibility="visible" />
 
 </RelativeLayout>

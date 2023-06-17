@@ -10,6 +10,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -35,6 +36,8 @@ public class HomeFragment extends Fragment {
     private RelativeLayout relativeLayout; // the RelativeLayout in fragment_home
     private int circles = 0; // number of confirmations drawn
     private int friend_circle_back_id; // the id of the last circle drawn
+    private ProgressBar loadingProgress; // the progress bar
+    private View defaultView; // the home default view
 
     // Server variables:
     private Retrofit retrofit;
@@ -88,6 +91,9 @@ public class HomeFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_home, container, false);
+        defaultView = view.findViewById(R.id.default_home);
+        loadingProgress = view.findViewById(R.id.loading_progress);
+
         // attaching the buttons
         AppCompatButton guestListButton = view.findViewById(R.id.guest_list_button);
         AppCompatButton groupTasksButton = view.findViewById(R.id.group_tasks_button);
@@ -149,6 +155,8 @@ public class HomeFragment extends Fragment {
                         String number = eventInfo.getNumber();
                         updateText("number", number);
                     }
+                    defaultView.setVisibility(View.VISIBLE);
+                    loadingProgress.setVisibility(View.GONE);
                 } else {
                     Log.e("Update Event Info", "Problem with retrieve event info" + response.message());
                 }
