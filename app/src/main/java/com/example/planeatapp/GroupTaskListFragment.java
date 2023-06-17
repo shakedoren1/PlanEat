@@ -6,6 +6,7 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 
 import android.text.Spannable;
+import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.text.style.StyleSpan;
 import android.util.Log;
@@ -148,7 +149,6 @@ public class GroupTaskListFragment extends Fragment implements MainPageActivity.
 
     private void appendItemsToTextView(String category, List<PotluckItem> items) {
         if (items != null) {
-
             // Create a new SpannableStringBuilder, apply the bold style to it, and append it to the TextView
             SpannableStringBuilder categorySB = new SpannableStringBuilder(category + ":\n");
             categorySB.setSpan(new StyleSpan(Typeface.BOLD), 0, categorySB.length(), Spannable.SPAN_INCLUSIVE_INCLUSIVE);
@@ -158,6 +158,7 @@ public class GroupTaskListFragment extends Fragment implements MainPageActivity.
             for (PotluckItem item : items) {
                 itemListTextView.append(item.getAmount() + " " + item.getItem() + "\n");
             }
+
             // Add a newline for spacing between categories
             itemListTextView.append("\n");
         } else {
