@@ -68,6 +68,10 @@ public class InvitePopup extends DialogFragment {
         String message = "You're invited to join " + description + " and celebrate! " +
                 "The theme is " + concept + " on " + when + " at " + time + "! " + "Hope to see you at "
                 + place + "! " + "To RSVP, click below! \n https://planeat-website.shakedoren1.repl.co/?eventID=" + eventID;
+        String forWhatsapp = "*Hey friends!* \uD83D\uDE04 \n You're invited to join " + description + " and celebrate! " +
+                "The theme is " + concept + " on " + when + " at " + time + "! " + "Hope to see you at "
+                + place + "! " + "To RSVP, click below! \n https://planeat-website.shakedoren1.repl.co/?eventID=" + eventID
+                + "\n *See you there!* \uD83E\uDD73";
         TextView messageTextView = view.findViewById(R.id.message_textview);
         messageTextView.setText(message);
         AppCompatButton sendButton = view.findViewById(R.id.whatsapp_export);
@@ -77,7 +81,7 @@ public class InvitePopup extends DialogFragment {
             public void onClick(View view) {
                 Intent sendIntent = new Intent();
                 sendIntent.setAction(Intent.ACTION_SEND);
-                sendIntent.putExtra(Intent.EXTRA_TEXT, message);
+                sendIntent.putExtra(Intent.EXTRA_TEXT, forWhatsapp);
                 sendIntent.setType("text/plain");
                 sendIntent.setPackage("com.whatsapp");
                 PackageManager packageManager = getContext().getPackageManager();
@@ -103,7 +107,7 @@ public class InvitePopup extends DialogFragment {
             public void onShow(DialogInterface dialogInterface) {
                 Button skipButton = dialog.getButton(AlertDialog.BUTTON_NEGATIVE);
                 if (skipButton != null) {
-                    skipButton.setX((dialog.getWindow().getDecorView().getWidth() - skipButton.getWidth()) * 4 / 10);
+                    skipButton.setX((dialog.getWindow().getDecorView().getWidth() - skipButton.getWidth()) / 2);
                 }
             }
         });
