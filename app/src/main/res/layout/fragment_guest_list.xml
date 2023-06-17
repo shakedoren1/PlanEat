@@ -167,4 +167,13 @@
         android:background="@color/gray_planEat"
         android:visibility="invisible" />
 
+    <ProgressBar
+        android:id="@+id/loading_progress"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="130dp"
+        android:layout_gravity="center_vertical"
+        android:elevation="11dp"
+        android:visibility="visible" />
+
 </RelativeLayout>
