@@ -73,7 +73,7 @@
 
                 <EditText
                     android:id="@+id/when_field"
-                    android:hint="When is the event?"
+                    android:hint="DD/MM/YYYY"
                     android:minHeight="48sp"
                     android:textAlignment="textStart"
                     android:textColor="@color/black"
@@ -95,7 +95,7 @@
 
                 <EditText
                     android:id="@+id/time_field"
-                    android:hint="At what time?"
+                    android:hint="HH:MM AM/PM"
                     android:minHeight="48sp"
                     android:textAlignment="textStart"
                     android:textColor="@color/black"
@@ -117,7 +117,7 @@
 
                 <EditText
                     android:id="@+id/place_field"
-                    android:hint="Where are you meeting?"
+                    android:hint="Meeting place"
                     android:minHeight="48sp"
                     android:textAlignment="textStart"
                     android:textColor="@color/black"
@@ -162,7 +162,7 @@
                 <EditText
                     android:id="@+id/participants_field"
                     android:inputType="number"
-                    android:hint="How many friends are invited?"
+                    android:hint="# of friends invited"
                     android:minHeight="48sp"
                     android:textAlignment="textStart"
                     android:textColor="@color/black"
