@@ -2,6 +2,7 @@
 
 const express = require('express');
 const app = express();
+const axios = require('axios');
 const { MongoClient } = require('mongodb')
 const { ObjectId } = require('mongodb');
 const url = 'mongodb+srv://PlanEatList:PlanEat123@planeat.selzkm5.mongodb.net/?retryWrites=true&w=majority';
@@ -136,6 +137,56 @@ app.get('/eventCon/:id', async (req, res) => {
     }
   } else {
     res.status(500).json({ error: 'Failed to retrieve event info' });
+  }
+});
+
+app.post('/prompt', async (req, res) => {
+  try {
+    const response = await axios.post('https://api.openai.com/v1/chat/completions', {
+      model: "gpt-3.5-turbo-0301",
+      messages: [
+        {
+          role: "user",
+          content: `Hi, I'm planning a ${req.body.concept} in a potluck style for ${req.body.number} friends at My house. Can you create a list of things we need to bring please? Make sure the list contains Appetizers, Mains, Sides, Dessert, Drinks and Others food or non-food items needed, not ingredients or partial dishes. Have only the names of things, have appropriate amounts and be thorough please. No intro and no outro or tips. Thank you! Please return this as a JSON file where each item has an "amount" and an "item" name in that order and the headers are as stated vefore.`
+        }
+      ]
+    }, {
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer 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`
+      }
+    });
+
+    let prompt = response.data.choices[0].message.content;
+
+    collectionName = 'Ingredients'
+
+    const result = await insertItem(JSON.parse(prompt), collectionName);
+
+    res.status(200).json({ prompt, insertedId: result.insertedId.toString() });
+
+  } catch (error) {
+    console.error('Error:', error);
+    console.error('Error details:', error.response.data);
+    res.status(500).json({ error: 'Failed to generate prompt' });
+  }
+});
+
+// The call from the group task list page to to get a list based on an id from the database
+app.get('/listInfo/:id', async (req, res) => {
+  console.log('Entered /listInfo'); // for debug
+
+  collectionName = 'Ingredients'
+  const listId = req.params.id;
+  console.log(listId); // for debug
+
+  try {
+    const list = await getEventById(listId, collectionName);
+    console.log(list); // for debug
+    res.status(200).json(list);
+  } catch (error) {
+    console.error(error); // for debug
+    res.status(500).json({ error: 'Failed to retrieve ingredient list' });
   }
 });
 

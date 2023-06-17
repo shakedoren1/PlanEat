@@ -86,4 +86,3 @@ function displayToast(message, type) {
     backgroundColor: type === 'success' ? '#32CD32' : '#FF0000',
   }).showToast();
 }
-
