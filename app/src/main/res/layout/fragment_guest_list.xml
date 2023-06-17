@@ -3,58 +3,168 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/fragment_guest_list_id"
     tools:context=".GuestListFragment">
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/guest_list"
+    <LinearLayout
+        android:id="@+id/arrival_approved_explanation"
         android:layout_width="match_parent"
-        android:layout_height="300dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginBottom="20dp"
-        android:background="@drawable/round_button"
-        android:paddingStart="20dp"
-        android:paddingTop="10dp"
-        android:paddingEnd="20dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="15dp"
+        android:gravity="center">
+
+        <View
+            android:id="@+id/arrival_approved_circle"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:background="@drawable/green_circle" />
+
+        <TextView
+            android:id="@+id/arrival_approved_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/arrival_approved_circle"
+            android:layout_marginStart="5dp"
+            android:textSize="10sp"
+            android:text="@string/arrival_approved" />
+
+        <View
+            android:id="@+id/not_coming_circle"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:layout_toRightOf="@id/arrival_approved_text"
+            android:layout_marginStart="25dp"
+            android:background="@drawable/red_circle" />
+
+        <TextView
+            android:id="@+id/not_coming_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/not_coming_circle"
+            android:layout_marginStart="5dp"
+            android:textSize="10sp"
+            android:text="@string/confirmed_not_coming" />
+
+    </LinearLayout>
+
+    <View
+        android:id="@+id/friend_circle_back_0"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_below="@+id/arrival_approved_explanation"
+        android:layout_marginTop="15dp"
+        android:layout_marginStart="30dp"
+        android:background="@drawable/green_circle"
+        android:visibility="invisible" />
+
+    <View
+        android:id="@+id/friend_circle_front_0"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_alignStart="@id/friend_circle_back_0"
+        android:layout_alignTop="@id/friend_circle_back_0"
+        android:layout_alignEnd="@id/friend_circle_back_0"
+        android:layout_alignBottom="@id/friend_circle_back_0"
+        android:layout_centerInParent="true"
+        android:layout_margin="3dp"
+        android:background="@drawable/light_circle"
+        android:visibility="invisible" />
+
+    <TextView
+        android:id="@+id/friend_circle_name_0"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@id/friend_circle_back_0"
+        android:layout_alignTop="@id/friend_circle_back_0"
+        android:layout_alignEnd="@id/friend_circle_back_0"
+        android:layout_alignBottom="@id/friend_circle_back_0"
         android:textColor="@color/black"
-        android:textSize="20sp"
-        android:textStyle="bold" />
-
-    <View
-        android:id="@+id/arrival_approved_circle"
-        android:layout_width="15dp"
-        android:layout_height="15dp"
-        android:layout_below="@+id/guest_list"
-        android:layout_marginStart="55dp"
-        android:background="@drawable/green_circle" />
+        android:text="T"
+        android:gravity="center"
+        android:visibility="invisible" />
 
     <TextView
-        android:id="@+id/arrival_approved_text"
+        android:id="@+id/full_name_0"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/guest_list"
-        android:layout_toRightOf="@id/arrival_approved_circle"
-        android:layout_marginStart="5dp"
-        android:textSize="10sp"
-        android:text="@string/arrival_approved" />
-
-    <View
-        android:id="@+id/not_coming_circle"
-        android:layout_width="15dp"
-        android:layout_height="15dp"
-        android:layout_below="@+id/guest_list"
-        android:layout_toRightOf="@id/arrival_approved_text"
-        android:layout_marginStart="25dp"
-        android:background="@drawable/red_circle" />
+        android:layout_toRightOf="@id/friend_circle_back_0"
+        android:layout_alignTop="@id/friend_circle_back_0"
+        android:layout_alignBottom="@id/friend_circle_back_0"
+        android:layout_marginStart="10dp"
+        android:textColor="@color/black"
+        android:text="Try Try"
+        android:gravity="center"
+        android:visibility="invisible" />
 
     <TextView
-        android:id="@+id/not_coming_text"
+        android:id="@+id/gray_line_0"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/full_name_0"
+        android:layout_marginStart="60dp"
+        android:layout_marginEnd="60dp"
+        android:layout_marginTop="15dp"
+        android:background="@color/gray_planEat"
+        android:visibility="invisible" />
+
+    <View
+        android:id="@+id/friend_circle_back_0.1"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginStart="30dp"
+        android:layout_below="@+id/gray_line_0"
+        android:background="@drawable/green_circle"
+        android:visibility="invisible" />
+
+    <View
+        android:id="@+id/friend_circle_front_0.1"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_alignStart="@id/friend_circle_back_0.1"
+        android:layout_alignTop="@id/friend_circle_back_0.1"
+        android:layout_alignEnd="@id/friend_circle_back_0.1"
+        android:layout_alignBottom="@id/friend_circle_back_0.1"
+        android:layout_centerInParent="true"
+        android:layout_margin="3dp"
+        android:background="@drawable/light_circle"
+        android:visibility="invisible" />
+
+    <TextView
+        android:id="@+id/friend_circle_name_0.1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/guest_list"
-        android:layout_toRightOf="@id/not_coming_circle"
-        android:layout_marginStart="5dp"
-        android:textSize="10sp"
-        android:text="@string/confirmed_not_coming" />
+        android:layout_alignStart="@id/friend_circle_back_0.1"
+        android:layout_alignTop="@id/friend_circle_back_0.1"
+        android:layout_alignEnd="@id/friend_circle_back_0.1"
+        android:layout_alignBottom="@id/friend_circle_back_0.1"
+        android:textColor="@color/black"
+        android:text="T"
+        android:gravity="center"
+        android:visibility="invisible" />
+
+    <TextView
+        android:id="@+id/full_name_0.1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/friend_circle_back_0.1"
+        android:layout_alignTop="@id/friend_circle_back_0.1"
+        android:layout_alignBottom="@id/friend_circle_back_0.1"
+        android:layout_marginStart="10dp"
+        android:textColor="@color/black"
+        android:text="Try Try 2"
+        android:gravity="center"
+        android:visibility="invisible" />
+
+    <TextView
+        android:id="@+id/gray_line_0.1"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/full_name_0.1"
+        android:layout_marginStart="60dp"
+        android:layout_marginEnd="60dp"
+        android:layout_marginTop="15dp"
+        android:background="@color/gray_planEat"
+        android:visibility="invisible" />
 
 </RelativeLayout>

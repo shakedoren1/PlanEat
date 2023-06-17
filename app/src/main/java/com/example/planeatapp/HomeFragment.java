@@ -31,7 +31,6 @@ public class HomeFragment extends Fragment {
 
     private static String eventID; // The ID of the event in the data base
     private static String listID; // The ID of the list in the data base
-    private int flag = 0; // mark build
     private boolean firstBuilt = true; // mark build
     private RelativeLayout relativeLayout; // the RelativeLayout in fragment_home
     private int circles = 0; // number of confirmations drawn
@@ -40,10 +39,8 @@ public class HomeFragment extends Fragment {
     // Server variables:
     private Retrofit retrofit;
     private RetrofitInterface retrofitInterface;
-    // for emulator
-//    private String BASE_URL = "http://10.0.2.2:8080";
-    // based on WIFI IP
     private String BASE_URL = "http://websiteserver.shakedoren1.repl.co";
+
     public HomeFragment() {
         // Required empty public constructor
     }
@@ -99,7 +96,7 @@ public class HomeFragment extends Fragment {
         String confirmedTitle = guestListButton.getText().toString();
         guestListButton.setOnClickListener(v ->
                 ((MainPageActivity) requireActivity()).replaceFragmentInMainPage(
-                        new ListFragment("Friends list", new GuestListFragment())));
+                        new ListFragment("Friends list", new GuestListFragment(eventID))));
 
         // sets the groupTasksButton
         groupTasksButton.setOnClickListener(v -> {
@@ -299,6 +296,8 @@ public class HomeFragment extends Fragment {
         circles++;
         TextView answeredText = getView().findViewById(R.id.answered_text);
         answeredText.setText(String.valueOf(circles));
+
+        // Updates last_friend_id to the current id
         friend_circle_back_id = generatedId;
     }
 
