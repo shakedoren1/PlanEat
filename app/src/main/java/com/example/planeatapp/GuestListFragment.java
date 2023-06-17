@@ -35,6 +35,7 @@ public class GuestListFragment extends Fragment {
     private boolean firstFriend = true; // mark first friend
     private int last_view_id; // the id of the last friend drawn
     private ProgressBar loadingProgress; // the progress bar
+    private View defaultMessage; // the default message written on the screen
 
     // Server variables:
     private Retrofit retrofit;
@@ -83,6 +84,7 @@ public class GuestListFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_guest_list, container, false);
         loadingProgress = view.findViewById(R.id.loading_progress);
+        defaultMessage = view.findViewById(R.id.default_message);
 
         // Updating from the data base the friends confirmation
         updateFriends(eventID);
@@ -133,6 +135,7 @@ public class GuestListFragment extends Fragment {
      * A method to draw the circle for each confirmation received
      */
     private void drawFriend(String name, char letter, String option) {
+        defaultMessage.setVisibility(View.GONE);
         drawBackCircle(option);
         drawFrontCircle();
         drawLetter(letter);
