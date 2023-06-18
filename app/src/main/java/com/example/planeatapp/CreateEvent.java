@@ -230,7 +230,7 @@ public class CreateEvent extends AppCompatActivity {
                     if (responseData != null && responseData.containsKey("insertedId")) {
                         // Assign the inserted ID to the eventID variable
                         eventID = responseData.get("insertedId");
-                        Toast.makeText(CreateEvent.this, "Event created successfully", Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(CreateEvent.this, "Event created successfully", Toast.LENGTH_SHORT).show();
                         Log.e("Insert Event", "Event created successfully, ID: " + eventID);
 
                         callback.onEventInserted(eventID); // Invoke the callback
@@ -273,7 +273,7 @@ public class CreateEvent extends AppCompatActivity {
                     if (responseData != null && responseData.containsKey("insertedId")) {
                         // Assign the inserted ID to the listID variable
                         listID = responseData.get("insertedId");
-                        Toast.makeText(CreateEvent.this, "List created successfully", Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(CreateEvent.this, "List created successfully", Toast.LENGTH_SHORT).show();
                         Log.e("Insert List", "List created successfully, ID: " + listID);
 
                         callback.onListInserted(listID); // Invoke the callback
