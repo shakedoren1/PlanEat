@@ -132,7 +132,7 @@ public class CreateEvent extends AppCompatActivity {
                         public void onEventInserted(String eventId) {
                             // Lines to be executed after event insertion succeeded
                             // Now attempt to create the list
-                            insertListToDatabase(concept, number, new InsertListCallback() {
+                            insertListToDatabase(concept, number, eventID, new InsertListCallback() {
                                 @Override
                                 public void onListInserted(String listId) {
                                     // If list is successfully created, show the popup
@@ -256,12 +256,13 @@ public class CreateEvent extends AppCompatActivity {
         });
     }
 
-    private void insertListToDatabase(String concept, String number, final InsertListCallback callback) {
+    private void insertListToDatabase(String concept, String number, String eventID, final InsertListCallback callback) {
 
         HashMap <String, String> listDetails = new HashMap<>();
 
         listDetails.put("concept", concept);
         listDetails.put("number", number);
+        listDetails.put("eventID", eventID);
 
         Call<Map<String, String>> call = retrofitInterface.executePrompt(listDetails);
 
