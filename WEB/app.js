@@ -4,10 +4,6 @@
 const urlParams = new URLSearchParams(window.location.search);
 const eventID = urlParams.get('eventID');
 
-// Set the placeholder value with the ID
-const placeholder = document.getElementById('event-id');
-placeholder.innerHTML += `<h4>The event id is: ${eventID}</h4>`;
-
 // Set the value of the hidden input to the eventID
 const eventIDInput = document.getElementById('eventID');
 eventIDInput.value = eventID;
@@ -28,6 +24,26 @@ xhr1.onload = function() {
   }
 };
 xhr1.send();
+
+// show the confirm button when an option is checked
+const option1 = document.getElementById('option1');
+const option2 = document.getElementById('option2');
+const list = document.getElementById('demo-list');
+const confirmBtn = document.getElementById('btn');
+
+option1.addEventListener('change', function() {
+  if (option1.checked) {
+    list.style.display = 'block';
+    confirmBtn.style.display = 'block';
+  }
+});
+
+option2.addEventListener('change', function() {
+  if (option2.checked) {
+    list.style.display = 'none';
+    confirmBtn.style.display = 'block';
+  }
+});
 
 // Select the form element
 const form = document.querySelector('.contact-form');
@@ -59,14 +75,26 @@ function submitConfirmation() {
 
   // alert(JSON.stringify(formData)); // for debug
 
+  // Determine the pop-up message and smiley based on the chosen option
+  let message = '';
+  let smiley = '';
+
+  if (formData.option === 'Coming') {
+    message = "Great news!\nSee you soon";
+    smiley = "😊";
+  } else if (formData.option === 'Not coming') {
+    message = "Oh no!\nThat's a bummer";
+    smiley = "😞";
+  }
+
   // Make an AJAX request to submit the confirmation
   const xhr2 = new XMLHttpRequest();
   xhr2.open('POST', 'https://websiteserver.shakedoren1.repl.co/confirmation', true);
   xhr2.setRequestHeader('Content-Type', 'application/json'); // Set the request header
   xhr2.onload = function() {
     if (xhr2.status === 200) {
-      // Show a success message if the confirmation was submitted successfully
-      displayToast('Confirmation received!', 'success');
+      // Show the pop-up message
+      alert(message + "\n" + smiley);
       form.reset(); // Reset the form
     } else {
       // Show an error message if there was an issue with submitting the confirmation

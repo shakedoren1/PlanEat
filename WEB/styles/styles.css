@@ -5,9 +5,56 @@ body {
   background-color: #FAFAFA;
 }
 
-/* the size of the icons */
+/* the size of the logo */
 .logo {
   width: 200px;
+}
+
+/* styling the massages on the screen */
+.top-massage h2 {
+  font-family: Arial, Helvetica, sans-serif; 
+  font-size: 22px;
+}
+.confirmation-input h4 {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 16px;
+  font-weight: normal;
+}
+.demo-list h5 {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 14px;
+  font-weight: normal;
+}
+
+/* styling the name box */
+#name {
+  width: 244px;
+  height: 45px;
+  font-size: 14px;
+  text-align: center;
+}
+
+/* the size of the icons */
+.icon {
+  width: 40px;
+  cursor: pointer;
+  margin-right: 10px;
+}
+
+/* Custom the radio buttons */
+input[type="radio"] {
+  display: none; /* Hide the default radio button */
+}
+
+/* default border color */
+label img {
+  border-radius: 50%;
+  border: 2px solid #fafafa;
+}
+
+/* checked border color */
+input[type="radio"]:checked + label img {
+  border: 2px solid #000000;
 }
 
 /* the confirm button */
@@ -18,17 +65,11 @@ body {
   border: none;
   color: white;
   font-size: 16px;
+  cursor: pointer;
 }
-
-/* the event ID - TEMP */
-.id-from-URL {
-  color: #d1d1d1;
-  display: none;
-}
-
-/* the size of the icons */
-.icon {
-  width: 40px;
+.submit-btn {
+  display: flex;
+  justify-content: center;
 }
 
 /* the toast message */

@@ -12,36 +12,42 @@
     </head>
     <body class="confirmation-page">
         <header>
-            <br>
-            <div class="id-from-URL" id="event-id">
-                <!-- Entered in the URL -->
-            </div>
+            <br><br>
             <img src="icons/logo.png" alt="PlanEat logo" class="logo">
         </header>
         <div class="top-massage">
-            <h2>Glad to see you here friend! Let's make it happen!</h2>
+            <h2>Let's make it happen!</h2>
         </div>
         <form method="post" class="contact-form">
             <input type="hidden" name="eventID" id="eventID"> <!-- Hidden input for eventID, updated when the website is loaded -->
             <div class="confirmation-input" id="name-input">
-                <input type="text" required placeholder="Your name" name="name" id="name">
+                <input type="text" required placeholder="What's your name?" name="name" id="name">
             </div>
             <div class="confirmation-input" id="event-title">
                 <!-- Entered based on the ID in the URL -->
             </div>
             <div class="confirmation-input" id="confirmation-options">
-                <label for="option1"><img src="icons/cancel.png" alt="Not coming" class="icon"></label>
-                <input type="radio" id="option1" name="option" value="Not coming">
-                <label for="option2"><img src="icons/checked.png" alt="Coming" class="icon"></label>
-                <input type="radio" id="option2" name="option" value="Coming">
-                <br><br>
+                <input type="radio" id="option1" name="option" value="Coming">
+                <label for="option1"><img src="icons/checked.png" id="coming" alt="Coming" class="icon"></label>
+                <input type="radio" id="option2" name="option" value="Not coming">
+                <label for="option2"><img src="icons/cancel.png" id="Not coming" alt="Not coming" class="icon"></label>
             </div>
+            <div class="demo-list" id="demo-list" style="display: none;">
+                <h5>This is a <strong>DEMO</strong> of how you will be able to<br>choose what to bring to the event:</h5>
+                <input type="checkbox" id="checkbox1" name="checkbox" value="option1">
+                <label for="checkbox1">Option 1</label> <br>
+                <input type="checkbox" id="checkbox2" name="checkbox" value="option2">
+                <label for="checkbox2">Option 2</label> <br>
+                <input type="checkbox" id="checkbox3" name="checkbox" value="option3">
+                <label for="checkbox3">Option 3</label> <br>
+                <input type="checkbox" id="checkbox4" name="checkbox" value="option4">
+                <label for="checkbox4">Option 4</label>
+            </div> <br>
             <div class="submit-btn">
-                <button class="main-btn" id="btn">
-                    <span class="btn-text">Confirm</span>
+                <button class="main-btn" id="btn" style="display: none;">
+                  <span class="btn-text">Confirm</span>
                 </button>
             </div>
-            <small id="error"></small>
         </form>
 
         <!-- toast message -->
