@@ -1,20 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".NotificationsFragment">
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/test_notif"
-        android:layout_width="350dp"
-        android:layout_height="80dp"
-        android:layout_centerHorizontal="true"
+    <TextView
+        android:id="@+id/day"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="35dp"
         android:layout_marginTop="25dp"
+        android:text="Today" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/demo_notification"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:paddingLeft="50dp"
+        android:layout_below="@+id/day"
         android:background="@drawable/round_button"
-        android:padding="10dp"
-        android:text="Congratulations! 🎉\n You created your first event!"
-        android:textAlignment="textStart"
+        android:text="Congratulations! 🎉\n You created a new event!"
+        android:gravity="left"
         android:textColor="@color/black"
         android:textSize="14sp" />
-</FrameLayout>
+
+    <ImageView
+        android:id="@+id/new_event_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@id/demo_notification"
+        android:layout_alignTop="@id/demo_notification"
+        android:layout_alignBottom="@id/demo_notification"
+        android:layout_margin="15dp"
+        android:layout_marginTop="10dp"
+        android:src="@drawable/check_ic"
+        android:elevation="10dp"
+        app:tint="@color/gray_planEat" />
+
+    <TextView
+        android:id="@+id/time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@id/demo_notification"
+        android:layout_alignTop="@id/demo_notification"
+        android:layout_alignBottom="@id/demo_notification"
+        android:layout_margin="15dp"
+        android:elevation="10dp"
+        android:gravity="center"
+        android:textColor="@color/gray_planEat"
+        android:text="Just now" />
+
+</RelativeLayout>
