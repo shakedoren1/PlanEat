@@ -17,17 +17,17 @@
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/demo_notification"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="20dp"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp"
-        android:paddingLeft="50dp"
+        android:layout_height="50dp"
         android:layout_below="@+id/day"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="20dp"
         android:background="@drawable/round_button"
-        android:text="Congratulations! 🎉\n You created a new event!"
-        android:gravity="left"
-        android:textColor="@color/black"
-        android:textSize="14sp" />
+        android:contentDescription="first notification of creating a new event"
+        android:paddingLeft="50dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp" />
 
     <ImageView
         android:id="@+id/new_event_icon"
@@ -36,11 +36,29 @@
         android:layout_alignStart="@id/demo_notification"
         android:layout_alignTop="@id/demo_notification"
         android:layout_alignBottom="@id/demo_notification"
-        android:layout_margin="15dp"
-        android:layout_marginTop="10dp"
-        android:src="@drawable/check_ic"
+        android:layout_marginStart="15dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="15dp"
         android:elevation="10dp"
+        android:src="@drawable/check_ic"
         app:tint="@color/gray_planEat" />
+
+    <TextView
+        android:id="@+id/message"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/new_event_icon"
+        android:layout_alignTop="@id/demo_notification"
+        android:layout_alignBottom="@id/demo_notification"
+        android:layout_margin="5dp"
+        android:elevation="10dp"
+        android:text="Congratulations! 🎉\nYou created a new event!"
+        android:gravity="center_vertical"
+        android:textColor="@color/black"
+        android:textSize="14sp" />
 
     <TextView
         android:id="@+id/time"
