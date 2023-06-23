@@ -5,6 +5,7 @@ const app = express();
 const axios = require('axios');
 const { MongoClient } = require('mongodb')
 const { ObjectId } = require('mongodb');
+const path = require('path');
 const url = 'mongodb+srv://PlanEatList:PlanEat123@planeat.selzkm5.mongodb.net/?retryWrites=true&w=majority';
 const databaseName = 'PlanEat';
 let collectionName = '';
@@ -13,8 +14,21 @@ const cors = require('cors');
 app.use(cors()); // Enable CORS for all routes
 
 app.use(express.json());
+
 // Allowing to run the website on the server localy
 // app.use(express.static(__dirname + '/..'));
+
+// Route handler for the root URL // In replit only
+app.get('/', (req, res) => {
+  const filePath = path.join(__dirname, 'message.html');
+  res.sendFile(filePath);
+});
+
+// access to the logo // In replit only
+app.get('/logo', (req, res) => {
+  const filePath = path.join(__dirname, 'icons/logo.png');
+  res.sendFile(filePath);
+});
 
 // A function that gets an item and insert it to the collection
 async function insertItem(item, colName) {
@@ -41,6 +55,14 @@ async function getConfirmationsByEventId(eventId, colName) {
   collection = db.collection(colName);
   const confirmations = await collection.find({ eventID: eventId }).toArray();
   return confirmations;
+}
+
+// A function to update the event ID in the list document
+async function updateEventID(eventID, listId) {
+  let result = await client.connect();
+  db = result.db(databaseName);
+  collection = db.collection(collectionName);
+  await collection.updateOne({ _id: new ObjectId(listId) }, { $set: { eventID: eventID } });
 }
 
 // The call from the creatEvent to insert a new event into the database
@@ -162,6 +184,15 @@ app.post('/prompt', async (req, res) => {
     collectionName = 'Ingredients'
 
     const result = await insertItem(JSON.parse(prompt), collectionName);
+    const listId = result.insertedId.toString();
+    
+    // Update the list document with the event ID
+    const eventID = req.body.eventID;
+    if (eventID) {
+      await updateEventID(eventID, listId);
+    }
+    
+    res.status(200).json({ prompt, insertedId: listId });
 
     res.status(200).json({ prompt, insertedId: result.insertedId.toString() });
 
@@ -193,4 +224,3 @@ app.get('/listInfo/:id', async (req, res) => {
 app.listen(8080, () => {
   console.log('Listening on port 8080.');
 });
-
