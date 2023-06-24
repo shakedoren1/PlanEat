@@ -26,6 +26,6 @@ public interface RetrofitInterface {
     @GET("eventCon/{id}")
     Call<List<Confirmation>> executeEventCon(@Path("id") String id);
 
-    @GET("getListId/{eventId}")
-    Call<String> getListIdByEventId(@Path("eventId") String eventId);
+    @GET("listInfoByEvent/{id}")
+    Call<IngredientList> executeListByEventId(@Path("id") String id);
 }
