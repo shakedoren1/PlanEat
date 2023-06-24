@@ -106,7 +106,7 @@ public class IngredientListFragment extends Fragment implements MainPageActivity
         // Removed the line that sets the text to "listID"
 
         // Initialize the icon drawable here, where the context is available
-        checkboxIcon = ContextCompat.getDrawable(getContext(), R.drawable.fork_knife);
+        checkboxIcon = ContextCompat.getDrawable(getContext(), R.drawable.flatware);
         if (checkboxIcon != null) {
             checkboxIcon.setBounds(0, 0, checkboxIcon.getIntrinsicWidth(), checkboxIcon.getIntrinsicHeight());
         }
