@@ -10,7 +10,9 @@ import android.os.Bundle;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Lifecycle;
 
+import android.os.Handler;
 import android.text.Html;
 import android.text.format.DateFormat;
 import android.util.Log;
@@ -131,48 +133,33 @@ public class CreateEvent extends AppCompatActivity {
                         @Override
                         public void onEventInserted(String eventId) {
                             // Lines to be executed after event insertion succeeded
+
                             // Now attempt to create the list
-                            insertListToDatabase(concept, number, eventID, new InsertListCallback() {
+                            Handler handler = new Handler();
+                            handler.post(() -> insertListToDatabase(concept, number, eventID, new InsertListCallback() {
                                 @Override
                                 public void onListInserted(String listId) {
                                     // If list is successfully created, show the popup
-                                    InvitePopup invitePopup = InvitePopup.newInstance(description, when, time, place, concept, eventId, listId);
-                                    // dismissing the progress bar
+                                    // dismiss the progress bar here if you don't want to show it until the list is also created
                                     loadingProgress.setVisibility(View.GONE);
-                                    //Showing the popup
-                                    invitePopup.show(getSupportFragmentManager(), "invite_popup");
-                                    // Create the StringRequest
-                                    StringRequest stringRequest = new StringRequest(Request.Method.POST, BASE_URL,
-                                            response -> {
-                                                // This code will run when the server responds
-                                                // The 'response' variable contains the GPT-generated text
-                                                Intent intent = new Intent(CreateEvent.this, MainPageActivity.class);
-                                                intent.putExtra("listID", listID);
-//                                                intent.putExtra("GPTResponse", response);
-                                                startActivity(intent);
-                                            }, error -> {
-                                        // This code will run if there was an error
-//                                        Toast.makeText(CreateEvent.this, "Error1: " + error.getMessage(), Toast.LENGTH_LONG).show();
-                                    })  {
-                                        @Override
-                                        protected Map<String, String> getParams() {
-                                            Map<String, String> params = new HashMap<>();
-                                            params.put("concept", concept);
-                                            params.put("number", number);
-                                            return params;
-                                        }
-                                    };
-                                    // Add the request to the RequestQueue
-                                    requestQueue.add(stringRequest);
-                                }
 
+                                    if (getLifecycle().getCurrentState().isAtLeast(Lifecycle.State.RESUMED)) {
+                                        InvitePopup invitePopup = InvitePopup.newInstance(description, when, time, place, concept, eventId, listId);
+                                        invitePopup.show(getSupportFragmentManager(), "invite_popup");
+                                    } else {
+                                        // Save the details and show it later when the activity is resumed.
+                                    }                                }
                                 @Override
                                 public void onListInsertionFailed(String errorMessage) {
                                     // Lines to be executed if list insertion failed
                                     Toast.makeText(CreateEvent.this, "Failed to insert list: " + errorMessage, Toast.LENGTH_SHORT).show();
                                     Log.e("Insert List", "List insertion failed: " + errorMessage);
                                 }
-                            });
+                            }));
+
+                            // Show the InvitePopup immediately after event insertion, without waiting for list creation
+                            InvitePopup invitePopup = InvitePopup.newInstance(description, when, time, place, concept, eventId, "");
+                            invitePopup.show(getSupportFragmentManager(), "invite_popup");
                         }
 
                         @Override
@@ -216,7 +203,6 @@ public class CreateEvent extends AppCompatActivity {
         eventDetails.put("place", place);
         eventDetails.put("concept", concept);
         eventDetails.put("number", number);
-
 
         Call<Map<String, String>> call = retrofitInterface.executeNewEvent(eventDetails);
 
