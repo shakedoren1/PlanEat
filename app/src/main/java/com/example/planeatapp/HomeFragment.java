@@ -42,7 +42,7 @@ public class HomeFragment extends Fragment {
     // Server variables:
     private Retrofit retrofit;
     private RetrofitInterface retrofitInterface;
-    private String BASE_URL = "http://websiteserver.shakedoren1.repl.co";
+    private final String BASE_URL = "http://websiteserver.shakedoren1.repl.co";
 
     public HomeFragment() {
         // Required empty public constructor
@@ -99,7 +99,6 @@ public class HomeFragment extends Fragment {
         AppCompatButton groupTasksButton = view.findViewById(R.id.group_tasks_button);
 
         // sets the guestListButton
-        String confirmedTitle = guestListButton.getText().toString();
         guestListButton.setOnClickListener(v ->
                 ((MainPageActivity) requireActivity()).replaceFragmentInMainPage(
                         new ListFragment("Friends list", new GuestListFragment(eventID))));
