@@ -105,17 +105,17 @@ public class HomeFragment extends Fragment {
 
         // sets the groupTasksButton
         groupTasksButton.setOnClickListener(v -> {
-            GroupTaskListFragment groupTaskListFragment = new GroupTaskListFragment();
+            IngredientListFragment ingredientListFragment = new IngredientListFragment(eventID);
 
             // Pass listID to GroupTaskListFragment
             Bundle bundle = new Bundle();
             bundle.putString("listID", listID);
-            groupTaskListFragment.setArguments(bundle);
+            ingredientListFragment.setArguments(bundle);
 
             Log.e("HomeFragment", "Home listID: " + listID);  // add this line
 
             ((MainPageActivity) requireActivity()).replaceFragmentInMainPage(
-                    new ListFragment("Don't forget these", groupTaskListFragment));
+                    new ListFragment("Don't forget these", ingredientListFragment));
         });
 
         // only allows to be built one time

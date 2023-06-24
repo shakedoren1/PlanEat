@@ -1,7 +1,6 @@
 package com.example.planeatapp;
 
 import android.content.Context;
-import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
@@ -9,10 +8,8 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import android.text.Spannable;
-import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.text.style.ImageSpan;
-import android.text.style.StyleSpan;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,12 +26,13 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link GroupTaskListFragment#newInstance} factory method to
+ * Use the {@link IngredientListFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class GroupTaskListFragment extends Fragment implements MainPageActivity.GPTResponseListener {
+public class IngredientListFragment extends Fragment implements MainPageActivity.GPTResponseListener {
 
     private static String listID = "";
+    private static String eventID;
     private Retrofit retrofit;
     private RetrofitInterface retrofitInterface;
     private String BASE_URL = "http://websiteserver.shakedoren1.repl.co"; // replace this with your server's URL
@@ -42,8 +40,15 @@ public class GroupTaskListFragment extends Fragment implements MainPageActivity.
     private Drawable checkboxIcon;
 
 
-    public GroupTaskListFragment() {
+    public IngredientListFragment() {
         // Required empty public constructor
+    }
+
+    /**
+     * A constructor that puts inside eventID the current event ID.
+     */
+    public IngredientListFragment(String ID) {
+        eventID = ID;
     }
 
     /**
@@ -52,8 +57,8 @@ public class GroupTaskListFragment extends Fragment implements MainPageActivity.
      *
      * @return A new instance of fragment GroupTaskListFragment.
      */
-    public static GroupTaskListFragment newInstance(String param1, String param2) {
-        GroupTaskListFragment fragment = new GroupTaskListFragment();
+    public static IngredientListFragment newInstance(String param1, String param2) {
+        IngredientListFragment fragment = new IngredientListFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
@@ -94,19 +99,19 @@ public class GroupTaskListFragment extends Fragment implements MainPageActivity.
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_group_task_list, container, false);
+        View view = inflater.inflate(R.layout.fragment_ingredient_list, container, false);
 
         // Find the TextView
         itemListTextView = view.findViewById(R.id.item_list);
         // Removed the line that sets the text to "listID"
 
         // Initialize the icon drawable here, where the context is available
-        checkboxIcon = ContextCompat.getDrawable(getContext(), R.drawable.check_box);
+        checkboxIcon = ContextCompat.getDrawable(getContext(), R.drawable.fork_knife);
         if (checkboxIcon != null) {
             checkboxIcon.setBounds(0, 0, checkboxIcon.getIntrinsicWidth(), checkboxIcon.getIntrinsicHeight());
         }
         // Call updateIngredientListInfo here
-        updateIngredientListInfo(listID);
+        updateIngredientListInfo(eventID);
 
         return view;
     }
@@ -114,11 +119,12 @@ public class GroupTaskListFragment extends Fragment implements MainPageActivity.
     private void updateIngredientListInfo(String id) {
         Log.e("Update Ingredient List Info", "passed: " + id );
 
-        Call<IngredientList> call = retrofitInterface.executeListInfo(id);
+        Call<IngredientList> call = retrofitInterface.executeListByEventId(id);
 
         call.enqueue(new Callback<IngredientList>() {
             @Override
             public void onResponse(Call<IngredientList> call, Response<IngredientList> response) {
+                Log.e("onResponse eventID", "passed: " + eventID );
                 if (response.isSuccessful()) {
                     IngredientList ingredientList = response.body();
                     if (ingredientList != null && itemListTextView != null) {
