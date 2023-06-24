@@ -116,7 +116,7 @@ public class HomeFragment extends Fragment {
             Log.e("HomeFragment", "Home listID: " + listID);  // add this line
 
             ((MainPageActivity) requireActivity()).replaceFragmentInMainPage(
-                    new ListFragment("Group task list", groupTaskListFragment));
+                    new ListFragment("Don't forget these", groupTaskListFragment));
         });
 
         // only allows to be built one time
@@ -145,19 +145,20 @@ public class HomeFragment extends Fragment {
                     if (eventInfo != null) {
                         // updating the home fragment with all the details received from the database
                         String title = eventInfo.getTitle();
-                        updateText("title", title);
+                        if (title != "")
+                            updateText("title", title);
                         String date = eventInfo.getDate();
-                        updateText("date", date);
+                        if (date != "")
+                            updateText("date", date);
                         String time = eventInfo.getTime();
-                        updateText("time", time);
+                        if (time != "")
+                            updateText("time", time);
                         String place = eventInfo.getPlace();
-                        updateText("place", place);
+                        if (place != "")
+                            updateText("place", place);
                         String number = eventInfo.getNumber();
                         updateText("number", number);
                     }
-                    // dismissing the loading sign
-                    defaultView.setVisibility(View.VISIBLE);
-                    loadingProgress.setVisibility(View.GONE);
                 } else {
                     Log.e("Update Event Info", "Problem with retrieve event info" + response.message());
                 }
@@ -218,8 +219,10 @@ public class HomeFragment extends Fragment {
                                 TextView answeredText = getView().findViewById(R.id.answered_text);
                                 answeredText.setText(String.valueOf(circles));
                             }
-
                         }
+                        // dismissing the loading sign
+                        defaultView.setVisibility(View.VISIBLE);
+                        loadingProgress.setVisibility(View.GONE);
                     } else {
                         Log.e("Update Friends List", "No confirmations yet");
                     }
