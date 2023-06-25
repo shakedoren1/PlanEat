@@ -181,7 +181,7 @@
             android:layout_centerHorizontal="true"
             android:layout_gravity="center"
             android:onClick="showInfoPopup"
-            android:text="Let's Plan It!"
+            android:text="Let's Plan Eat!"
             android:textAlignment="center"
             android:textColor="@color/white"
             android:textSize="20sp"

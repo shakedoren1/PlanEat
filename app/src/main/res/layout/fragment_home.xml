@@ -311,7 +311,7 @@
             android:layout_toRightOf="@id/slesh2_text"
             android:textColor="@color/black"
             android:textStyle="bold"
-            android:text="8" />
+            android:text="23" />
 
         <TextView
             android:id="@+id/confirmed2_text"

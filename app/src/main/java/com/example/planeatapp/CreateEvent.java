@@ -74,7 +74,9 @@ public class CreateEvent extends AppCompatActivity {
 
         descriptionField = findViewById(R.id.description_field);
         whenField = findViewById(R.id.when_field);
+        whenField.setFocusable(false);
         timeField = findViewById(R.id.time_field);
+        timeField.setFocusable(false);
         placeField = findViewById(R.id.place_field);
         conceptField = findViewById(R.id.concept_field);
         participantsField = findViewById(R.id.participants_field);
