@@ -153,7 +153,7 @@
             android:layout_toRightOf="@id/potential_text"
             android:textColor="@color/black"
             android:textStyle="bold"
-            android:text="@string/confirmed" />
+            android:text=" confirmed" />
 
         <TextView
             android:id="@+id/confirmed_bottom_text"
@@ -323,7 +323,7 @@
             android:layout_toRightOf="@id/need_text"
             android:textColor="@color/black"
             android:textStyle="bold"
-            android:text="@string/choose" />
+            android:text=" choose" />
 
         <TextView
             android:id="@+id/choose_bottom_text"

@@ -25,13 +25,11 @@
     <string name="just_now">Just now</string>
     <string name="check_icon">check icon</string>
     <string name="click_to_see_the_full_list">Click to see the full list! 🍴🥤</string>
-    <string name="choose">choose</string>
     <string name="_need_text">23</string>
     <string name="dash">/</string>
     <string name="_choose_text">0</string>
     <string name="the_things_to_bring_for_the_event">The things to bring for the event</string>
     <string name="don_t_forget_these">Don\'t forget these</string>
-    <string name="confirmed">confirmed</string>
     <string name="_potential_text">10</string>
     <string name="_answered_text">0</string>
     <string name="the_amount_of_people_confirmed">The amount of people confirmed</string>
