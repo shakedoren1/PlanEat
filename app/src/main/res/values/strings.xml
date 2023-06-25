@@ -6,7 +6,7 @@
     <string name="back_arrow_description">Back arrow</string>
     <string name="arrival_approved">Arrival approved</string>
     <string name="confirmed_not_coming">Confirmed not coming</string>
-    <string name="coming_soon">COMING SOON...</string>
+    <string name="coming_soon">COMING SOON…</string>
     <string name="title_activity_create_event">CreateEvent</string>
     <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">First Fragment</string>
@@ -17,5 +17,30 @@
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
     <string name="title_activity_gpttest">GPTtest</string>
+    <string name="add_new_event">Add new event</string>
+    <string name="oh_no_nobody_replied_yet">Oh no! nobody replied yet…</string>
+    <string name="today">Today</string>
+    <string name="first_notification_of_creating_a_new_event">first notification of creating a new event</string>
+    <string name="congratulations_you_created_a_new_event">Congratulations! 🎉\nYou created a new event!</string>
+    <string name="just_now">Just now</string>
+    <string name="check_icon">check icon</string>
+    <string name="click_to_see_the_full_list">Click to see the full list! 🍴🥤</string>
+    <string name="choose">choose</string>
+    <string name="_need_text">23</string>
+    <string name="dash">/</string>
+    <string name="_choose_text">0</string>
+    <string name="the_things_to_bring_for_the_event">The things to bring for the event</string>
+    <string name="don_t_forget_these">Don\'t forget these</string>
+    <string name="confirmed">confirmed</string>
+    <string name="_potential_text">10</string>
+    <string name="_answered_text">0</string>
+    <string name="the_amount_of_people_confirmed">The amount of people confirmed</string>
+    <string name="friends_list">Friends list</string>
+    <string name="tbd">TBD</string>
+    <string name="location_icon">Location icon</string>
+    <string name="event_title">Event title</string>
+    <string name="press_icon">press icon</string>
+    <string name="calendar_icon">calendar icon</string>
+    <string name="clock_icon">clock icon</string>
 
 </resources>

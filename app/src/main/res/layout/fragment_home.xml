@@ -21,7 +21,7 @@
             android:paddingTop="15dp"
             android:background="@color/purple_planEat"
             android:textColor="@color/white"
-            android:text="Event title"
+            android:text="@string/event_title"
             android:textSize="30sp"
             android:textStyle="bold"/>
 
@@ -33,7 +33,8 @@
             android:layout_marginTop="60dp"
             android:layout_marginStart="40dp"
             android:src="@drawable/ic_calendar"
-            app:tint="@color/white" />
+            app:tint="@color/white"
+            android:contentDescription="@string/calendar_icon"/>
 
         <TextView
             android:id="@+id/date_text"
@@ -43,7 +44,7 @@
             android:layout_alignBottom="@id/calendar_icon"
             android:layout_toRightOf="@id/calendar_icon"
             android:layout_marginStart="5dp"
-            android:text="TBD" />
+            android:text="@string/tbd" />
 
         <ImageView
             android:id="@+id/time_icon"
@@ -53,7 +54,8 @@
             android:layout_toRightOf="@id/calendar_icon"
             android:layout_marginStart="150dp"
             android:src="@drawable/ic_time"
-            app:tint="@color/white" />
+            app:tint="@color/white"
+            android:contentDescription="@string/clock_icon"/>
 
         <TextView
             android:id="@+id/time_text"
@@ -63,7 +65,7 @@
             android:layout_alignBottom="@id/calendar_icon"
             android:layout_toRightOf="@id/time_icon"
             android:layout_marginStart="5dp"
-            android:text="TBD" />
+            android:text="@string/tbd" />
 
         <ImageView
             android:id="@+id/location_icon"
@@ -74,7 +76,7 @@
             android:layout_marginTop="10dp"
             android:src="@drawable/ic_location"
             app:tint="@color/white"
-            android:contentDescription="Location icon" />
+            android:contentDescription="@string/location_icon" />
 
         <TextView
             android:id="@+id/location_text"
@@ -84,7 +86,7 @@
             android:layout_alignBottom="@id/location_icon"
             android:layout_toRightOf="@id/location_icon"
             android:layout_marginStart="5dp"
-            android:text="TBD" />
+            android:text="@string/tbd" />
 
         <TextView
             android:id="@+id/guest_list_text"
@@ -93,7 +95,7 @@
             android:layout_below="@+id/event_title"
             android:layout_marginStart="35dp"
             android:layout_marginTop="25dp"
-            android:text="Friends list" />
+            android:text="@string/friends_list" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/guest_list_button"
@@ -106,7 +108,7 @@
             android:background="@drawable/round_button"
             android:textColor="@color/black"
             android:padding="10dp"
-            android:contentDescription="The amount of people confirmed"/>
+            android:contentDescription="@string/the_amount_of_people_confirmed"/>
 
         <TextView
             android:id="@+id/answered_text"
@@ -118,10 +120,10 @@
             android:paddingStart="10dp"
             android:textColor="@color/black"
             android:textStyle="bold"
-            android:text="0" />
+            android:text="@string/_answered_text" />
 
         <TextView
-            android:id="@+id/slesh_text"
+            android:id="@+id/dash_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:elevation="10dp"
@@ -129,7 +131,7 @@
             android:layout_toRightOf="@id/answered_text"
             android:textColor="@color/black"
             android:textStyle="bold"
-            android:text="/" />
+            android:text="@string/dash" />
 
         <TextView
             android:id="@+id/potential_text"
@@ -137,10 +139,10 @@
             android:layout_height="wrap_content"
             android:elevation="10dp"
             android:layout_alignBaseline="@id/guest_list_button"
-            android:layout_toRightOf="@id/slesh_text"
+            android:layout_toRightOf="@id/dash_text"
             android:textColor="@color/black"
             android:textStyle="bold"
-            android:text="10" />
+            android:text="@string/_potential_text" />
 
         <TextView
             android:id="@+id/confirmed_text"
@@ -151,7 +153,7 @@
             android:layout_toRightOf="@id/potential_text"
             android:textColor="@color/black"
             android:textStyle="bold"
-            android:text=" confirmed" />
+            android:text="@string/confirmed" />
 
         <TextView
             android:id="@+id/confirmed_bottom_text"
@@ -162,7 +164,7 @@
             android:layout_alignStart="@id/guest_list_button"
             android:padding="20dp"
             android:textColor="@color/black"
-            android:text="Oh no! nobody replied yet"
+            android:text="@string/oh_no_nobody_replied_yet"
              />
 
         <View
@@ -203,7 +205,6 @@
             android:layout_alignEnd="@id/friend_circle_back_0"
             android:layout_alignBottom="@id/friend_circle_back_0"
             android:textColor="@color/black"
-            android:text="T"
             android:gravity="center"
             android:visibility="invisible" />
 
@@ -243,7 +244,6 @@
             android:layout_alignEnd="@id/friend_circle_back_0.1"
             android:layout_alignBottom="@id/friend_circle_back_0.1"
             android:textColor="@color/black"
-            android:text="R"
             android:gravity="center"
             android:visibility="invisible" />
 
@@ -255,7 +255,8 @@
             android:layout_alignBaseline="@id/guest_list_button"
             android:layout_alignEnd="@id/guest_list_button"
             android:layout_marginEnd="10dp"
-            android:src="@drawable/ic_double_arrow_right" />
+            android:src="@drawable/ic_double_arrow_right"
+            android:contentDescription="@string/press_icon"/>
 
         <TextView
             android:id="@+id/group_tasks_text"
@@ -264,7 +265,7 @@
             android:layout_below="@+id/guest_list_button"
             android:layout_marginStart="35dp"
             android:layout_marginTop="25dp"
-            android:text="Don't forget these" />
+            android:text="@string/don_t_forget_these" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/group_tasks_button"
@@ -277,7 +278,7 @@
             android:background="@drawable/round_button"
             android:textColor="@color/black"
             android:padding="10dp"
-            android:contentDescription="The things to bring for the event"/>
+            android:contentDescription="@string/the_things_to_bring_for_the_event"/>
 
         <TextView
             android:id="@+id/choose_text"
@@ -289,10 +290,10 @@
             android:paddingStart="10dp"
             android:textColor="@color/black"
             android:textStyle="bold"
-            android:text="0" />
+            android:text="@string/_choose_text" />
 
         <TextView
-            android:id="@+id/slesh2_text"
+            android:id="@+id/dash2_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:elevation="10dp"
@@ -300,7 +301,7 @@
             android:layout_toRightOf="@id/choose_text"
             android:textColor="@color/black"
             android:textStyle="bold"
-            android:text="/" />
+            android:text="@string/dash" />
 
         <TextView
             android:id="@+id/need_text"
@@ -308,10 +309,10 @@
             android:layout_height="wrap_content"
             android:elevation="10dp"
             android:layout_alignBaseline="@id/group_tasks_button"
-            android:layout_toRightOf="@id/slesh2_text"
+            android:layout_toRightOf="@id/dash2_text"
             android:textColor="@color/black"
             android:textStyle="bold"
-            android:text="23" />
+            android:text="@string/_need_text" />
 
         <TextView
             android:id="@+id/confirmed2_text"
@@ -322,7 +323,7 @@
             android:layout_toRightOf="@id/need_text"
             android:textColor="@color/black"
             android:textStyle="bold"
-            android:text=" choose" />
+            android:text="@string/choose" />
 
         <TextView
             android:id="@+id/choose_bottom_text"
@@ -333,7 +334,7 @@
             android:layout_alignStart="@id/group_tasks_button"
             android:padding="20dp"
             android:textColor="@color/black"
-            android:text="Click to see the full list! 🍴🥤" />
+            android:text="@string/click_to_see_the_full_list" />
 
         <ImageView
             android:id="@+id/arrow_icon_2"
@@ -343,7 +344,8 @@
             android:layout_alignBaseline="@id/group_tasks_button"
             android:layout_alignEnd="@id/group_tasks_button"
             android:layout_marginEnd="10dp"
-            android:src="@drawable/ic_double_arrow_right" />
+            android:src="@drawable/ic_double_arrow_right"
+            android:contentDescription="@string/press_icon"/>
 
     </RelativeLayout>
 

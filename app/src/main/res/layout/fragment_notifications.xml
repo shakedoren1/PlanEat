@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="35dp"
         android:layout_marginTop="25dp"
-        android:text="Today" />
+        android:text="@string/today" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/demo_notification"
@@ -24,7 +24,7 @@
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="20dp"
         android:background="@drawable/round_button"
-        android:contentDescription="first notification of creating a new event"
+        android:contentDescription="@string/first_notification_of_creating_a_new_event"
         android:paddingLeft="50dp"
         android:paddingTop="10dp"
         android:paddingBottom="10dp" />
@@ -44,7 +44,8 @@
         android:layout_marginBottom="15dp"
         android:elevation="10dp"
         android:src="@drawable/check_ic"
-        app:tint="@color/gray_planEat" />
+        app:tint="@color/gray_planEat"
+        android:contentDescription="@string/check_icon"/>
 
     <TextView
         android:id="@+id/message"
@@ -55,7 +56,7 @@
         android:layout_alignBottom="@id/demo_notification"
         android:layout_margin="5dp"
         android:elevation="10dp"
-        android:text="Congratulations! 🎉\nYou created a new event!"
+        android:text="@string/congratulations_you_created_a_new_event"
         android:gravity="center_vertical"
         android:textColor="@color/black"
         android:textSize="14sp" />
@@ -70,7 +71,7 @@
         android:layout_margin="15dp"
         android:elevation="10dp"
         android:gravity="center"
-        android:textColor="@color/gray_planEat"
-        android:text="Just now" />
+        android:textColor="@color/dark_gray_planEat"
+        android:text="@string/just_now" />
 
 </RelativeLayout>

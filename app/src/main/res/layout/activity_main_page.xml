@@ -50,6 +50,6 @@
         app:backgroundTint="@color/black"
         app:maxImageSize="50dp"
         app:layout_anchor="@id/bottomAppBar"
-        android:contentDescription="Add new event"/>
+        android:contentDescription="@string/add_new_event"/>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

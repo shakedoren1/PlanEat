@@ -23,7 +23,7 @@
         android:layout_marginStart="90dp"
         android:layout_marginTop="30dp"
         android:textSize="24sp"
-        android:text="list title" />
+        android:text="" />
 
     <TextView
         android:id="@+id/gray_line"
