@@ -29,7 +29,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
  * create an instance of this fragment.
  */
 public class HomeFragment extends Fragment {
-
     private static String eventID; // The ID of the event in the data base
     private static String listID; // The ID of the list in the data base
     private boolean firstBuilt = true; // mark build
@@ -38,11 +37,7 @@ public class HomeFragment extends Fragment {
     private int friend_circle_back_id; // the id of the last circle drawn
     private ProgressBar loadingProgress; // the progress bar
     private View defaultView; // the home default view
-
-    // Server variables:
-    private Retrofit retrofit;
-    private RetrofitInterface retrofitInterface;
-    private final String BASE_URL = "http://websiteserver.shakedoren1.repl.co";
+    private RetrofitInterface retrofitInterface; // Server interface
 
     public HomeFragment() {
         // Required empty public constructor
@@ -79,7 +74,8 @@ public class HomeFragment extends Fragment {
         }
 
         // Server setup
-        retrofit = new Retrofit.Builder()
+        String BASE_URL = "http://websiteserver.shakedoren1.repl.co";
+        Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
