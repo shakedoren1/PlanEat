@@ -3,12 +3,9 @@ package com.example.planeatapp;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 
-import com.android.volley.RequestQueue;
-import com.android.volley.toolbox.Volley;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Lifecycle;
 
@@ -21,9 +18,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
-
-import com.android.volley.Request;
-import com.android.volley.toolbox.StringRequest;
 
 import java.util.Calendar;
 import java.util.HashMap;
@@ -45,17 +39,13 @@ public class CreateEvent extends AppCompatActivity {
     private DatePickerDialog datePickerDialog;
     private TimePickerDialog timePickerDialog;
     private ProgressBar loadingProgress;
-
-    // Server variables:
-    private Retrofit retrofit;
-    private RetrofitInterface retrofitInterface;
-    private String eventID, listID, BASE_URL = "https://websiteserver.shakedoren1.repl.co";
+    private RetrofitInterface retrofitInterface; // Server interface
+    private String eventID, listID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_event);
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
         loadingProgress = findViewById(R.id.loading_progress);
 
         OkHttpClient okHttpClient = new OkHttpClient.Builder()
@@ -65,7 +55,8 @@ public class CreateEvent extends AppCompatActivity {
                 .build();
 
         // Server setup
-        retrofit = new Retrofit.Builder()
+        String BASE_URL = "https://websiteserver.shakedoren1.repl.co";
+        Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
                 .client(okHttpClient) // set the custom OkHttpClient
                 .addConverterFactory(GsonConverterFactory.create())
@@ -112,66 +103,62 @@ public class CreateEvent extends AppCompatActivity {
         timeField.setOnClickListener(v -> timePickerDialog.show());
 
         Button createEventButton = findViewById(R.id.create_event_button);
-        createEventButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // showing the progress bar
-                loadingProgress.setVisibility(View.VISIBLE);
+        createEventButton.setOnClickListener(v -> {
+            // showing the progress bar
+            loadingProgress.setVisibility(View.VISIBLE);
 
-                String description = descriptionField.getText().toString();
-                String when = whenField.getText().toString();
-                String time = timeField.getText().toString();
-                String place = placeField.getText().toString();
-                String concept = conceptField.getText().toString();
-                String number = participantsField.getText().toString();
+            String description = descriptionField.getText().toString();
+            String when = whenField.getText().toString();
+            String time = timeField.getText().toString();
+            String place = placeField.getText().toString();
+            String concept = conceptField.getText().toString();
+            String number = participantsField.getText().toString();
 
-                // Check if concept and number fields are empty
-                if (concept.isEmpty() || number.isEmpty()) {
-                    // Show popup for missing info
-                    showMissingInfoPopup();
-                } else {
+            // Check if concept and number fields are empty
+            if (concept.isEmpty() || number.isEmpty()) {
+                // Show popup for missing info
+                showMissingInfoPopup();
+            } else {
 
-                    insertEventToDatabase(description, when, time, place, concept, number, new InsertEventCallback() {
-                        @Override
-                        public void onEventInserted(String eventId) {
-                            // Lines to be executed after event insertion succeeded
+                insertEventToDatabase(description, when, time, place, concept, number, new InsertEventCallback() {
+                    @Override
+                    public void onEventInserted(String eventId) {
+                        // Lines to be executed after event insertion succeeded
 
-                            // Now attempt to create the list
-                            Handler handler = new Handler();
-                            handler.post(() -> insertListToDatabase(concept, number, eventID, new InsertListCallback() {
-                                @Override
-                                public void onListInserted(String listId) {
-                                    // If list is successfully created, show the popup
-                                    // dismiss the progress bar here if you don't want to show it until the list is also created
-                                    loadingProgress.setVisibility(View.GONE);
+                        // Now attempt to create the list
+                        Handler handler = new Handler();
+                        handler.post(() -> insertListToDatabase(concept, number, eventID, new InsertListCallback() {
+                            @Override
+                            public void onListInserted(String listId) {
+                                // If list is successfully created, show the popup
+                                // dismiss the progress bar here if you don't want to show it until the list is also created
+                                loadingProgress.setVisibility(View.GONE);
 
-                                    if (getLifecycle().getCurrentState().isAtLeast(Lifecycle.State.RESUMED)) {
-                                        InvitePopup invitePopup = InvitePopup.newInstance(description, when, time, place, concept, eventId, listId);
-                                        invitePopup.show(getSupportFragmentManager(), "invite_popup");
-                                    } else {
-                                        // Save the details and show it later when the activity is resumed.
-                                    }                                }
-                                @Override
-                                public void onListInsertionFailed(String errorMessage) {
-                                    // Lines to be executed if list insertion failed
-                                    Toast.makeText(CreateEvent.this, "Failed to insert list: " + errorMessage, Toast.LENGTH_SHORT).show();
-                                    Log.e("Insert List", "List insertion failed: " + errorMessage);
+                                if (getLifecycle().getCurrentState().isAtLeast(Lifecycle.State.RESUMED)) {
+                                    InvitePopup invitePopup = InvitePopup.newInstance(description, when, time, place, concept, eventId, listId);
+                                    invitePopup.show(getSupportFragmentManager(), "invite_popup");
                                 }
-                            }));
+                            }
+                            @Override
+                            public void onListInsertionFailed(String errorMessage) {
+                                // Lines to be executed if list insertion failed
+                                Toast.makeText(CreateEvent.this, "Failed to insert list: " + errorMessage, Toast.LENGTH_SHORT).show();
+                                Log.e("Insert List", "List insertion failed: " + errorMessage);
+                            }
+                        }));
 
-                            // Show the InvitePopup immediately after event insertion, without waiting for list creation
-                            InvitePopup invitePopup = InvitePopup.newInstance(description, when, time, place, concept, eventId, "");
-                            invitePopup.show(getSupportFragmentManager(), "invite_popup");
-                        }
+                        // Show the InvitePopup immediately after event insertion, without waiting for list creation
+                        InvitePopup invitePopup = InvitePopup.newInstance(description, when, time, place, concept, eventId, "");
+                        invitePopup.show(getSupportFragmentManager(), "invite_popup");
+                    }
 
-                        @Override
-                        public void onEventInsertionFailed(String errorMessage) {
-                            // Lines to be executed if event insertion failed
-                            Toast.makeText(CreateEvent.this, "Failed to insert event: " + errorMessage, Toast.LENGTH_SHORT).show();
-                            Log.e("Insert Event", "Event insertion failed: " + errorMessage);
-                        }
-                    });
-                }
+                    @Override
+                    public void onEventInsertionFailed(String errorMessage) {
+                        // Lines to be executed if event insertion failed
+                        Toast.makeText(CreateEvent.this, "Failed to insert event: " + errorMessage, Toast.LENGTH_SHORT).show();
+                        Log.e("Insert Event", "Event insertion failed: " + errorMessage);
+                    }
+                });
             }
         });
     }
@@ -211,7 +198,7 @@ public class CreateEvent extends AppCompatActivity {
         call.enqueue(new Callback<Map<String, String>>() {
             @Override
 
-            public void onResponse(Call<Map<String, String>> call, Response<Map<String, String>> response) {
+            public void onResponse(@NonNull Call<Map<String, String>> call, @NonNull Response<Map<String, String>> response) {
                 if (response.isSuccessful()) {
                     Map<String, String> responseData = response.body();
                     Log.d("Response", "Response data: " + responseData); // Log entire response data
@@ -237,7 +224,7 @@ public class CreateEvent extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<Map<String, String>> call, Throwable t) {
+            public void onFailure(@NonNull Call<Map<String, String>> call, @NonNull Throwable t) {
                 Toast.makeText(CreateEvent.this, t.getMessage(), Toast.LENGTH_SHORT).show();
                 Log.e("Insert Event", "Event insertion failed: " + t.getMessage());
             }
@@ -256,7 +243,7 @@ public class CreateEvent extends AppCompatActivity {
 
         call.enqueue(new Callback<Map<String, String>>() {
             @Override
-            public void onResponse(Call<Map<String, String>> call, Response<Map<String, String>> response) {
+            public void onResponse(@NonNull Call<Map<String, String>> call, @NonNull Response<Map<String, String>> response) {
                 if (response.isSuccessful()) {
                     Map<String, String> responseData = response.body();
                     if (responseData != null && responseData.containsKey("insertedId")) {
@@ -281,7 +268,7 @@ public class CreateEvent extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<Map<String, String>> call, Throwable t) {
+            public void onFailure(@NonNull Call<Map<String, String>> call, @NonNull Throwable t) {
                 Toast.makeText(CreateEvent.this, t.getMessage(), Toast.LENGTH_SHORT).show();
                 Log.e("Insert List", "List insertion failed: " + t.getMessage());
             }
