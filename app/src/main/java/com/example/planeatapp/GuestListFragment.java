@@ -2,6 +2,7 @@ package com.example.planeatapp;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
@@ -10,12 +11,12 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.List;
+import java.util.Objects;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -36,11 +37,7 @@ public class GuestListFragment extends Fragment {
     private int last_view_id; // the id of the last friend drawn
     private ProgressBar loadingProgress; // the progress bar
     private View defaultMessage; // the default message written on the screen
-
-    // Server variables:
-    private Retrofit retrofit;
-    private RetrofitInterface retrofitInterface;
-    private String BASE_URL = "http://websiteserver.shakedoren1.repl.co";
+    private RetrofitInterface retrofitInterface; // Server interface
 
     public GuestListFragment() {
         // Required empty public constructor
@@ -59,7 +56,7 @@ public class GuestListFragment extends Fragment {
      *
      * @return A new instance of fragment GuestListFragment.
      */
-    public static GuestListFragment newInstance(String param1, String param2) {
+    public static GuestListFragment newInstance() {
         GuestListFragment fragment = new GuestListFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
@@ -71,7 +68,8 @@ public class GuestListFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         // Server setup
-        retrofit = new Retrofit.Builder()
+        String BASE_URL = "http://websiteserver.shakedoren1.repl.co";
+        Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
@@ -102,7 +100,7 @@ public class GuestListFragment extends Fragment {
 
         call.enqueue(new Callback<List<Confirmation>>() {
             @Override
-            public void onResponse(Call<List<Confirmation>> call, Response<List<Confirmation>> response) {
+            public void onResponse(@NonNull Call<List<Confirmation>> call, @NonNull Response<List<Confirmation>> response) {
                 if (response.isSuccessful()) {
                     List<Confirmation> confirmations = response.body();
                     if (confirmations != null) {
@@ -125,7 +123,7 @@ public class GuestListFragment extends Fragment {
             }
 
             @Override
-            public void onFailure(Call<List<Confirmation>> call, Throwable t) {
+            public void onFailure(@NonNull Call<List<Confirmation>> call, @NonNull Throwable t) {
                 Log.e("Update Friends confirmations", "Failed to retrieve event confirmations" + t.getMessage());
             }
         });
@@ -148,7 +146,7 @@ public class GuestListFragment extends Fragment {
      */
     private void drawBackCircle(String option) {
         // Retrieves the RelativeLayout from fragment_home
-        relativeLayout = getView().findViewById(R.id.fragment_guest_list_id);
+        relativeLayout = Objects.requireNonNull(getView()).findViewById(R.id.fragment_guest_list_id);
 
         // Creates a new instance of the View class
         View circleView = new View(getContext());
@@ -245,7 +243,7 @@ public class GuestListFragment extends Fragment {
         layoutParams.addRule(RelativeLayout.ALIGN_TOP, last_view_id);
         layoutParams.addRule(RelativeLayout.ALIGN_END, last_view_id);
         layoutParams.addRule(RelativeLayout.ALIGN_BOTTOM, last_view_id);
-        int textColor = ContextCompat.getColor(getContext(), R.color.black);
+        int textColor = ContextCompat.getColor(Objects.requireNonNull(getContext()), R.color.black);
         letterView.setTextColor(textColor);
         letterView.setText(String.valueOf(letter));
         letterView.setGravity(Gravity.CENTER);
@@ -279,7 +277,7 @@ public class GuestListFragment extends Fragment {
         layoutParams.addRule(RelativeLayout.ALIGN_BOTTOM, last_view_id);
         layoutParams.addRule(RelativeLayout.RIGHT_OF, last_view_id);
         layoutParams.setMargins(nameMargin, 0, 0, 0);
-        int textColor = ContextCompat.getColor(getContext(), R.color.black);
+        int textColor = ContextCompat.getColor(Objects.requireNonNull(getContext()), R.color.black);
         nameView.setTextColor(textColor);
         nameView.setText(String.valueOf(name));
         nameView.setGravity(Gravity.CENTER);
