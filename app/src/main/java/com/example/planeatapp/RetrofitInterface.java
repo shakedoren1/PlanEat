@@ -20,9 +20,6 @@ public interface RetrofitInterface {
     @POST("/prompt")
     Call<Map<String, String>> executePrompt(@Body HashMap<String, String> map);
 
-    @GET("listInfo/{id}")
-    Call<IngredientList> executeListInfo(@Path("id") String id);
-
     @GET("eventCon/{id}")
     Call<List<Confirmation>> executeEventCon(@Path("id") String id);
 

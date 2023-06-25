@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
@@ -17,6 +18,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import java.util.List;
+import java.util.Objects;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -31,14 +33,10 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 public class IngredientListFragment extends Fragment implements MainPageActivity.GPTResponseListener {
 
-    private static String listID = "";
     private static String eventID;
-    private Retrofit retrofit;
     private RetrofitInterface retrofitInterface;
-    private String BASE_URL = "http://websiteserver.shakedoren1.repl.co"; // replace this with your server's URL
     private TextView itemListTextView;
     private Drawable checkboxIcon;
-
 
     public IngredientListFragment() {
         // Required empty public constructor
@@ -57,7 +55,7 @@ public class IngredientListFragment extends Fragment implements MainPageActivity
      *
      * @return A new instance of fragment GroupTaskListFragment.
      */
-    public static IngredientListFragment newInstance(String param1, String param2) {
+    public static IngredientListFragment newInstance() {
         IngredientListFragment fragment = new IngredientListFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
@@ -70,7 +68,7 @@ public class IngredientListFragment extends Fragment implements MainPageActivity
     }
 
     @Override
-    public void onAttach(Context context) {
+    public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         if (context instanceof MainPageActivity) {
             ((MainPageActivity) context).setGPTResponseListener(this);
@@ -82,7 +80,9 @@ public class IngredientListFragment extends Fragment implements MainPageActivity
         super.onCreate(savedInstanceState);
 
         // Initialize retrofit and retrofitInterface here
-        retrofit = new Retrofit.Builder()
+        // replace this with your server's URL
+        String BASE_URL = "http://websiteserver.shakedoren1.repl.co";
+        Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
@@ -90,7 +90,7 @@ public class IngredientListFragment extends Fragment implements MainPageActivity
         retrofitInterface = retrofit.create(RetrofitInterface.class);
 
         if (getArguments() != null) {
-            listID = getArguments().getString("listID");
+            String listID = getArguments().getString("listID");
             Log.e("Insert List ID", "TaskList List ID: " + listID);
         }
     }
@@ -106,7 +106,7 @@ public class IngredientListFragment extends Fragment implements MainPageActivity
         // Removed the line that sets the text to "listID"
 
         // Initialize the icon drawable here, where the context is available
-        checkboxIcon = ContextCompat.getDrawable(getContext(), R.drawable.flatware);
+        checkboxIcon = ContextCompat.getDrawable(Objects.requireNonNull(getContext()), R.drawable.flatware);
         if (checkboxIcon != null) {
             checkboxIcon.setBounds(0, 0, checkboxIcon.getIntrinsicWidth(), checkboxIcon.getIntrinsicHeight());
         }
@@ -123,7 +123,7 @@ public class IngredientListFragment extends Fragment implements MainPageActivity
 
         call.enqueue(new Callback<IngredientList>() {
             @Override
-            public void onResponse(Call<IngredientList> call, Response<IngredientList> response) {
+            public void onResponse(@NonNull Call<IngredientList> call, @NonNull Response<IngredientList> response) {
                 Log.e("onResponse eventID", "passed: " + eventID );
                 if (response.isSuccessful()) {
                     IngredientList ingredientList = response.body();
@@ -145,7 +145,7 @@ public class IngredientListFragment extends Fragment implements MainPageActivity
             }
 
             @Override
-            public void onFailure(Call<IngredientList> call, Throwable t) {
+            public void onFailure(@NonNull Call<IngredientList> call, @NonNull Throwable t) {
                 Log.e("Update Ingredient List Info", "Failed to retrieve ingredient list" + t.getMessage());
                 if (itemListTextView != null) {
                     itemListTextView.setText("Oops there's no list yet!");

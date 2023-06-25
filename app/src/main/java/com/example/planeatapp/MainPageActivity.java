@@ -15,17 +15,11 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class MainPageActivity extends AppCompatActivity {
-
     BottomNavigationView bottomNavigationView; // BottomBar
     ActivityMainPageBinding binding; // fragments binding
-    private FragmentManager fragmentManager; // fragments manager
     private String eventID; // the event id in the data base
     private String listID; // the list id in the data base
-
     RequestQueue requestQueue;
-
-    // variable to store the GPT Response
-    private String gptResponse;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,7 +88,7 @@ public class MainPageActivity extends AppCompatActivity {
 
     // setting the GPT Response
     public void setGPTResponse(String gptResponse) {
-        this.gptResponse = gptResponse;
+        // variable to store the GPT Response
     }
 
     /**
@@ -110,7 +104,8 @@ public class MainPageActivity extends AppCompatActivity {
             bundle.putString("eventID", eventID);
             fragment.setArguments(bundle);
         }
-        fragmentManager = getSupportFragmentManager();
+        // fragments manager
+        FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.fragment_container, fragment);
         fragmentTransaction.addToBackStack(null); // Add the replaced fragment to the back stack

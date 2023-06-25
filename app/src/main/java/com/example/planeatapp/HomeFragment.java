@@ -1,6 +1,8 @@
 package com.example.planeatapp;
 
 import android.os.Bundle;
+
+import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
@@ -16,6 +18,7 @@ import android.widget.TextView;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -134,22 +137,22 @@ public class HomeFragment extends Fragment {
 
         call.enqueue(new Callback<EventDetails>() {
             @Override
-            public void onResponse(Call<EventDetails> call, Response<EventDetails> response) {
+            public void onResponse(@NonNull Call<EventDetails> call, @NonNull Response<EventDetails> response) {
                 if (response.isSuccessful()) {
                     EventDetails eventInfo = response.body();
                     if (eventInfo != null) {
                         // updating the home fragment with all the details received from the database
                         String title = eventInfo.getTitle();
-                        if (title != "")
+                        if (!Objects.equals(title, ""))
                             updateText("title", title);
                         String date = eventInfo.getDate();
-                        if (date != "")
+                        if (!Objects.equals(date, ""))
                             updateText("date", date);
                         String time = eventInfo.getTime();
-                        if (time != "")
+                        if (!Objects.equals(time, ""))
                             updateText("time", time);
                         String place = eventInfo.getPlace();
-                        if (place != "")
+                        if (!Objects.equals(place, ""))
                             updateText("place", place);
                         String number = eventInfo.getNumber();
                         updateText("number", number);
@@ -160,7 +163,7 @@ public class HomeFragment extends Fragment {
             }
 
             @Override
-            public void onFailure(Call<EventDetails> call, Throwable t) {
+            public void onFailure(@NonNull Call<EventDetails> call, @NonNull Throwable t) {
                 Log.e("Update Event Info", "Failed to retrieve event info" + t.getMessage());
             }
         });
@@ -181,7 +184,7 @@ public class HomeFragment extends Fragment {
         // putting the text received inside the relevant text_view
         if (textMap.containsKey(name)) {
             int nameId = textMap.get(name);
-            TextView textView = getView().findViewById(nameId);
+            TextView textView = Objects.requireNonNull(getView()).findViewById(nameId);
             textView.setText(text);
         }
     }
@@ -196,7 +199,7 @@ public class HomeFragment extends Fragment {
 
         call.enqueue(new Callback<List<Confirmation>>() {
             @Override
-            public void onResponse(Call<List<Confirmation>> call, Response<List<Confirmation>> response) {
+            public void onResponse(@NonNull Call<List<Confirmation>> call, @NonNull Response<List<Confirmation>> response) {
                 if (response.isSuccessful()) {
                     List<Confirmation> confirmations = response.body();
                     if (confirmations != null) {
@@ -211,7 +214,7 @@ public class HomeFragment extends Fragment {
                             } else {
                                 // Count the circles and update the answered_text
                                 circles++;
-                                TextView answeredText = getView().findViewById(R.id.answered_text);
+                                TextView answeredText = Objects.requireNonNull(getView()).findViewById(R.id.answered_text);
                                 answeredText.setText(String.valueOf(circles));
                             }
                         }
@@ -227,7 +230,7 @@ public class HomeFragment extends Fragment {
             }
 
             @Override
-            public void onFailure(Call<List<Confirmation>> call, Throwable t) {
+            public void onFailure(@NonNull Call<List<Confirmation>> call, @NonNull Throwable t) {
                 Log.e("Update Friends List", "Failed to retrieve event confirmations" + t.getMessage());
             }
         });
@@ -247,7 +250,7 @@ public class HomeFragment extends Fragment {
      */
     private void drawBackCircle(String option) {
         // Retrieves the RelativeLayout from fragment_home
-        relativeLayout = getView().findViewById(R.id.default_home);
+        relativeLayout = Objects.requireNonNull(getView()).findViewById(R.id.default_home);
 
         // Find the confirmed_bottom_text TextView and set its visibility to "invisible"
         TextView confirmedBottomText = getView().findViewById(R.id.confirmed_bottom_text);
@@ -370,7 +373,7 @@ public class HomeFragment extends Fragment {
         layoutParams.addRule(RelativeLayout.ALIGN_TOP, friend_circle_back_id);
         layoutParams.addRule(RelativeLayout.ALIGN_END, friend_circle_back_id);
         layoutParams.addRule(RelativeLayout.ALIGN_BOTTOM, friend_circle_back_id);
-        int textColor = ContextCompat.getColor(getContext(), R.color.black);
+        int textColor = ContextCompat.getColor(Objects.requireNonNull(getContext()), R.color.black);
         letterView.setTextColor(textColor);
         letterView.setText(String.valueOf(letter));
         letterView.setGravity(Gravity.CENTER);

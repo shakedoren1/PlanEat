@@ -1,15 +1,12 @@
 package com.example.planeatapp;
 
 import android.app.Dialog;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -17,26 +14,13 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.fragment.app.DialogFragment;
 
+import java.util.Objects;
+
 public class InvitePopup extends DialogFragment {
-
-    private static final String TAG = "InvitePopup";
-    private static final String DESCRIPTION_KEY = "description_key";
-    private static final String WHEN_KEY = "when_key";
-    private static final String TIME_KEY = "time_key";
-    private static final String PLACE_KEY = "place_key";
-    private static final String CONCEPT_KEY = "concept_key";
-    private static final String EVENT_KEY = "event_key";
-    private static final String LIST_KEY = "list_key";
-
-    private String description;
-    private String when;
-    private String time;
-    private String place;
-    private String concept;
-    private String eventID;
-    private String listID;
-
-    private static final int MY_PERMISSIONS_REQUEST_SEND_SMS = 0;
+    private static final String DESCRIPTION_KEY = "description_key", WHEN_KEY = "when_key",
+            TIME_KEY = "time_key", PLACE_KEY = "place_key", CONCEPT_KEY = "concept_key",
+            EVENT_KEY = "event_key", LIST_KEY = "list_key";
+    private String description, when, time, place, concept, eventID, listID;
 
     public static InvitePopup newInstance(String description, String when, String time, String place, String concept, String ID, String listID) {
         InvitePopup invitePopup = new InvitePopup();
@@ -76,39 +60,26 @@ public class InvitePopup extends DialogFragment {
         TextView messageTextView = view.findViewById(R.id.message_textview);
         messageTextView.setText(message);
         AppCompatButton sendButton = view.findViewById(R.id.whatsapp_export);
-        sendButton.setOnClickListener(new View.OnClickListener() {
-            @Override
+        sendButton.setOnClickListener(view1 -> {
+            Intent sendIntent = new Intent();
+            sendIntent.setAction(Intent.ACTION_SEND);
+            sendIntent.putExtra(Intent.EXTRA_TEXT, forWhatsapp);
+            sendIntent.setType("text/plain");
+            sendIntent.setPackage("com.whatsapp");
 
-            public void onClick(View view) {
-                Intent sendIntent = new Intent();
-                sendIntent.setAction(Intent.ACTION_SEND);
-                sendIntent.putExtra(Intent.EXTRA_TEXT, forWhatsapp);
-                sendIntent.setType("text/plain");
-                sendIntent.setPackage("com.whatsapp");
-                PackageManager packageManager = getContext().getPackageManager();
+            runMain();
 
-                runMain();
-
-                //Start whatsapp
-                startActivity(sendIntent);
-            }
+            //Start whatsapp
+            startActivity(sendIntent);
         });
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setView(view).setNegativeButton("Later", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                runMain();
-            }
-        });
+        AlertDialog.Builder builder = new AlertDialog.Builder(Objects.requireNonNull(getActivity()));
+        builder.setView(view).setNegativeButton("Later", (dialogInterface, i) -> runMain());
         AlertDialog dialog = builder.create();
 
-        dialog.setOnShowListener(new DialogInterface.OnShowListener() {
-            @Override
-            public void onShow(DialogInterface dialogInterface) {
-                Button skipButton = dialog.getButton(AlertDialog.BUTTON_NEGATIVE);
-                if (skipButton != null) {
-                    skipButton.setX((dialog.getWindow().getDecorView().getWidth() - skipButton.getWidth()) / 2);
-                }
+        dialog.setOnShowListener(dialogInterface -> {
+            Button skipButton = dialog.getButton(AlertDialog.BUTTON_NEGATIVE);
+            if (skipButton != null) {
+                skipButton.setX((dialog.getWindow().getDecorView().getWidth() - skipButton.getWidth()) / 2);
             }
         });
         return dialog;
