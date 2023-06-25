@@ -1,4 +1,4 @@
-// SWITCHED TO WORK IN REPLIT
+// WORKED ON REPLIT: https://replit.com/@ShakedOren1/PlanEat-Website#app.js
 
 // Get the ID from the URL
 const urlParams = new URLSearchParams(window.location.search);
@@ -16,7 +16,7 @@ xhr1.onload = function() {
     const eventData = JSON.parse(xhr1.responseText);
     // Update the event title
     const eventTitle = document.getElementById('event-title');
-    eventTitle.innerHTML += `<h4>Will we see you at the ${eventData.title} on ${eventData.date} at ${eventData.place}?</h4>`;
+    eventTitle.innerHTML += `<h4>Will we see you at the ${eventData.title} on <br>${eventData.date} at ${eventData.place}?</h4>`;
   } else {
     // Update the event title
     const eventTitle = document.getElementById('event-title');
@@ -73,8 +73,6 @@ function submitConfirmation() {
     option: optionInput.value,
   };
 
-  // alert(JSON.stringify(formData)); // for debug
-
   // Determine the pop-up message and smiley based on the chosen option
   let message = '';
   let smiley = '';
@@ -96,6 +94,8 @@ function submitConfirmation() {
       // Show the pop-up message
       alert(message + "\n" + smiley);
       form.reset(); // Reset the form
+      list.style.display = 'none';
+      confirmBtn.style.display = 'none';
     } else {
       // Show an error message if there was an issue with submitting the confirmation
       displayToast('Failed to submit confirmation.', 'error');

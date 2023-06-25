@@ -1,16 +1,18 @@
-// SWITCHED TO WORK IN REPLIT
+// WORKED ON REPLIT: https://replit.com/@ShakedOren1/websiteServer#index.js
 
 const express = require('express');
-const app = express();
 const axios = require('axios');
 const { MongoClient } = require('mongodb')
 const { ObjectId } = require('mongodb');
 const path = require('path');
+const cors = require('cors');
+
+const app = express();
 const url = 'mongodb+srv://PlanEatList:PlanEat123@planeat.selzkm5.mongodb.net/?retryWrites=true&w=majority';
 const databaseName = 'PlanEat';
 let collectionName = '';
 const client = new MongoClient(url);
-const cors = require('cors');
+
 app.use(cors()); // Enable CORS for all routes
 
 app.use(express.json());
@@ -18,19 +20,19 @@ app.use(express.json());
 // Allowing to run the website on the server localy
 // app.use(express.static(__dirname + '/..'));
 
-// Route handler for the root URL // In replit only
+// Route handler for the root URL
 app.get('/', (req, res) => {
   const filePath = path.join(__dirname, 'message.html');
   res.sendFile(filePath);
 });
 
-// access to the logo // In replit only
+// access to the logo
 app.get('/logo', (req, res) => {
   const filePath = path.join(__dirname, 'icons/logo.png');
   res.sendFile(filePath);
 });
 
-// A function that gets an item and insert it to the collection
+// A function that gets an item and inserts it in the collection
 async function insertItem(item, colName) {
   let result = await client.connect();
   db = result.db(databaseName);
@@ -64,6 +66,33 @@ async function updateEventID(eventID, listId) {
   collection = db.collection(collectionName);
   await collection.updateOne({ _id: new ObjectId(listId) }, { $set: { eventID: eventID } });
 }
+
+// A function to retrieve list by eventID from the database
+async function getListByEventId(eventId, colName) {
+  let result = await client.connect();
+  db = result.db(databaseName);
+  collection = db.collection(colName);
+  const list = await collection.findOne({ eventID: eventId });
+  return list;
+}
+
+// The call from the group task list page to get a list based on an eventID from the database
+app.get('/listInfoByEvent/:id', async (req, res) => {
+  console.log('Entered /listInfoByEvent'); // for debug
+
+  collectionName = 'Ingredients'
+  const eventId = req.params.id;
+  console.log(eventId); // for debug
+
+  try {
+    const list = await getListByEventId(eventId, collectionName);
+    console.log(list); // for debug
+    res.status(200).json(list);
+  } catch (error) {
+    console.error(error); // for debug
+    res.status(500).json({ error: 'Failed to retrieve ingredient list by eventID' });
+  }
+});
 
 // The call from the creatEvent to insert a new event into the database
 app.post('/newEvent', (req, res) => {
@@ -169,7 +198,7 @@ app.post('/prompt', async (req, res) => {
       messages: [
         {
           role: "user",
-          content: `Hi, I'm planning a ${req.body.concept} in a potluck style for ${req.body.number} friends at My house. Can you create a list of things we need to bring please? Make sure the list contains Appetizers, Mains, Sides, Dessert, Drinks and Others food or non-food items needed, not ingredients or partial dishes. Have only the names of things, have appropriate amounts and be thorough please. No intro and no outro or tips. Thank you! Please return this as a JSON file where each item has an "amount" and an "item" name in that order and the headers are as stated vefore.`
+          content: `Hi, I'm planning a ${req.body.concept} in a potluck style for ${req.body.number} friends at My house. Can you create a list of things we need to bring please? Make sure the list contains Appetizers, Mains, Sides, Dessert, Drinks and Others food or non-food items needed, not ingredients or partial dishes. Have only the names of things, have appropriate amounts and be thorough please. No intro and no outro or tips. Thank you! Please return this as a JSON file where each item has an "amount" and an "item" name in that order and the headers are as stated before.`
         }
       ]
     }, {
@@ -183,18 +212,15 @@ app.post('/prompt', async (req, res) => {
 
     collectionName = 'Ingredients'
 
-    const result = await insertItem(JSON.parse(prompt), collectionName);
-    const listId = result.insertedId.toString();
-    
-    // Update the list document with the event ID
-    const eventID = req.body.eventID;
-    if (eventID) {
-      await updateEventID(eventID, listId);
-    }
-    
-    res.status(200).json({ prompt, insertedId: listId });
 
-    res.status(200).json({ prompt, insertedId: result.insertedId.toString() });
+    // Parse the prompt content to a JavaScript object before insertion
+    const parsedPrompt = JSON.parse(prompt);
+    const newListItem = { ...parsedPrompt, eventID: req.body.eventID };
+
+    // Add the parsedPrompt directly to the database
+    const result = await insertItem(newListItem, collectionName);
+
+    res.status(200).json({ prompt, insertedId: result.insertedId });
 
   } catch (error) {
     console.error('Error:', error);
