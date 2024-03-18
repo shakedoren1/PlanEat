@@ -81,7 +81,7 @@ public class IngredientListFragment extends Fragment implements MainPageActivity
 
         // Initialize retrofit and retrofitInterface here
         // replace this with your server's URL
-        String BASE_URL = "http://websiteserver.shakedoren1.repl.co";
+        String BASE_URL = "https://8cd39e75-ae9e-4a95-9ae7-d31da3478fc8-00-2a6lif9mxtnmr.riker.replit.dev";
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())

@@ -1,4 +1,4 @@
-// WORKED ON REPLIT: https://replit.com/@ShakedOren1/websiteServer#index.js
+// TO RUN ON REPLIT: https://replit.com/@ShakedOren1/websiteServer#index.js
 
 const express = require('express');
 const axios = require('axios');

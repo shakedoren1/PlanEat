@@ -55,7 +55,7 @@ public class CreateEvent extends AppCompatActivity {
                 .build();
 
         // Server setup
-        String BASE_URL = "https://websiteserver.shakedoren1.repl.co";
+        String BASE_URL = "https://8cd39e75-ae9e-4a95-9ae7-d31da3478fc8-00-2a6lif9mxtnmr.riker.replit.dev";
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
                 .client(okHttpClient) // set the custom OkHttpClient

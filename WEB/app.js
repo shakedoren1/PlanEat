@@ -10,7 +10,7 @@ eventIDInput.value = eventID;
 
 // Make an AJAX request to the server to get the event info by the ID
 const xhr1 = new XMLHttpRequest();
-xhr1.open('GET', `https://websiteserver.shakedoren1.repl.co/eventInfo/${eventID}`, true);
+xhr1.open('GET', `https://8cd39e75-ae9e-4a95-9ae7-d31da3478fc8-00-2a6lif9mxtnmr.riker.replit.dev/eventInfo/${eventID}`, true);
 xhr1.onload = function() {
   if (xhr1.status == 200) {
     const eventData = JSON.parse(xhr1.responseText);
@@ -87,7 +87,7 @@ function submitConfirmation() {
 
   // Make an AJAX request to submit the confirmation
   const xhr2 = new XMLHttpRequest();
-  xhr2.open('POST', 'https://websiteserver.shakedoren1.repl.co/confirmation', true);
+  xhr2.open('POST', 'https://8cd39e75-ae9e-4a95-9ae7-d31da3478fc8-00-2a6lif9mxtnmr.riker.replit.dev/confirmation', true);
   xhr2.setRequestHeader('Content-Type', 'application/json'); // Set the request header
   xhr2.onload = function() {
     if (xhr2.status === 200) {
