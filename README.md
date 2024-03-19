@@ -24,6 +24,6 @@ Here is a brief flow of the app:
 ##### The event home page after a few people responded:<br>
 <img src="ScreenShots/HomePage2.png" alt="HomePage2" width="200">
 <img src="ScreenShots/Confirmations.png" alt="Confirmations" width="200">
-<br><br><br>
+<br>
 
 Inside the app we used fragments for the different windows of the app. Each event is stored inside the database and each RSVP is also saved to the database with the relevant event ID. There is also an AI generated ingredient list for the event based on the concept and number of people invited.
